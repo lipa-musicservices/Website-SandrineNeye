@@ -1,0 +1,44 @@
+<!--
+==============================================================================
+
+    __    _ ____            __  ___           _         _____                 _               
+   / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
+  / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
+
+   LiPa Music Services – Abteilung Webentwicklung
+   © 2026 LiPa Music Services GbR
+   https://www.lipamusicservices.com
+
+==============================================================================
+-->
+<footer class="Footbar" role="contentinfo">
+  <div class="Footbar__inner">
+
+    <div class="Footbar__left">
+      <span class="Footbar__brand">###BRAND###</span>
+      <span class="Footbar__copy">© <span id="YearSlot"></span></span>
+    </div>
+
+    <nav class="Footbar__links" aria-label="Footer Links">
+      <a href="Legal/impressum.html">Impressum</a>
+      <a href="Legal/datenschutz.html">Datenschutz</a>
+    </nav>
+
+    <div class="Footbar__lipa">
+        <a href="https://www.lipamusicservices.com" target="_blank" rel="noopener noreferrer">
+            This Website is powered by LiPa Music Services
+        </a>
+        </div>
+
+  </div>
+
+  <script>
+    // Tiny inline helper: sets current year without needing main.js
+    (function(){
+      const y = document.getElementById("YearSlot");
+      if(y) y.textContent = new Date().getFullYear();
+    })();
+  </script>
+</footer>
