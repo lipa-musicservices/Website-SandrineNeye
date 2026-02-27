@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="./">
+
+  <title>Galerie – Sandrine Neye</title>
+  <meta name="description" content="Galerie von Sandrine Neye." />
+  <meta name="theme-color" content="#680068" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="../Resources/Content/Favicon.ico" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <script defer src="../Scripts/includes.js"></script>
+  <script defer src="../Scripts/main.js"></script>
+
+  <style>
+    html, body{
+      margin:0;
+      padding:0;
+      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#fff;
+      color:#0e1116;
+    }
+
+    :root{
+      --purple:#680068;
+      --container:1120px;
+      --border:rgba(10,16,26,.12);
+      --radius:14px;
+      --muted:rgba(14,17,22,.7);
+      --hbH:74px;
+    }
+
+    #MainContent{
+      min-height: calc(100vh - var(--hbH));
+      display:flex;
+      flex-direction:column;
+      width:100%;
+    }
+
+    .Page{
+      flex:1;
+      width:100%;
+      max-width:var(--container);
+      margin:0 auto;
+      padding: 42px 18px 70px;
+      box-sizing:border-box;
+    }
+
+    /* Links wie vorher */
+    .Page__head{
+      width:100%;
+      text-align:left;
+      margin-bottom: 6px;
+    }
+
+    .Page__title{
+      margin:0;
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+
+    /* Links, nicht mittig */
+    .AccentRule{
+      height:3px;
+      width:56px;
+      background: var(--purple);
+      border-radius:2px;
+      margin:14px 0 0;
+    }
+
+    .Count{
+      margin-top:18px;
+      font-weight:900;
+      color:var(--muted);
+      font-size:14px;
+      text-align:left;
+    }
+
+    /* Breite fix: Grid IMMER 100% */
+    .Grid{
+      width:100%;
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap:12px;
+    }
+
+    .Tile{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      overflow:hidden;
+      background:#f4f4f8;
+      cursor:pointer;
+    }
+
+    .Tile img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      display:block;
+      transition:transform .2s ease;
+    }
+
+    .Tile:hover img{
+      transform:scale(1.05);
+    }
+
+    /* Error/Empty: links, aber trotzdem "stabil breit" */
+    .Empty{
+      width:100%;
+      max-width: 760px;   /* kannst du auch wegnehmen, wenn du 100% willst */
+      margin:16px 0 0;    /* links statt auto */
+      border:1px dashed rgba(10,16,26,.22);
+      border-radius: var(--radius);
+      padding:16px 18px;
+      color:var(--muted);
+      box-sizing:border-box;
+      text-align:left;
+    }
+
+    /* Lightbox */
+    .Lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.85);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:20px;
+    }
+    .Lightbox.is-open{ display:flex; }
+
+    .Lightbox img{
+      max-width:95vw;
+      max-height:90vh;
+      border-radius:12px;
+    }
+
+    .Lightbox button{
+      position:fixed;
+      top:20px;
+      right:20px;
+      padding:10px 14px;
+      border-radius:10px;
+      border:2px solid #fff;
+      background:transparent;
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    @media (max-width: 1000px){
+      .Grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 700px){
+      .Grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 450px){
+      .Grid{ grid-template-columns: 1fr; }
+      .Tile img{ height: 220px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="HeadbarSlot"></div>
+
+  <main id="MainContent">
+    <div class="Page">
+
+      <header class="Page__head">
+        <h1 class="Page__title">Galerie</h1>
+        <div class="AccentRule"></div>
+        <div class="Count" id="Count">Lade Bilder…</div>
+      </header>
+
+      <div id="Error" class="Empty" style="display:none;"></div>
+      <div id="Grid" class="Grid"></div>
+
+    </div>
+  </main>
+
+  <div id="FootbarSlot"></div>
+  <div id="CookieSlot"></div>
+
+  <div class="Lightbox" id="Lightbox" aria-hidden="true">
+    <button id="LbClose" type="button">Schließen</button>
+    <img id="LbImg" alt="">
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbx41vfB3zcZ2sPY8EIb6rqT6mEfxvNLtcU0Xb1UInRGPe9EoR2HqmjwjkPO7LeeeHATSQ/exec";
+
+  const grid = document.getElementById("Grid");
+  const err  = document.getElementById("Error");
+  const cnt  = document.getElementById("Count");
+
+  const lb = document.getElementById("Lightbox");
+  const lbImg = document.getElementById("LbImg");
+  const lbClose = document.getElementById("LbClose");
+
+  function esc(s){
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[m]));
+  }
+
+  function openLb(src){
+    lbImg.src = src;
+    lb.classList.add("is-open");
+    lb.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLb(){
+    lb.classList.remove("is-open");
+    lb.setAttribute("aria-hidden","true");
+    lbImg.src = "";
+    document.body.style.overflow = "";
+  }
+
+  lbClose.addEventListener("click", closeLb);
+  lb.addEventListener("click", e => { if(e.target === lb) closeLb(); });
+  document.addEventListener("keydown", e => { if(e.key === "Escape") closeLb(); });
+
+  function showError(msg){
+    err.style.display = "block";
+    err.innerHTML = msg;
+  }
+
+  async function load(){
+    err.style.display = "none";
+    err.textContent = "";
+    grid.innerHTML = "";
+    cnt.textContent = "Lade Bilder…";
+
+    try{
+      const res = await fetch(ENDPOINT + "?max=150", { cache:"no-cache" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      if(items.length === 0){
+        cnt.textContent = "0 Bilder";
+        showError("Keine Bilder gefunden. (Ordner leer oder Freigabe/Script prüfen)");
+        return;
+      }
+
+      cnt.textContent = items.length + " Bilder";
+
+      grid.innerHTML = items.map(item => `
+        <div class="Tile" data-full="${esc(item.full)}" aria-label="${esc(item.name)}">
+          <img src="${esc(item.thumb)}" alt="${esc(item.name)}" loading="lazy">
+        </div>
+      `).join("");
+
+      grid.addEventListener("click", e => {
+        const tile = e.target.closest(".Tile");
+        if(!tile) return;
+        const src = tile.dataset.full;
+        if(src) openLb(src);
+      });
+
+    }catch(e){
+      console.warn(e);
+      cnt.textContent = "—";
+      showError("Galerie konnte nicht geladen werden.<br><br><small>" + esc(String(e)) + "</small>");
+    }
+  }
+
+  load();
+})();
+</script>
+
+</body>
+</html>

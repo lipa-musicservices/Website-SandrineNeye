@@ -16,29 +16,44 @@
 <footer class="Footbar" role="contentinfo">
   <div class="Footbar__inner">
 
+    <!-- Left: Brand + Year -->
     <div class="Footbar__left">
-      <span class="Footbar__brand">###BRAND###</span>
+      <span class="Footbar__brand">Sandrine Neye</span>
       <span class="Footbar__copy">© <span id="YearSlot"></span></span>
     </div>
 
-    <nav class="Footbar__links" aria-label="Footer Links">
-      <a href="Legal/impressum.html">Impressum</a>
-      <a href="Legal/datenschutz.html">Datenschutz</a>
+    <!-- Center: Pages -->
+    <nav class="Footbar__pages" aria-label="Seiten">
+      <a href="index.html">Start</a>
+      <a href="Pages/vita.html">Vita</a>
+      <a href="Pages/konzerte.html">Konzerte</a>
+      <a href="Pages/galerie.html">Galerie</a>
+      <a href="Pages/projekte.html">Projekte</a>
+      <a href="Pages/pressestimmen.html">Pressestimmen</a>
+      <a href="Pages/kontakt.html">Kontakt</a>
     </nav>
 
-    <div class="Footbar__lipa">
-        <a href="https://www.lipamusicservices.com" target="_blank" rel="noopener noreferrer">
-            This Website is powered by LiPa Music Services
-        </a>
+    <!-- Right: Address + Legal + Powered -->
+    <div class="Footbar__right">
+      <div class="Footbar__address" aria-label="Adresse">
+        <div class="Footbar__addrTitle">Adresse</div>
+        <div class="Footbar__addrLines">
+          <div>Karlsruhe, Deutschland</div>
         </div>
+      </div>
+
+      <nav class="Footbar__links" aria-label="Rechtliches">
+        <a href="Legal/impressum.html">Impressum</a>
+        <a href="Legal/datenschutz.html">Datenschutz</a>
+      </nav>
+
+      <div class="Footbar__lipa">
+        <a href="https://www.lipamusicservices.com" target="_blank" rel="noopener noreferrer">
+          This Website is powered by LiPa Music Services
+        </a>
+      </div>
+    </div>
 
   </div>
 
-  <script>
-    // Tiny inline helper: sets current year without needing main.js
-    (function(){
-      const y = document.getElementById("YearSlot");
-      if(y) y.textContent = new Date().getFullYear();
-    })();
-  </script>
 </footer>

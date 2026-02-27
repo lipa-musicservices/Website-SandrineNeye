@@ -1,5 +1,4 @@
 /* ==============================================================================
-
     __    _ ____            __  ___           _         _____                 _               
    / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
   / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
@@ -9,5 +8,578 @@
    LiPa Music Services – Abteilung Webentwicklung
    © 2026 LiPa Music Services GbR
    https://www.lipamusicservices.com
-
 ============================================================================== */
+
+/* =========================================================
+   Sandrine Neye – MENU + FOOTBAR (SOLID PURPLE, NO PILLS)
+   - Desktop menu + Mobile menu + Footbar: solid #680068
+   - No transparency, no white mixes
+   - Buttons/links: NEVER pill-shaped; slight rounding only
+   - Footbar menu: vertical list
+   - "This Website is powered..." never as pill
+   ========================================================= */
+
+:root{
+  --container:1120px;
+
+  /* Brand Purple */
+  --purple:#1d001d;      /* requested */
+  --purpleDark:#1d001d;  /* hover/active */
+  --purpleDarker:#1d001d;
+
+  --hbH:74px;
+
+  /* Menu text */
+  --menuText:#ffffff;
+  --menuTextSoft:rgba(255,255,255,.85);
+
+  /* Corner radius for links/buttons (NOT pills) */
+  --r:10px;
+}
+
+/* =========================
+   Global Font – Outfit
+   ========================= */
+
+html, body {
+  font-family: "Outfit", sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================
+   HEADBAR (solid purple)
+   ========================= */
+
+.Headbar{
+  position:sticky;
+  top:0;
+  z-index:500;
+
+  background:var(--purple);
+  border-bottom:2px solid var(--purpleDark);
+}
+
+.Headbar__inner{
+  height:var(--hbH);
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 6px 0 18px;   /* links 18px, rechts 6px */
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* Brand / Logo */
+.Headbar__brand{
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+  min-width:160px;
+}
+
+.Headbar__logo{
+  height:40px;
+  width:auto;
+  display:block;
+}
+
+/* Desktop Nav */
+.Headbar__nav{
+  flex:1;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.Headbar__menu{
+  list-style:none;
+  margin:0;
+  padding:0;
+
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.Headbar__menu a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  height:42px;
+  padding:0 12px;
+  border-radius:var(--r);
+
+  color:var(--menuText);
+  text-decoration:none;
+  font-weight:900;
+  font-size:10.9pt;
+  letter-spacing:.2px;
+
+  background:transparent;
+  border:1px solid transparent;
+
+  transition:background .15s ease, transform .15s ease, border-color .15s ease;
+}
+
+.Headbar__menu a:hover{
+  background:var(--purpleDark);
+  border-color:rgba(255,255,255,.18);
+  transform:translateY(-1px);
+}
+
+.Headbar__menu a:active{
+  transform:translateY(0);
+  background:var(--purpleDarker);
+}
+
+.Headbar__menu a.is-active{
+  background:var(--purpleDark);
+  border-color:rgba(255,255,255,.26);
+}
+
+/* Language Switch (no pills, small rounding) */
+.Headbar__lang{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  padding:6px 10px;
+  border-radius:var(--r);
+
+  background:transparent;
+  border:1px solid rgba(255,255,255,.22);
+}
+
+.Headbar__lang{
+  margin-left:auto; /* drückt den Sprachschalter ganz nach rechts */
+}
+
+.Headbar__langItem{
+  text-decoration:none;
+  font-weight:900;
+  font-size:10.5pt;
+  letter-spacing:.35px;
+
+  color:var(--menuTextSoft);
+  padding:6px 8px;
+  border-radius:var(--r);
+
+  transition:background .15s ease, color .15s ease;
+}
+
+.Headbar__langItem:hover{
+  background:var(--purpleDark);
+  color:var(--menuText);
+}
+
+.Headbar__langItem.is-active{
+  background:var(--purpleDark);
+  color:var(--menuText);
+}
+
+.Headbar__langDivider{
+  color:rgba(255,255,255,.55);
+  font-weight:900;
+  user-select:none;
+}
+
+/* Burger Button (no pill) */
+.Headbar__burger{
+  width:46px;
+  height:46px;
+  border-radius:var(--r);
+
+  background:transparent;
+  border:1px solid rgba(255,255,255,.22);
+
+  display:none; /* mobile */
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  cursor:pointer;
+
+  transition:background .15s ease, transform .15s ease, border-color .15s ease;
+}
+
+.Headbar__burger:hover{
+  background:var(--purpleDark);
+  border-color:rgba(255,255,255,.28);
+  transform:translateY(-1px);
+}
+
+.Headbar__burger:active{
+  transform:translateY(0);
+  background:var(--purpleDarker);
+}
+
+.Headbar__burger span{
+  display:block;
+  width:18px;
+  height:2px;
+  border-radius:999px;
+  background:var(--menuText);
+}
+
+/* =========================
+   MOBILE MENU (slide in right, solid purple)
+   ========================= */
+
+.MobileMenu{
+  display:none; /* mobile only */
+  position:fixed;
+  top:0;
+  right:0;
+  height:100vh;
+  width:min(420px, 88vw);
+  z-index:800;
+
+  background:var(--purple);
+  border-left:2px solid var(--purpleDark);
+
+  transform:translateX(102%);
+  pointer-events:none;
+
+  transition:transform .22s ease;
+  padding-top: calc(var(--hbH) + 12px);
+}
+
+.MobileMenu.is-open{
+  transform:translateX(0);
+  pointer-events:auto;
+}
+
+.MobileMenu__list{
+  list-style:none;
+  margin:0;
+  padding:14px 16px 10px;
+
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.MobileMenu__list a{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+
+  height:48px;
+  padding:0 14px;
+  border-radius:var(--r);
+
+  text-decoration:none;
+  font-weight:900;
+  font-size:11.6pt;
+  letter-spacing:.1px;
+
+  color:var(--menuText);
+  background:var(--purpleDark);
+  border:1px solid rgba(255,255,255,.16);
+
+  transition:transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.MobileMenu__list a:hover{
+  background:var(--purpleDarker);
+  border-color:rgba(255,255,255,.24);
+  transform:translateY(-1px);
+}
+
+.MobileMenu__list a:active{
+  transform:translateY(0);
+}
+
+.MobileMenu__lang{
+  display:flex;
+  gap:10px;
+  padding:10px 16px 16px;
+}
+
+.MobileMenu__lang a{
+  flex:1;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:var(--r);
+  text-decoration:none;
+  font-weight:900;
+
+  color:var(--menuTextSoft);
+  background:transparent;
+  border:1px solid rgba(255,255,255,.22);
+
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.MobileMenu__lang a:hover{
+  background:var(--purpleDark);
+  color:var(--menuText);
+  border-color:rgba(255,255,255,.28);
+}
+
+.MobileMenu__lang a.is-active{
+  background:var(--purpleDark);
+  color:var(--menuText);
+  border-color:rgba(255,255,255,.28);
+}
+/* =========================================================
+   FOOTBAR – CLEAN / FLAT / NO BUTTONS
+   - solid #680068
+   - no boxes, no borders, no rounded corners
+   - links as pure text
+   ========================================================= */
+
+.Footbar{
+  background:#1d001d;
+  color:#ffffff;
+}
+
+.Footbar__inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:26px 18px;
+
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:32px;
+
+  font-size:11pt;
+}
+
+/* Left */
+.Footbar__left{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.Footbar__brand{
+  font-weight:900;
+  letter-spacing:.3px;
+  color:#ffffff;
+}
+
+.Footbar__copy{
+  color:rgba(255,255,255,.8);
+}
+
+/* Pages (vertical list) */
+.Footbar__pages{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.Footbar__pages a{
+  color:#ffffff;
+  text-decoration:none;
+  font-weight:800;
+  transition:opacity .15s ease;
+}
+
+.Footbar__pages a:hover{
+  opacity:.75;
+}
+
+/* Right column */
+.Footbar__right{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:flex-end;
+}
+
+/* Address */
+.Footbar__address{
+  line-height:1.5;
+}
+
+.Footbar__addrTitle{
+  font-weight:900;
+  margin-bottom:4px;
+  color:#ffffff;
+}
+
+.Footbar__addrLines{
+  color:rgba(255,255,255,.85);
+  font-weight:700;
+}
+
+/* Legal links (vertical, no styling) */
+.Footbar__links{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:flex-end;
+}
+
+.Footbar__links a{
+  color:#ffffff;
+  text-decoration:none;
+  font-weight:800;
+  transition:opacity .15s ease;
+}
+
+.Footbar__links a:hover{
+  opacity:.75;
+}
+
+/* Powered by – plain text link */
+.Footbar__lipa{
+  margin-top:8px;
+}
+
+.Footbar__lipa a{
+  color:rgba(255,255,255,.85);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  font-weight:800;
+  transition:opacity .15s ease;
+}
+
+.Footbar__lipa a:hover{
+  opacity:.75;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 980px){
+  .Footbar__inner{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .Footbar__right{
+    align-items:center;
+  }
+
+  .Footbar__links{
+    align-items:center;
+  }
+}
+
+/* =========================================================
+   Cookie Banner – LiPa Style
+   ========================================================= */
+
+.CookieOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;           /* <- WICHTIG */
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+
+.CookieBanner{
+  width:100%;
+  max-width:520px;
+  background:#ffffff;
+  border-radius:14px;
+  padding:26px 24px;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  animation: cookieFade .25s ease;
+}
+
+@keyframes cookieFade{
+  from{ opacity:0; transform:translateY(8px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.CookieBanner h2{
+  margin:0;
+  font-size:20px;
+  font-weight:900;
+}
+
+.CookieBanner p{
+  margin:8px 0 0;
+  font-size:14.5px;
+  line-height:1.55;
+  color:rgba(14,17,22,.75);
+}
+
+.CookieBanner__hint{
+  font-size:13px;
+  opacity:.7;
+}
+
+.CookieBanner__actions{
+  display:flex;
+  gap:12px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+
+.CookieBtn{
+  height:44px;
+  padding:0 16px;
+  border-radius:10px; /* leicht rund, keine Pills */
+  font-weight:800;
+  border:2px solid #680068;
+  cursor:pointer;
+  transition:.15s ease;
+  font-family:inherit;
+}
+
+.CookieBtn--primary{
+  background:#680068;
+  color:#fff;
+}
+
+.CookieBtn--primary:hover{
+  background:#4b004b;
+}
+
+.CookieBtn--ghost{
+  background:transparent;
+  color:#680068;
+}
+
+.CookieBtn--ghost:hover{
+  background:#680068;
+  color:#fff;
+}
+
+@media (max-width:600px){
+  .CookieBanner{
+    padding:22px 18px;
+  }
+
+  .CookieBanner__actions{
+    justify-content:stretch;
+  }
+
+  .CookieBtn{
+    flex:1;
+  }
+}
+
+/* === Headbar: Menü wirklich bis ganz rechts === */
+.Headbar__inner{
+  max-width: 100% !important;   /* Container-Limit weg */
+  margin: 0 !important;         /* nicht mehr zentrieren */
+  padding-left: 18px;           /* links normal */
+  padding-right: 8px;           /* rechts fast bis Ecke */
+}
+
+/* Nav nimmt Platz, drückt Language ganz nach rechts */
+.Headbar__nav{
+  justify-content: flex-end !important; /* statt center */
+}
+
+/* Language bleibt ganz rechts */
+.Headbar__lang{
+  margin-left: 14px;            /* kleiner Abstand zur Navigation */
+}

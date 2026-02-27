@@ -1,0 +1,301 @@
+<!--
+==============================================================================
+
+    __    _ ____            __  ___           _         _____                 _               
+   / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
+  / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
+
+   LiPa Music Services – Abteilung Webentwicklung
+   © 2026 LiPa Music Services GbR
+   https://www.lipamusicservices.com
+
+==============================================================================
+-->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="./">
+
+  <title>Projekte – Sandrine Neye</title>
+  <meta name="description" content="Projekte & Referenzen von Sandrine Neye – Singer & Songwriter." />
+  <meta name="theme-color" content="#680068" />
+
+  <!-- Google Font: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Root assets -->
+  <link rel="icon" href="../../Resources/Content/Favicon.ico" />
+  <link rel="stylesheet" href="../../style.css" />
+
+  <script defer src="../../Scripts/includes.js"></script>
+  <script defer src="../../Scripts/main.js"></script>
+
+  <style>
+    html, body{
+      margin:0;
+      padding:0;
+      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#fff;
+      color:#0e1116;
+    }
+
+    :root{
+      --purple:#680068;
+      --purpleDark:#4b004b;
+      --container:1120px;
+      --muted:rgba(14,17,22,.72);
+      --border:rgba(10,16,26,.12);
+      --radius:14px;
+      --hbH:74px;
+    }
+
+    /* Footer nicht "im Raum": Seite füllt Höhe */
+    #MainContent{
+      min-height: calc(100vh - var(--hbH));
+      display:flex;
+      flex-direction:column;
+      width:100%;
+    }
+
+    .Page{
+      flex:1;
+      width:100%;
+      max-width:var(--container);
+      margin:0 auto;
+      padding: 42px 18px 70px;
+      box-sizing:border-box;
+    }
+
+    .Page__head{
+      width:100%;
+      text-align:left;
+      margin-bottom: 22px;
+    }
+
+    .Page__title{
+      margin:0;
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight: 900;
+      letter-spacing:-0.02em;
+    }
+
+    .AccentRule{
+      height:3px;
+      width:56px;
+      background: var(--purple);
+      border-radius: 2px;
+      margin:14px 0 0;
+    }
+
+    .Page__subtitle{
+      margin:12px 0 0;
+      color:var(--muted);
+      font-size: 16.5px;
+      line-height:1.6;
+      max-width: 78ch;
+    }
+
+    .ListHint{
+      margin: 18px 0 0;
+      padding-left: 18px;
+      color: rgba(14,17,22,.78);
+      font-weight: 700;
+      line-height:1.7;
+    }
+
+    /* Project cards */
+    .Projects{
+      margin-top: 28px;
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+
+    .Project{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background:#fff;
+      overflow:hidden;
+
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap: 0;
+    }
+
+    .Project__media{
+      background:#f4f4f8;
+      border-right:1px solid var(--border);
+      min-height: 220px;
+      position:relative;
+    }
+
+    .Project__media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .Project__body{
+      padding: 16px 18px 18px;
+      box-sizing:border-box;
+      min-width:0;
+    }
+
+    .Project__title{
+      margin:0;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing:-0.01em;
+    }
+
+    .Project__meta{
+      margin:6px 0 0;
+      color: var(--muted);
+      font-weight: 750;
+      font-size: 14.5px;
+      line-height:1.4;
+    }
+
+    .Project__text{
+      margin: 12px 0 0;
+      color: rgba(14,17,22,.82);
+      font-size: 16.2px;
+      line-height: 1.72;
+      white-space: pre-wrap;
+    }
+
+    /* optional small divider */
+    .Project__rule{
+      margin-top: 12px;
+      height:2px;
+      width:44px;
+      background: rgba(104,0,104,.18);
+      border-radius:2px;
+    }
+
+    @media (max-width: 980px){
+      .Project{
+        grid-template-columns: 1fr;
+      }
+      .Project__media{
+        border-right:0;
+        border-bottom:1px solid var(--border);
+        min-height: 240px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="HeadbarSlot"></div>
+
+  <main id="MainContent">
+    <div class="Page">
+
+      <header class="Page__head">
+        <h1 class="Page__title">Projekte</h1>
+        <div class="AccentRule"></div>
+
+        <p class="Page__subtitle">
+          Projekte & Referenzen – von kollaborativen Produktionen bis zu eigenen Formaten.
+        </p>
+
+        <ul class="ListHint">
+          <li>Sandie Wollasch</li>
+          <li>Lajazzo</li>
+          <li>FUNKgeræt</li>
+          <li>Sandrine im Duo</li>
+          <li>Sandrine Solo</li>
+        </ul>
+      </header>
+
+      <section class="Projects" aria-label="Projekte & Referenzen">
+
+        <!-- 1 -->
+        <article class="Project">
+          <div class="Project__media">
+            <img src="../Resources/Content/Projects1.png" alt="Projekt: Sandie Wollasch" loading="lazy">
+          </div>
+          <div class="Project__body">
+            <h2 class="Project__title">Sandie Wollasch</h2>
+            <div class="Project__meta">Women’s Choice · Perspektive Pop · Album (15. März 2024)</div>
+            <div class="Project__rule"></div>
+            <p class="Project__text">Im Sommer 2022 gewinne ich das Stipendium Perspektive Pop, dass mir mein Herzensprojekt "Women‘s Choice" ermöglicht. Zusammen mit dem famosen Klaus Wagenleiter Trio als Begleitband, lud ich Frauen aus ganz unterschiedlichen Genres ein. Mit dabei sind: Michelle Labonte (Saxofon), Andrea Ritter (Blockflöte), Sarah Lipfert (Gesang), Sandrine Neye (Gesang) &amp; Les Escapades, das bekannte Gambenconsort aus Karlsruhe. Das zugehörige Album erscheint erscheint am 15. März 2024.</p>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="Project">
+          <div class="Project__media">
+            <img src="../Resources/Content/Projects2.png" alt="Projekt: Lajazzo" loading="lazy">
+          </div>
+          <div class="Project__body">
+            <h2 class="Project__title">Lajazzo</h2>
+            <div class="Project__meta">Projekt / Band · Jazz / Pop / Crossover</div>
+            <div class="Project__rule"></div>
+            <p class="Project__text">Platzhalter-Text: Kurzbeschreibung von Lajazzo. Was ist das für ein Projekt, welche Rolle hat Sandrine darin (Gesang, Arrangements, etc.), typische Locations/Events, Stilrichtung, Highlights.</p>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="Project">
+          <div class="Project__media">
+            <img src="../Resources/Content/Projects3.png" alt="Projekt: FUNKgeræt" loading="lazy">
+          </div>
+          <div class="Project__body">
+            <h2 class="Project__title">FUNKgeræt</h2>
+            <div class="Project__meta">Band · Funk / Soul / Groove</div>
+            <div class="Project__rule"></div>
+            <p class="Project__text">Platzhalter-Text: Kurzbeschreibung von FUNKgeræt (Energie, Groove, Live-Set), Sandrines Part (Vocals/Features), Referenzen oder besondere Shows.</p>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="Project">
+          <div class="Project__media">
+            <img src="../Resources/Content/Projects4.png" alt="Projekt: Sandrine im Duo" loading="lazy">
+          </div>
+          <div class="Project__body">
+            <h2 class="Project__title">Sandrine im Duo</h2>
+            <div class="Project__meta">Duo-Programm · reduziert · nahbar</div>
+            <div class="Project__rule"></div>
+            <p class="Project__text">Platzhalter-Text: Duo-Set (Instrument/Partner), Stimmung, Einsatzorte (Trauungen, Wohnzimmerkonzerte, Kultur), Repertoire oder “vibe”.</p>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="Project">
+          <div class="Project__media">
+            <img src="../Resources/Content/Projects5.png" alt="Projekt: Sandrine Solo" loading="lazy">
+          </div>
+          <div class="Project__body">
+            <h2 class="Project__title">Sandrine Solo</h2>
+            <div class="Project__meta">Singer & Songwriter · Solo-Set</div>
+            <div class="Project__rule"></div>
+            <p class="Project__text">Platzhalter-Text: Solo-Programm (eigene Songs / Covers), Soundästhetik, typische Bühnen-Setups, besondere Momente/Publikumsnähe.</p>
+          </div>
+        </article>
+
+      </section>
+
+    </div>
+  </main>
+
+  <div id="FootbarSlot"></div>
+  <div id="CookieSlot"></div>
+
+  <noscript>
+    <div style="padding:16px; max-width:900px; margin:0 auto;">
+      Diese Website benötigt JavaScript, um Navigation/Footer korrekt zu laden.
+    </div>
+  </noscript>
+</body>
+</html>

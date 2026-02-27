@@ -1,0 +1,346 @@
+<!--
+==============================================================================
+
+    __    _ ____            __  ___           _         _____                 _               
+   / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
+  / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
+
+   LiPa Music Services – Abteilung Webentwicklung
+   © 2026 LiPa Music Services GbR
+   https://www.lipamusicservices.com
+
+==============================================================================
+-->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="./">
+
+  <title>Konzerte – Sandrine Neye</title>
+  <meta name="description" content="Kommende und vergangene Konzerte von Sandrine Neye." />
+  <meta name="theme-color" content="#680068" />
+
+  <!-- Google Font: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Root assets (2 Ebenen hoch) -->
+  <link rel="icon" href="../../Resources/Content/Favicon.ico" />
+  <link rel="stylesheet" href="../../style.css" />
+
+  <script defer src="../../Scripts/includes.js"></script>
+  <script defer src="../../Scripts/main.js"></script>
+
+  <style>
+    html, body{
+      margin:0;
+      padding:0;
+      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#fff;
+      color:#0e1116;
+    }
+
+    :root{
+      --purple:#680068;
+      --purpleDark:#4b004b;
+      --container:1120px;
+      --muted:rgba(14,17,22,.72);
+      --border:rgba(10,16,26,.12);
+      --radius:14px;
+    }
+
+    .Page{
+      max-width:var(--container);
+      margin:0 auto;
+      padding: 42px 18px 70px;
+
+      min-height: 60vh;
+    }
+
+    .Page__head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom: 22px;
+    }
+
+    .Page__title{
+      margin:0;
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight: 900;
+      letter-spacing:-0.02em;
+    }
+
+    .AccentRule{
+      height:3px;
+      width:56px;
+      background: var(--purple);
+      border-radius: 2px;
+      margin-top: 14px;
+    }
+
+    .Page__subtitle{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size: 16.5px;
+      line-height:1.55;
+      max-width: 70ch;
+    }
+
+    .SectionTitle{
+      margin: 34px 0 12px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing:.02em;
+      text-transform: uppercase;
+      color: rgba(14,17,22,.82);
+    }
+
+    .Grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .Gig{
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      background:#fff;
+      display:grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 14px;
+      align-items:center;
+    }
+
+    .Gig__date{
+      font-weight: 900;
+      font-size: 14px;
+      color: rgba(14,17,22,.86);
+      letter-spacing:.02em;
+    }
+
+    .Gig__main{
+      min-width:0;
+    }
+
+    .Gig__title{
+      margin:0;
+      font-weight: 900;
+      font-size: 16.5px;
+      line-height:1.25;
+    }
+
+    .Gig__meta{
+      margin:4px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 14.5px;
+      line-height:1.35;
+    }
+
+    .Gig__actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    /* Links: keine Pills, leicht rund */
+    .Gig__link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:40px;
+      padding: 0 12px;
+      border-radius: 10px;
+      text-decoration:none;
+      font-weight: 850;
+      border:2px solid var(--purple);
+      color: var(--purple);
+      background: transparent;
+      transition: background .15s ease, color .15s ease, transform .15s ease;
+      white-space:nowrap;
+    }
+    .Gig__link:hover{
+      background: var(--purple);
+      color:#fff;
+      transform: translateY(-1px);
+    }
+
+    .Gig__tag{
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(14,17,22,.60);
+      white-space:nowrap;
+    }
+
+    /* Past concerts: ausgeblasst */
+    .Gig.is-past{
+      opacity:.52;
+      filter:saturate(.9);
+    }
+    .Gig.is-past .Gig__link{
+      border-color: rgba(104,0,104,.55);
+      color: rgba(104,0,104,.9);
+    }
+
+    .Empty{
+      border:1px dashed rgba(10,16,26,.22);
+      border-radius: var(--radius);
+      padding: 16px;
+      color: var(--muted);
+      background: rgba(10,16,26,.02);
+    }
+
+    @media (max-width: 860px){
+      .Gig{
+        grid-template-columns: 1fr;
+        gap: 10px;
+        align-items:start;
+      }
+      .Gig__actions{
+        justify-content:flex-start;
+        flex-wrap:wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="HeadbarSlot"></div>
+
+  <main id="MainContent">
+    <div class="Page">
+      <header class="Page__head">
+        <div>
+          <h1 class="Page__title">Konzerte</h1>
+          <div class="AccentRule"></div>
+          <p class="Page__subtitle">
+            Hier findest du kommende und vergangene Konzerte.
+          </p>
+        </div>
+      </header>
+
+      <h2 class="SectionTitle">Kommende Konzerte</h2>
+      <div id="UpcomingList" class="Grid"></div>
+
+      <h2 class="SectionTitle">Vergangene Konzerte</h2>
+      <div id="PastList" class="Grid"></div>
+
+      <div id="LoadError" class="Empty" style="display:none; margin-top:16px;"></div>
+
+    </div>
+  </main>
+
+  <div id="FootbarSlot"></div>
+
+  <noscript>
+    <div style="padding:16px; max-width:900px; margin:0 auto;">
+      Diese Website benötigt JavaScript, um Navigation/Footer korrekt zu laden.
+    </div>
+  </noscript>
+<script>
+  (function(){
+    const upcomingEl = document.getElementById("UpcomingList");
+    const pastEl = document.getElementById("PastList");
+    const errEl = document.getElementById("LoadError");
+
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbxZlkfVMiZW6sgIhuK8Y231GbP1u4cWsuAJPy3D_ZHH9--VRjCroJCE-fK3lrfOKiCX6A/exec";
+
+    function esc(s){
+      return String(s ?? "").replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
+    }
+
+    function formatDate(iso){
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso||""));
+      if(!m) return iso || "";
+      const y = +m[1], mo = +m[2], d = +m[3];
+      return `${String(d).padStart(2,"0")}.${String(mo).padStart(2,"0")}.${y}`;
+    }
+
+    function gigCard(g, isPast){
+      const date = formatDate(g.date);
+      const title = esc(g.title || g.venue || "Konzert");
+      const city = esc(g.city || "");
+      const venue = esc(g.venue || "");
+      const time = esc(g.time || "");
+
+      // Wichtig: tickets aus Apps Script = erster Link aus Beschreibung
+      const ticketUrl = g.tickets ? esc(g.tickets) : "";
+      const infoUrl = g.url ? esc(g.url) : "";
+
+      const metaParts = [];
+      if(venue) metaParts.push(venue);
+      if(city) metaParts.push(city);
+      if(time) metaParts.push(time);
+      const meta = metaParts.join(" · ");
+
+      const links = [];
+      if(ticketUrl) links.push(`<a class="Gig__link" href="${ticketUrl}" target="_blank" rel="noopener">Tickets</a>`);
+      if(infoUrl) links.push(`<a class="Gig__link" href="${infoUrl}" target="_blank" rel="noopener">Info</a>`);
+
+      return `
+        <div class="Gig ${isPast ? "is-past":""}">
+          <div class="Gig__date">${esc(date)}</div>
+
+          <div class="Gig__main">
+            <h3 class="Gig__title">${title}</h3>
+            <div class="Gig__meta">${esc(meta)}</div>
+          </div>
+
+          <div class="Gig__actions">
+            ${links.join("") || `<span class="Gig__tag">${isPast ? "Vergangen" : "Kommend"}</span>`}
+          </div>
+        </div>
+      `;
+    }
+
+    function showEmpty(el, txt){
+      el.innerHTML = `<div class="Empty">${esc(txt)}</div>`;
+    }
+
+    async function load(){
+      const url = ENDPOINT + "?mode=split&days=365&max=250";
+
+      try{
+        const res = await fetch(url, { cache:"no-cache" });
+        if(!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+
+        const upcoming = Array.isArray(data.upcoming) ? data.upcoming : [];
+        const past = Array.isArray(data.past) ? data.past : [];
+
+        if(upcoming.length === 0) showEmpty(upcomingEl, "Aktuell sind keine kommenden Konzerte eingetragen.");
+        else upcomingEl.innerHTML = upcoming.map(g => gigCard(g, false)).join("");
+
+        if(past.length === 0) showEmpty(pastEl, "Noch keine vergangenen Konzerte eingetragen.");
+        else pastEl.innerHTML = past.map(g => gigCard(g, true)).join("");
+
+        errEl.style.display = "none";
+        errEl.textContent = "";
+
+      }catch(e){
+        console.warn(e);
+        errEl.style.display = "block";
+        errEl.innerHTML = `<strong>Konzerte konnten nicht geladen werden.</strong><br>${esc(String(e))}`;
+        showEmpty(upcomingEl, "—");
+        showEmpty(pastEl, "—");
+      }
+    }
+
+    load();
+  })();
+</script>
+
+<div id="CookieSlot"></div></body>
+</html>

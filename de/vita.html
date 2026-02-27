@@ -1,0 +1,214 @@
+<!--
+==============================================================================
+
+    __    _ ____            __  ___           _         _____                 _               
+   / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
+  / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
+
+   LiPa Music Services – Abteilung Webentwicklung
+   © 2026 LiPa Music Services GbR
+   https://www.lipamusicservices.com
+
+==============================================================================
+-->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- auf Pages/ Ebene: base bleibt ./ -->
+  <base href="./">
+
+  <title>Vita – Sandrine Neye</title>
+  <meta name="description" content="Vita von Sandrine Neye – Singer & Songwriter." />
+  <meta name="theme-color" content="#680068" />
+
+  <!-- Google Font: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Root assets (2 Ebenen hoch) -->
+  <link rel="icon" href="../../Resources/Content/Favicon.ico" />
+  <link rel="stylesheet" href="../../style.css" />
+
+  <script defer src="../../Scripts/includes.js"></script>
+  <script defer src="../../Scripts/main.js"></script>
+
+  <!-- Seiten-spezifisches CSS (nur Layout/Text) -->
+  <style>
+    html, body{
+      margin:0;
+      padding:0;
+      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#fff;
+      color:#0e1116;
+    }
+
+    :root{
+      --purple:#680068;
+      --container:1120px;
+      --text:#0e1116;
+      --muted:rgba(14,17,22,.72);
+      --border:rgba(10,16,26,.12);
+      --radius:14px;
+    }
+
+    .Page{
+      max-width:var(--container);
+      margin:0 auto;
+      padding: 42px 18px 70px;
+    }
+
+    .Page__head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom: 22px;
+    }
+
+    .Page__title{
+      margin:0;
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight: 900;
+      letter-spacing:-0.02em;
+    }
+
+    .Page__subtitle{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size: 16.5px;
+      line-height:1.55;
+      max-width: 65ch;
+    }
+
+    .VitaGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 26px;
+      align-items:start;
+      margin-top: 26px;
+    }
+
+    .Card{
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px;
+      background:#fff;
+    }
+
+    /* Bild */
+    .VitaPic{
+      border-radius: var(--radius);
+      overflow:hidden;
+      border:1px solid var(--border);
+      background:#f3f3f6;
+    }
+    .VitaPic img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+
+    /* Text aus .txt */
+    .VitaText{
+      font-size: 16.8px;
+      line-height: 1.75;
+      color: rgba(14,17,22,.86);
+      white-space: pre-wrap; /* wichtig: Zeilenumbrüche aus .txt bleiben */
+    }
+
+    .Hint{
+      color:var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    /* kleine Akzentlinie */
+    .AccentRule{
+      height:3px;
+      width:56px;
+      background: var(--purple);
+      border-radius: 2px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 940px){
+      .VitaGrid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="HeadbarSlot"></div>
+
+  <main id="MainContent">
+    <div class="Page">
+
+      <header class="Page__head">
+        <div>
+          <h1 class="Page__title">Vita</h1>
+          <div class="AccentRule"></div>
+          <p class="Page__subtitle">
+            Ein paar Stationen, Hintergründe und musikalische Eckpunkte.
+          </p>
+        </div>
+      </header>
+
+      <section class="VitaGrid" aria-label="Vita Inhalt">
+
+        <!-- Linke Spalte: Text -->
+        <article class="Card">
+          <div id="VitaText" class="VitaText">Lade Vita…</div>
+        </article>
+
+        <!-- Rechte Spalte: Bild -->
+        <aside>
+          <div class="VitaPic">
+            <!-- Bild-Datei kannst du später umbenennen/ersetzen -->
+            <img src="../../Resources/Content/Vita.jpg" alt="Sandrine Neye – Vita Foto" loading="lazy">
+          </div>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+
+  <div id="FootbarSlot"></div>
+  <div id="CookieSlot"></div>
+
+  <noscript>
+    <div style="padding:16px; max-width:900px; margin:0 auto;">
+      Diese Website benötigt JavaScript, um Navigation/Footer korrekt zu laden.
+    </div>
+  </noscript>
+
+  <!-- Vita Text laden -->
+  <script>
+    (function(){
+      const target = document.getElementById("VitaText");
+      if(!target) return;
+
+      // von /de/Pages/ aus: ../Content/Vita.txt
+      fetch("Content/Vita.txt", { cache: "no-cache" })
+        .then(r => {
+          if(!r.ok) throw new Error("Vita.txt not found: " + r.status);
+          return r.text();
+        })
+        .then(txt => {
+          target.textContent = txt.trim();
+        })
+        .catch(err => {
+          console.warn(err);
+          target.textContent = "Vita konnte nicht geladen werden. (Pfad prüfen: de/Content/Vita.txt)";
+        });
+    })();
+  </script>
+<div id="CookieSlot"></div></body>
+</html>
