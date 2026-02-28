@@ -32,11 +32,11 @@
 
   async function loadPartials(){
     // Deine Struktur: /de/Partials/... (und später /en/Partials/...)
-    await Promise.all([
-      inject("HeadbarSlot", "Partials/headbar.html"),
-      inject("FootbarSlot", "Partials/footbar.html"),
-      inject("CookieSlot",  "Partials/cookies.html"),
-    ]);
+await Promise.all([
+  inject("HeadbarSlot", "/de/Partials/headbar.html"),
+  inject("FootbarSlot", "/de/Partials/footbar.html"),
+  inject("CookieSlot",  "/de/Partials/cookies.html"),
+]);
 
     document.dispatchEvent(new Event("partials:loaded"));
   }
