@@ -10,73 +10,53 @@
    https://www.lipamusicservices.com
 ============================================================================== */
 
-(function(){
+(function () {
   "use strict";
 
-  const PARTIALS = [
-    { slotId: "HeadbarSlot", name: "headbar.html" },
-    { slotId: "FootbarSlot", name: "footbar.html" },
-    { slotId: "CookieSlot",  name: "cookies.html"  },
-  ];
-
-  function detectLangRoot(){
-    // robust für:
-    // /de/index.html
-    // /de/Pages/vita.html
-    // /en/index.html
-    // /en/Pages/...
+  // liefert "de" oder "en" anhand der URL
+  function getLangFolder() {
     const parts = window.location.pathname.split("/").filter(Boolean);
-    const lang = (parts[0] === "de" || parts[0] === "en") ? parts[0] : "de";
-    return `/${lang}/`;
+    // z.B. ["de","index.html"] oder ["de","Pages","vita.html"]
+    const first = (parts[0] || "").toLowerCase();
+    if (first === "de" || first === "en") return first;
+    // fallback: deutsch
+    return "de";
   }
 
-  async function fetchText(url){
-    const res = await fetch(url, { cache: "no-cache" });
-    if(!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-    return await res.text();
+  function absUrl(path) {
+    // baut absolute URL aus Origin + "/de/Partials/..."
+    return window.location.origin + "/" + path.replace(/^\/+/, "");
   }
 
-  async function inject(slotId, url){
+  async function inject(slotId, url) {
     const slot = document.getElementById(slotId);
-    if(!slot) return;
+    if (!slot) return;
 
-    const html = await fetchText(url);
-    slot.innerHTML = html;
-  }
-
-  async function loadOnce(){
-    const langRoot = detectLangRoot();          // "/de/" oder "/en/"
-    const base = `${langRoot}Partials/`;        // "/de/Partials/"
-    await Promise.all(
-      PARTIALS.map(p => inject(p.slotId, base + p.name).catch(err => {
-        console.warn(`[includes] Failed ${base + p.name}:`, err);
-        const slot = document.getElementById(p.slotId);
-        if(slot) slot.innerHTML = "";
-      }))
-    );
-  }
-
-  async function loadWithRetry(){
-    // 1–2 Retries helfen manchmal bei Local Dev Reload/Timing
-    const tries = 3;
-    for(let i=0; i<tries; i++){
-      await loadOnce();
-
-      // Check: mindestens Headbar sollte geladen sein
-      const hb = document.getElementById("HeadbarSlot");
-      const ok = hb && hb.children && hb.children.length > 0;
-
-      if(ok) break;
-      await new Promise(r => setTimeout(r, 80));
+    try {
+      const res = await fetch(url, { cache: "no-cache" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      slot.innerHTML = await res.text();
+    } catch (e) {
+      console.warn(`[includes] ${slotId} failed:`, url, e);
+      slot.innerHTML = "";
     }
-
-    document.dispatchEvent(new CustomEvent("partials:loaded"));
   }
 
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", loadWithRetry, { once:true });
-  }else{
-    loadWithRetry();
+  async function loadPartials() {
+    const lang = getLangFolder(); // "de" | "en"
+    await Promise.all([
+      inject("HeadbarSlot", absUrl(`${lang}/Partials/headbar.html`)),
+      inject("FootbarSlot", absUrl(`${lang}/Partials/footbar.html`)),
+      inject("CookieSlot",  absUrl(`${lang}/Partials/cookies.html`)),
+    ]);
+
+    document.dispatchEvent(new Event("partials:loaded"));
   }
 
+  // DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadPartials);
+  } else {
+    loadPartials();
+  }
 })();
