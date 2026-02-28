@@ -10,53 +10,40 @@
    https://www.lipamusicservices.com
 ============================================================================== */
 
-(function () {
+(function(){
   "use strict";
 
-  // liefert "de" oder "en" anhand der URL
-  function getLangFolder() {
-    const parts = window.location.pathname.split("/").filter(Boolean);
-    // z.B. ["de","index.html"] oder ["de","Pages","vita.html"]
-    const first = (parts[0] || "").toLowerCase();
-    if (first === "de" || first === "en") return first;
-    // fallback: deutsch
-    return "de";
-  }
-
-  function absUrl(path) {
-    // baut absolute URL aus Origin + "/de/Partials/..."
-    return window.location.origin + "/" + path.replace(/^\/+/, "");
-  }
-
-  async function inject(slotId, url) {
+  async function inject(slotId, relUrl){
     const slot = document.getElementById(slotId);
-    if (!slot) return;
+    if(!slot) return;
 
-    try {
+    // Wichtig: new URL(..., document.baseURI) respektiert /REPO/ Prefix + <base href="./">
+    const url = new URL(relUrl, document.baseURI).toString();
+
+    try{
       const res = await fetch(url, { cache: "no-cache" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if(!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
       slot.innerHTML = await res.text();
-    } catch (e) {
-      console.warn(`[includes] ${slotId} failed:`, url, e);
+    }catch(err){
+      console.warn(`[includes] ${slotId} failed:`, err);
       slot.innerHTML = "";
     }
   }
 
-  async function loadPartials() {
-    const lang = getLangFolder(); // "de" | "en"
+  async function loadPartials(){
+    // Deine Struktur: /de/Partials/... (und später /en/Partials/...)
     await Promise.all([
-      inject("HeadbarSlot", absUrl(`${lang}/Partials/headbar.html`)),
-      inject("FootbarSlot", absUrl(`${lang}/Partials/footbar.html`)),
-      inject("CookieSlot",  absUrl(`${lang}/Partials/cookies.html`)),
+      inject("HeadbarSlot", "Partials/headbar.html"),
+      inject("FootbarSlot", "Partials/footbar.html"),
+      inject("CookieSlot",  "Partials/cookies.html"),
     ]);
 
     document.dispatchEvent(new Event("partials:loaded"));
   }
 
-  // DOM ready
-  if (document.readyState === "loading") {
+  if(document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded", loadPartials);
-  } else {
+  }else{
     loadPartials();
   }
 })();
