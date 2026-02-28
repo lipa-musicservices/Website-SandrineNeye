@@ -1,9 +1,9 @@
 /* ==============================================================================
-    __    _ ____            __  ___           _         _____                 _               
+    __    _ ____            __  ___           _         _____                 _
    / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
   / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
- / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
-/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  )
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/
 
    LiPa Music Services – Abteilung Webentwicklung
    © 2026 LiPa Music Services GbR
@@ -11,65 +11,80 @@
 ============================================================================== */
 
 /* =========================================================
-   Sandrine Neye – MENU + FOOTBAR (SOLID PURPLE, NO PILLS)
-   - Desktop menu + Mobile menu + Footbar: solid #680068
-   - No transparency, no white mixes
-   - Buttons/links: NEVER pill-shaped; slight rounding only
-   - Footbar menu: vertical list
-   - "This Website is powered..." never as pill
+   Sandrine Neye – MENU + FOOTBAR
+   - Headbar + MobileMenu + Footbar: SOLID #1d001d (always)
+   - No transparency mixes on the bars
+   - No pill buttons (slight rounding only)
+   - Footbar pages: vertical list
+   - "powered..." never as pill
    ========================================================= */
 
+
+/* =========================
+   TOKENS
+   ========================= */
 :root{
   --container:1120px;
-
-  /* Brand Purple */
-  --purple:#1d001d;      /* requested */
-  --purpleDark:#1d001d;  /* hover/active */
-  --purpleDarker:#1d001d;
-
   --hbH:74px;
+
+  /* Corner radius (NOT pills) */
+  --r:10px;
 
   /* Menu text */
   --menuText:#ffffff;
   --menuTextSoft:rgba(255,255,255,.85);
-
-  /* Corner radius for links/buttons (NOT pills) */
-  --r:10px;
 }
 
 /* =========================
-   Global Font – Outfit
+   GLOBAL FONT – Outfit
    ========================= */
-
-html, body {
-  font-family: "Outfit", sans-serif;
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html, body{
+  font-family:"Outfit", sans-serif;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
+
+
+/* =========================================================
+   HARD GUARANTEE COLOR (scoped, robust vs other themes)
+   ========================================================= */
+.Headbar,
+.MobileMenu,
+.Footbar{
+  --purple:#1d001d;
+  --purpleDark:#1d001d;
+  --purpleDarker:#1d001d;
+}
+
 
 /* =========================
    HEADBAR (solid purple)
    ========================= */
-
 .Headbar{
   position:sticky;
   top:0;
   z-index:500;
 
   background:var(--purple);
+  background-color:var(--purple);
+
   border-bottom:2px solid var(--purpleDark);
 }
 
+/* Full width Headbar inner (NOT limited to container) */
 .Headbar__inner{
   height:var(--hbH);
-  max-width:var(--container);
-  margin:0 auto;
-  padding:0 6px 0 18px;   /* links 18px, rechts 6px */
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0 6px 0 18px;
 
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:12px;
+
+  box-sizing:border-box;
 }
 
 /* Brand / Logo */
@@ -77,7 +92,7 @@ html, body {
   display:flex;
   align-items:center;
   text-decoration:none;
-  min-width:160px;
+  min-width:140px;
 }
 
 .Headbar__logo{
@@ -86,7 +101,7 @@ html, body {
   display:block;
 }
 
-/* Desktop Nav */
+/* Desktop Nav: right aligned */
 .Headbar__nav{
   flex:1;
   display:flex;
@@ -140,8 +155,10 @@ html, body {
   border-color:rgba(255,255,255,.26);
 }
 
-/* Language Switch (no pills, small rounding) */
+/* Language Switch: always at far right */
 .Headbar__lang{
+  margin-left:auto;
+
   display:inline-flex;
   align-items:center;
   gap:10px;
@@ -151,10 +168,6 @@ html, body {
 
   background:transparent;
   border:1px solid rgba(255,255,255,.22);
-}
-
-.Headbar__lang{
-  margin-left:auto; /* drückt den Sprachschalter ganz nach rechts */
 }
 
 .Headbar__langItem{
@@ -186,7 +199,6 @@ html, body {
   user-select:none;
 }
 
-/* Burger Button (no pill) */
 .Headbar__burger{
   width:46px;
   height:46px;
@@ -195,13 +207,22 @@ html, body {
   background:transparent;
   border:1px solid rgba(255,255,255,.22);
 
-  display:none; /* mobile */
+  display:none;            /* bleibt wie gehabt: mobile only */
+  flex-direction:column;   /* <- DAS ist der Burger */
   align-items:center;
   justify-content:center;
-  gap:6px;
+  gap:5px;                 /* Abstand zwischen den 3 Linien */
   cursor:pointer;
 
   transition:background .15s ease, transform .15s ease, border-color .15s ease;
+}
+
+.Headbar__burger span{
+  display:block;
+  width:22px;              /* Länge der Linien */
+  height:2px;              /* Dicke der Linien */
+  border-radius:2px;       /* leicht rund, aber nicht pillig */
+  background:var(--menuText);
 }
 
 .Headbar__burger:hover{
@@ -215,20 +236,18 @@ html, body {
   background:var(--purpleDarker);
 }
 
-.Headbar__burger span{
-  display:block;
-  width:18px;
-  height:2px;
-  border-radius:999px;
-  background:var(--menuText);
-}
+
+/* Responsive switch: Desktop -> Burger (JS toggled) */
+.Headbar.is-mobile .Headbar__nav{ display:none; }
+.Headbar.is-mobile .Headbar__burger{ display:inline-flex; }
+
 
 /* =========================
-   MOBILE MENU (slide in right, solid purple)
+   MOBILE MENU (slide in right)
    ========================= */
-
 .MobileMenu{
-  display:none; /* mobile only */
+  display:block; /* must NOT be none */
+
   position:fixed;
   top:0;
   right:0;
@@ -237,13 +256,17 @@ html, body {
   z-index:800;
 
   background:var(--purple);
+  background-color:var(--purple);
+
   border-left:2px solid var(--purpleDark);
 
   transform:translateX(102%);
   pointer-events:none;
 
   transition:transform .22s ease;
-  padding-top: calc(var(--hbH) + 12px);
+  padding-top:calc(var(--hbH) + 12px);
+
+  opacity: 0.9;
 }
 
 .MobileMenu.is-open{
@@ -301,6 +324,7 @@ html, body {
 .MobileMenu__lang a{
   flex:1;
   height:44px;
+
   display:flex;
   align-items:center;
   justify-content:center;
@@ -327,15 +351,14 @@ html, body {
   color:var(--menuText);
   border-color:rgba(255,255,255,.28);
 }
-/* =========================================================
-   FOOTBAR – CLEAN / FLAT / NO BUTTONS
-   - solid #680068
-   - no boxes, no borders, no rounded corners
-   - links as pure text
-   ========================================================= */
 
+
+/* =========================================================
+   FOOTBAR – SOLID PURPLE (new color applied)
+   ========================================================= */
 .Footbar{
-  background:#1d001d;
+  background:var(--purple);
+  background-color:var(--purple);
   color:#ffffff;
 }
 
@@ -345,7 +368,7 @@ html, body {
   padding:26px 18px;
 
   display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr;
   gap:32px;
 
   font-size:11pt;
@@ -394,7 +417,6 @@ html, body {
   align-items:flex-end;
 }
 
-/* Address */
 .Footbar__address{
   line-height:1.5;
 }
@@ -410,7 +432,7 @@ html, body {
   font-weight:700;
 }
 
-/* Legal links (vertical, no styling) */
+/* Legal links */
 .Footbar__links{
   display:flex;
   flex-direction:column;
@@ -429,7 +451,7 @@ html, body {
   opacity:.75;
 }
 
-/* Powered by – plain text link */
+/* Powered by */
 .Footbar__lipa{
   margin-top:8px;
 }
@@ -446,50 +468,48 @@ html, body {
   opacity:.75;
 }
 
-/* =========================
-   Responsive
-   ========================= */
-
+/* Responsive Footbar */
 @media (max-width: 980px){
   .Footbar__inner{
     grid-template-columns:1fr;
     text-align:center;
   }
-
-  .Footbar__right{
-    align-items:center;
-  }
-
-  .Footbar__links{
-    align-items:center;
-  }
+  .Footbar__right{ align-items:center; }
+  .Footbar__links{ align-items:center; }
 }
 
-/* =========================================================
-   Cookie Banner – LiPa Style
-   ========================================================= */
 
+/* =========================================================
+   COOKIE BANNER – LiPa Style
+   (keine Pill-Buttons, leichtes rounding)
+   ========================================================= */
 .CookieOverlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.55);
-  display:none;           /* <- WICHTIG */
+
+  display:none; /* default hidden */
   align-items:center;
   justify-content:center;
+
   z-index:10000;
 }
 
 .CookieBanner{
   width:100%;
   max-width:520px;
+
   background:#ffffff;
   border-radius:14px;
   padding:26px 24px;
+
   box-shadow:0 30px 80px rgba(0,0,0,.35);
+
   display:flex;
   flex-direction:column;
   gap:22px;
-  animation: cookieFade .25s ease;
+
+  animation:cookieFade .25s ease;
 }
 
 @keyframes cookieFade{
@@ -525,10 +545,13 @@ html, body {
 .CookieBtn{
   height:44px;
   padding:0 16px;
-  border-radius:10px; /* leicht rund, keine Pills */
+
+  border-radius:10px;
   font-weight:800;
+
   border:2px solid #680068;
   cursor:pointer;
+
   transition:.15s ease;
   font-family:inherit;
 }
@@ -553,33 +576,7 @@ html, body {
 }
 
 @media (max-width:600px){
-  .CookieBanner{
-    padding:22px 18px;
-  }
-
-  .CookieBanner__actions{
-    justify-content:stretch;
-  }
-
-  .CookieBtn{
-    flex:1;
-  }
-}
-
-/* === Headbar: Menü wirklich bis ganz rechts === */
-.Headbar__inner{
-  max-width: 100% !important;   /* Container-Limit weg */
-  margin: 0 !important;         /* nicht mehr zentrieren */
-  padding-left: 18px;           /* links normal */
-  padding-right: 8px;           /* rechts fast bis Ecke */
-}
-
-/* Nav nimmt Platz, drückt Language ganz nach rechts */
-.Headbar__nav{
-  justify-content: flex-end !important; /* statt center */
-}
-
-/* Language bleibt ganz rechts */
-.Headbar__lang{
-  margin-left: 14px;            /* kleiner Abstand zur Navigation */
+  .CookieBanner{ padding:22px 18px; }
+  .CookieBanner__actions{ justify-content:stretch; }
+  .CookieBtn{ flex:1; }
 }
