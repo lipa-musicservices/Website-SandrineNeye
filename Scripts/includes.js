@@ -19,6 +19,7 @@
 
     // Wichtig: new URL(..., document.baseURI) respektiert /REPO/ Prefix + <base href="./">
     const url = new URL(relUrl, document.baseURI).toString();
+    console.log(url);
 
     try{
       const res = await fetch(url, { cache: "no-cache" });
