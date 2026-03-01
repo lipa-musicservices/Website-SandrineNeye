@@ -15,6 +15,7 @@
    - Headbar + MobileMenu + Footbar: SOLID #1d001d (always)
    - No transparency mixes on the bars
    - No pill buttons (slight rounding only)
+   - Desktop hover: Shirin-style text fly-out/in (0.5s)
    - Footbar pages: vertical list
    - "powered..." never as pill
    ========================================================= */
@@ -33,7 +34,15 @@
   /* Menu text */
   --menuText:#ffffff;
   --menuTextSoft:rgba(255,255,255,.85);
+
+  /* Nav button height */
+  --navH:42px;
+
+  /* Hover motion */
+  --navDur:.5s;
+  --navEase:cubic-bezier(.2,.9,.2,1);
 }
+
 
 /* =========================
    GLOBAL FONT – Outfit
@@ -59,16 +68,14 @@ html, body{
 
 
 /* =========================
-   HEADBAR (solid purple)
+   HEADBAR
    ========================= */
 .Headbar{
   position:sticky;
   top:0;
   z-index:500;
-
   background:var(--purple);
   background-color:var(--purple);
-
   border-bottom:2px solid var(--purpleDark);
 }
 
@@ -118,31 +125,76 @@ html, body{
   gap:6px;
 }
 
+
+/* =========================================================
+   DESKTOP NAV LINKS – Shirin-style (100% reliable)
+   Markup:
+   <a><span class="NavLabel" data-label="Home">Home</span></a>
+   ========================================================= */
 .Headbar__menu a{
   display:inline-flex;
-  align-items:center;
+  align-items:flex-start;     /* deine Korrektur */
   justify-content:center;
 
-  height:42px;
+  height:var(--navH);
   padding:0 12px;
   border-radius:var(--r);
 
-  color:var(--menuText);
   text-decoration:none;
   font-weight:900;
   font-size:10.9pt;
   letter-spacing:.2px;
+  color:var(--menuText);
 
   background:transparent;
   border:1px solid transparent;
 
-  transition:background .15s ease, transform .15s ease, border-color .15s ease;
+  position:relative;
+  overflow:hidden; /* CLIP */
+  transition:background .15s ease, transform .15s ease;
 }
 
+/* Wrapper: is 2 lines tall, we slide it by -50% */
+.Headbar__menu a .NavLabel{
+  display:block;
+  height:calc(var(--navH) * 2);
+  transform:translate3d(0,0,0);
+  transition:transform var(--navDur) var(--navEase);
+  will-change:transform;
+
+  /* kill the real text node (so it doesn't interfere) */
+  font-size:0;
+  line-height:0;
+}
+
+/* Two real lines in normal flow */
+.Headbar__menu a .NavLabel::before,
+.Headbar__menu a .NavLabel::after{
+  content:attr(data-label);
+  display:block;
+
+  height:var(--navH);
+  line-height:var(--navH);
+
+  width:100%;
+  text-align:center;
+
+  /* explicit typography so it doesn't inherit font-size:0 */
+  font-size:10.9pt;
+  font-weight:900;
+  letter-spacing:.2px;
+  color:var(--menuText);
+}
+
+/* Hover: bg + lift */
 .Headbar__menu a:hover{
   background:var(--purpleDark);
-  border-color:rgba(255,255,255,.18);
   transform:translateY(-1px);
+}
+
+/* Hover: slide up by one line (1 line / 2 lines = 50%) */
+.Headbar__menu a:hover .NavLabel{
+  transform:translate3d(0,-50%,0);
 }
 
 .Headbar__menu a:active{
@@ -150,15 +202,23 @@ html, body{
   background:var(--purpleDarker);
 }
 
+/* Active item */
 .Headbar__menu a.is-active{
   background:var(--purpleDark);
   border-color:rgba(255,255,255,.26);
 }
 
-/* Language Switch: always at far right */
+/* Optional: disable fly on active */
+.Headbar__menu a.is-active:hover .NavLabel{
+  transform:translate3d(0,0,0);
+}
+
+
+/* =========================
+   LANGUAGE SWITCH
+   ========================= */
 .Headbar__lang{
   margin-left:auto;
-
   display:inline-flex;
   align-items:center;
   gap:10px;
@@ -199,6 +259,10 @@ html, body{
   user-select:none;
 }
 
+
+/* =========================
+   BURGER
+   ========================= */
 .Headbar__burger{
   width:46px;
   height:46px;
@@ -207,21 +271,21 @@ html, body{
   background:transparent;
   border:1px solid rgba(255,255,255,.22);
 
-  display:none;            /* bleibt wie gehabt: mobile only */
-  flex-direction:column;   /* <- DAS ist der Burger */
+  display:none;            /* mobile only */
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:5px;                 /* Abstand zwischen den 3 Linien */
-  cursor:pointer;
+  gap:5px;
 
+  cursor:pointer;
   transition:background .15s ease, transform .15s ease, border-color .15s ease;
 }
 
 .Headbar__burger span{
   display:block;
-  width:22px;              /* Länge der Linien */
-  height:2px;              /* Dicke der Linien */
-  border-radius:2px;       /* leicht rund, aber nicht pillig */
+  width:22px;
+  height:2px;
+  border-radius:2px;
   background:var(--menuText);
 }
 
@@ -236,7 +300,6 @@ html, body{
   background:var(--purpleDarker);
 }
 
-
 /* Responsive switch: Desktop -> Burger (JS toggled) */
 .Headbar.is-mobile .Headbar__nav{ display:none; }
 .Headbar.is-mobile .Headbar__burger{ display:inline-flex; }
@@ -246,7 +309,7 @@ html, body{
    MOBILE MENU (slide in right)
    ========================= */
 .MobileMenu{
-  display:block; /* must NOT be none */
+  display:block;
 
   position:fixed;
   top:0;
@@ -266,7 +329,7 @@ html, body{
   transition:transform .22s ease;
   padding-top:calc(var(--hbH) + 12px);
 
-  opacity: 0.9;
+  opacity:.9;
 }
 
 .MobileMenu.is-open{
@@ -354,141 +417,233 @@ html, body{
 
 
 /* =========================================================
-   FOOTBAR – SOLID PURPLE (new color applied)
+   FOOTBAR – FINAL (CLEAN, NO DUPLICATES)
+   - Solid #1d001d (via --purple)
+   - Clean grid
+   - Social list "icon + text"
+   - Powered-by line centered bottom (full width)
    ========================================================= */
+
 .Footbar{
   background:var(--purple);
   background-color:var(--purple);
-  color:#ffffff;
+  color:#fff;
 }
 
 .Footbar__inner{
   max-width:var(--container);
   margin:0 auto;
-  padding:26px 18px;
+  padding:34px 18px;
 
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:32px;
+  grid-template-columns: 1.05fr .95fr 1.25fr .75fr;
+  gap:34px;
 
-  font-size:11pt;
+  align-items:start;
+  box-sizing:border-box;
 }
 
-/* Left */
-.Footbar__left{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+/* Titles */
+.Footbar__title{
+  font-weight:900;
+  letter-spacing:.25px;
+  font-size:11.2pt;
+  margin:0 0 12px;
+  color:rgba(255,255,255,.92);
 }
 
+/* Brand */
 .Footbar__brand{
   font-weight:900;
-  letter-spacing:.3px;
-  color:#ffffff;
+  letter-spacing:.35px;
+  font-size:12.5pt;
 }
 
 .Footbar__copy{
-  color:rgba(255,255,255,.8);
-}
-
-/* Pages (vertical list) */
-.Footbar__pages{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.Footbar__pages a{
-  color:#ffffff;
-  text-decoration:none;
-  font-weight:800;
-  transition:opacity .15s ease;
-}
-
-.Footbar__pages a:hover{
-  opacity:.75;
-}
-
-/* Right column */
-.Footbar__right{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  align-items:flex-end;
-}
-
-.Footbar__address{
-  line-height:1.5;
-}
-
-.Footbar__addrTitle{
-  font-weight:900;
-  margin-bottom:4px;
-  color:#ffffff;
-}
-
-.Footbar__addrLines{
-  color:rgba(255,255,255,.85);
+  margin-top:8px;
+  color:rgba(255,255,255,.78);
   font-weight:700;
 }
 
-/* Legal links */
-.Footbar__links{
+.Footbar__text{
+  color:rgba(255,255,255,.82);
+  font-weight:750;
+  line-height:1.55;
+}
+
+.Footbar__spacer{
+  height:18px;
+}
+
+/* Lists (Pages + Legal) */
+.Footbar__list{
+  list-style:none;
+  padding:0;
+  margin:0;
+
   display:flex;
   flex-direction:column;
-  gap:6px;
-  align-items:flex-end;
+  gap:10px;
 }
 
-.Footbar__links a{
-  color:#ffffff;
+.Footbar__list a{
+  color:rgba(255,255,255,.90);
   text-decoration:none;
-  font-weight:800;
-  transition:opacity .15s ease;
+  font-weight:850;
+  letter-spacing:.1px;
+
+  display:inline-flex;
+  align-items:center;
+
+  padding:7px 10px;
+  border-radius:10px;
+
+  border:1px solid transparent;
+  background:transparent;
+
+  transition:background .15s ease, border-color .15s ease, transform .15s ease, opacity .15s ease;
 }
 
-.Footbar__links a:hover{
-  opacity:.75;
+.Footbar__list a:hover{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.14);
+  transform:translateY(-1px);
 }
 
-/* Powered by */
-.Footbar__lipa{
-  margin-top:8px;
+.Footbar__list a:active{
+  transform:translateY(0);
+  opacity:.92;
 }
 
-.Footbar__lipa a{
-  color:rgba(255,255,255,.85);
+/* Social list */
+.Footbar__socialList{
+  list-style:none;
+  margin:0;
+  padding:0;
+
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.Footbar__socialLink{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  padding:10px 12px;
+  border-radius:12px;
+
+  text-decoration:none;
+  color:rgba(255,255,255,.90);
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+
+  transition:background .15s ease, border-color .15s ease, transform .15s ease;
+}
+
+.Footbar__socialLink:hover{
+  background:rgba(255,255,255,.07);
+  border-color:rgba(255,255,255,.18);
+  transform:translateY(-1px);
+}
+
+.Footbar__socialLink:active{
+  transform:translateY(0);
+}
+
+.Footbar__socialIcon{
+  width:18px;
+  height:18px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  opacity:.95;
+  color:#fff;
+}
+
+.Footbar__socialIcon svg{
+  width:18px;
+  height:18px;
+  display:block;
+}
+
+.Footbar__socialText{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.Footbar__socialName{
+  font-weight:900;
+  letter-spacing:.15px;
+  font-size:10.8pt;
+}
+
+.Footbar__socialUrl{
+  font-weight:750;
+  color:rgba(255,255,255,.76);
+  font-size:10.2pt;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+}
+
+/* Powered by – centered bottom, full width
+   NOTE: requires this element inside .Footbar__inner:
+   <div class="Footbar__poweredLine"><a ...>...</a></div>
+*/
+.Footbar__poweredLine{
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  padding-top: 18px;
+
+  display:flex;
+  justify-content:center;
+
+  border-top:1px solid rgba(255,255,255,.10);
+}
+
+.Footbar__poweredLine a{
+  color:rgba(255,255,255,.74);
   text-decoration:underline;
   text-underline-offset:3px;
   font-weight:800;
   transition:opacity .15s ease;
 }
 
-.Footbar__lipa a:hover{
-  opacity:.75;
+.Footbar__poweredLine a:hover{
+  opacity:.78;
 }
 
-/* Responsive Footbar */
-@media (max-width: 980px){
+/* Responsive */
+@media (max-width: 1100px){
+  .Footbar__inner{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media (max-width: 720px){
   .Footbar__inner{
     grid-template-columns:1fr;
-    text-align:center;
+    gap:22px;
+    padding:28px 16px;
   }
-  .Footbar__right{ align-items:center; }
-  .Footbar__links{ align-items:center; }
 }
 
 
 /* =========================================================
-   COOKIE BANNER – LiPa Style
-   (keine Pill-Buttons, leichtes rounding)
+   COOKIE BANNER
    ========================================================= */
 .CookieOverlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.55);
 
-  display:none; /* default hidden */
+  display:none;
   align-items:center;
   justify-content:center;
 

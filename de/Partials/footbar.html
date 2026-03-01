@@ -1,59 +1,152 @@
-<!--
-==============================================================================
-
-    __    _ ____            __  ___           _         _____                 _               
-   / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
-  / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
- / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
-/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
-
-   LiPa Music Services – Abteilung Webentwicklung
-   © 2026 LiPa Music Services GbR
-   https://www.lipamusicservices.com
-
-==============================================================================
--->
 <footer class="Footbar" role="contentinfo">
   <div class="Footbar__inner">
 
-    <!-- Left: Brand + Year -->
-    <div class="Footbar__left">
-      <span class="Footbar__brand">Sandrine Neye</span>
-      <span class="Footbar__copy">© <span id="YearSlot"></span></span>
-    </div>
+    <!-- Brand -->
+    <section class="Footbar__col Footbar__col--brand" aria-label="Brand">
+      <div class="Footbar__brand">Sandrine Neye</div>
+      <div class="Footbar__copy">© <span id="YearSlot"></span></div>
+      <div class="Footbar__location">Karlsruhe, Deutschland</div>
+    </section>
 
-    <!-- Center: Pages -->
-    <nav class="Footbar__pages" aria-label="Seiten">
-      <a href="index.html">Start</a>
-      <a href="Pages/vita.html">Vita</a>
-      <a href="Pages/konzerte.html">Konzerte</a>
-      <a href="Pages/galerie.html">Galerie</a>
-      <a href="Pages/projekte.html">Projekte</a>
-      <a href="Pages/pressestimmen.html">Pressestimmen</a>
-      <a href="Pages/kontakt.html">Kontakt</a>
+    <!-- Pages -->
+    <nav class="Footbar__col Footbar__col--pages" aria-label="Seiten">
+      <div class="Footbar__title">Seiten</div>
+      <ul class="Footbar__list">
+        <li><a href="index.html">Start</a></li>
+        <li><a href="Pages/vita.html">Vita</a></li>
+        <li><a href="Pages/konzerte.html">Konzerte</a></li>
+        <li><a href="Pages/galerie.html">Galerie</a></li>
+        <li><a href="Pages/projekte.html">Projekte</a></li>
+        <li><a href="Pages/pressestimmen.html">Pressestimmen</a></li>
+        <li><a href="Pages/kontakt.html">Kontakt</a></li>
+      </ul>
     </nav>
 
-    <!-- Right: Address + Legal + Powered -->
-    <div class="Footbar__right">
-      <div class="Footbar__address" aria-label="Adresse">
-        <div class="Footbar__addrTitle">Adresse</div>
-        <div class="Footbar__addrLines">
-          <div>Karlsruhe, Deutschland</div>
-        </div>
-      </div>
+    <!-- Social -->
+    <section class="Footbar__col Footbar__col--social" aria-label="Social">
+      <div class="Footbar__title">Social</div>
 
-      <nav class="Footbar__links" aria-label="Rechtliches">
-        <a href="Legal/impressum.html">Impressum</a>
-        <a href="Legal/datenschutz.html">Datenschutz</a>
-      </nav>
+      <ul class="Footbar__socialList" aria-label="Social Links">
+        <li>
+          <a class="Footbar__socialLink" href="https://www.instagram.com/sandrine_neye/" target="_blank" rel="noopener noreferrer">
+            <span class="Footbar__socialIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7.5 2.8h9A4.7 4.7 0 0 1 21.2 7.5v9a4.7 4.7 0 0 1-4.7 4.7h-9A4.7 4.7 0 0 1 2.8 16.5v-9A4.7 4.7 0 0 1 7.5 2.8Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 16.2a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M17.6 6.6h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="Footbar__socialText">
+              <span class="Footbar__socialName">Instagram</span>
+              <span class="Footbar__socialUrl">instagram.com/sandrine_neye</span>
+            </span>
+          </a>
+        </li>
 
-      <div class="Footbar__lipa">
-        <a href="https://www.lipamusicservices.com" target="_blank" rel="noopener noreferrer">
-          This Website is powered by LiPa Music Services
-        </a>
-      </div>
-    </div>
+        <li>
+          <a class="Footbar__socialLink" href="https://www.youtube.com/@sandrineneye" target="_blank" rel="noopener noreferrer">
+            <span class="Footbar__socialIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M21.5 8.2a3.2 3.2 0 0 0-2.3-2.3C17.3 5.4 12 5.4 12 5.4s-5.3 0-7.2.5A3.2 3.2 0 0 0 2.5 8.2 33.6 33.6 0 0 0 2.5 12s0 2.7.3 3.8a3.2 3.2 0 0 0 2.3 2.3c1.9.5 7 .5 7 .5s5.3 0 7.2-.5a3.2 3.2 0 0 0 2.3-2.3c.3-1.1.3-3.8.3-3.8s0-2.7-.3-3.8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M10.3 9.7 15.7 12l-5.4 2.3V9.7Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="Footbar__socialText">
+              <span class="Footbar__socialName">YouTube</span>
+              <span class="Footbar__socialUrl">youtube.com/@sandrineneye</span>
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a class="Footbar__socialLink" href="https://open.spotify.com/intl-de/artist/61zOIoHkxLEKAQxIRl2nuf?si=FqQm0DscSDCj8iDrxYn6fQ" target="_blank" rel="noopener noreferrer">
+            <span class="Footbar__socialIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M7.7 10.3c2.9-1 6.7-.8 9.2.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.2 13.2c2.4-.7 5.5-.5 7.5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+                <path d="M8.7 15.9c1.9-.4 3.8-.3 5.3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+              </svg>
+            </span>
+            <span class="Footbar__socialText">
+              <span class="Footbar__socialName">Spotify</span>
+              <span class="Footbar__socialUrl">open.spotify.com</span>
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a class="Footbar__socialLink" href="https://www.facebook.com/sandrine.neye" target="_blank" rel="noopener noreferrer">
+            <span class="Footbar__socialIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M14 9h2V6.5A2.5 2.5 0 0 0 13.5 4H11a3 3 0 0 0-3 3v2H6v3h2v8h3v-8h2.4L14 12H11V9.3A.3.3 0 0 1 11.3 9H14Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="Footbar__socialText">
+              <span class="Footbar__socialName">Facebook</span>
+              <span class="Footbar__socialUrl">facebook.com/sandrine.neye</span>
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a class="Footbar__socialLink" href="https://music.apple.com/de/artist/sandrine-neye/1629703562" target="_blank" rel="noopener noreferrer">
+            <span class="Footbar__socialIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M16.8 13.2c0-1.7 1-2.8 2.2-3.5-0.7-1-1.8-1.6-3.1-1.7-1.3-.1-2.6.8-3.2.8-.7 0-1.7-.8-2.8-.8-2.2.1-4.4 1.8-4.4 5.4 0 1.1.2 2.3.7 3.4.6 1.3 1.5 2.9 2.7 2.9 1.0 0 1.7-.7 3-.7 1.2 0 1.8.7 3 .7 1.3 0 2.1-1.5 2.6-2.8.2-.5.4-1 .5-1.6-1.4-.6-2.2-1.9-2.2-3.5Z" fill="currentColor"/>
+                <path d="M14.3 4.6c.6-.7 1-1.7.9-2.6-1 .1-2 .7-2.7 1.5-.6.7-1 1.7-.9 2.6 1-.1 2-.6 2.7-1.5Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="Footbar__socialText">
+              <span class="Footbar__socialName">Apple Music</span>
+              <span class="Footbar__socialUrl">music.apple.com</span>
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <a class="Footbar__socialLink" href="https://amazon.com/music/player/albums/B0B4384B9K?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_JA5EDlbk90Hg8itzHnL9zrEsY" target="_blank" rel="noopener noreferrer">
+            <span class="Footbar__socialIcon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6.2 16.3c3.1 2 8.2 2 11.4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M15.8 16.4l2 .2-.8 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.2 8.6c1.2-1.1 2.9-1.8 4.8-1.8 3.6 0 6.5 2.3 6.5 5.2 0 1.2-.5 2.3-1.4 3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+              </svg>
+            </span>
+            <span class="Footbar__socialText">
+              <span class="Footbar__socialName">Amazon</span>
+              <span class="Footbar__socialUrl">amazon.com/music</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Legal -->
+    <nav class="Footbar__col Footbar__col--legal" aria-label="Rechtliches">
+      <div class="Footbar__title">Rechtliches</div>
+      <ul class="Footbar__list">
+        <li><a href="Legal/impressum.html">Impressum</a></li>
+        <li><a href="Legal/datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </nav>
 
   </div>
 
+  <!-- Bottom -->
+  <div class="Footbar__bottom">
+    <div class="Footbar__powered">
+      <a href="https://www.lipamusicservices.com" target="_blank" rel="noopener noreferrer">
+        This Website is powered by LiPa Music Services
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var y = new Date().getFullYear();
+      var slot = document.getElementById("YearSlot");
+      if(slot) slot.textContent = y;
+    })();
+  </script>
 </footer>
