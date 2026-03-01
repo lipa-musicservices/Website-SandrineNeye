@@ -34,147 +34,153 @@
   <link rel="stylesheet" href="../style.css" />
   <script defer src="../Scripts/includes.js"></script>
   <script defer src="../Scripts/main.js"></script>
+<style>
+  html, body{
+    margin:0;
+    padding:0;
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#fff;
+    color:#0e1116;
+  }
 
-  <style>
-    html, body{
-      margin:0;
-      padding:0;
-      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#fff;
-      color:#0e1116;
-    }
+  :root{
+    --purple:#680068;
+    --container:1120px;
+    --muted:rgba(14,17,22,.72);
+    --border:rgba(10,16,26,.12);
+    --radius:14px;
+    --hbH:74px;
+  }
 
-    :root{
-      --purple:#680068;
-      --container:1120px;
-      --muted:rgba(14,17,22,.72);
-      --border:rgba(10,16,26,.12);
-      --radius:14px;
-      --hbH:74px;
-    }
+  /* Footer nicht im Raum */
+  #MainContent{
+    min-height: calc(100vh - var(--hbH));
+    display:flex;
+    flex-direction:column;
+    width:100%;
+  }
 
-    /* Footer nicht im Raum */
-    #MainContent{
-      min-height: calc(100vh - var(--hbH));
-      display:flex;
-      flex-direction:column;
-      width:100%;
-    }
+  .Page{
+    flex:1;
+    width:100%;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:42px 18px 70px;
+    box-sizing:border-box;
+  }
 
-    .Page{
-      flex:1;
-      width:100%;
-      max-width:var(--container);
-      margin:0 auto;
-      padding: 42px 18px 70px;
-      box-sizing:border-box;
-    }
+  .Page__head{
+    width:100%;
+    text-align:left;
+    margin-bottom:22px;
+  }
 
-    .Page__head{
-      width:100%;
-      text-align:left;
-      margin-bottom: 22px;
-    }
+  /* Schlanker, eleganter */
+  .Page__title{
+    margin:0;
+    font-size: clamp(32px, 4.2vw, 52px);
+    font-weight:300;              /* war 900 */
+    letter-spacing:0.004em;       /* weniger “tight” */
+    line-height:1.05;
+  }
 
-    .Page__title{
-      margin:0;
-      font-size: clamp(32px, 4.2vw, 52px);
-      font-weight: 900;
-      letter-spacing:-0.02em;
-    }
+  .AccentRule{
+    height:3px;
+    width:56px;
+    background: var(--purple);
+    border-radius:2px;
+    margin:14px 0 0;
+    opacity:.9;
+  }
 
-    .AccentRule{
-      height:3px;
-      width:56px;
-      background: var(--purple);
-      border-radius: 2px;
-      margin:14px 0 0;
-    }
+  .Page__subtitle{
+    margin:12px 0 0;
+    color:var(--muted);
+    font-size:16.5px;
+    line-height:1.65;
+    max-width:80ch;
+    font-weight:400;
+  }
 
-    .Page__subtitle{
-      margin:12px 0 0;
-      color:var(--muted);
-      font-size: 16.5px;
-      line-height:1.6;
-      max-width: 80ch;
-    }
+  .Grid{
+    margin-top:26px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    width:100%;
+  }
 
-    .Grid{
-      margin-top: 26px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      width:100%;
-    }
+  .Quote{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    background:#fff;
+    box-sizing:border-box;
+  }
 
-    .Quote{
-      width:100%;
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      background:#fff;
-      box-sizing:border-box;
-    }
+  .Quote__text{
+    margin:0;
+    font-size:17px;
+    line-height:1.7;
+    color: rgba(14,17,22,.86);
+    font-weight:400;              /* war 500 */
+  }
 
-    .Quote__text{
-      margin:0;
-      font-size: 17px;
-      line-height: 1.7;
-      color: rgba(14,17,22,.86);
-      font-weight: 500;
-    }
+  .Quote__text::before,
+  .Quote__text::after{
+    color: rgba(104,0,104,.42);
+    font-weight:600;              /* war 900 */
+  }
+  .Quote__text::before{
+    content:"“";
+    margin-right:3px;
+  }
+  .Quote__text::after{
+    content:"”";
+    margin-left:3px;
+  }
 
-    .Quote__text::before{
-      content:"“";
-      color: rgba(104,0,104,.45);
-      font-weight: 900;
-      margin-right: 2px;
-    }
-    .Quote__text::after{
-      content:"”";
-      color: rgba(104,0,104,.45);
-      font-weight: 900;
-      margin-left: 2px;
-    }
+  .Quote__meta{
+    margin-top:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 14px;
+    align-items:baseline;
+    color: var(--muted);
+    font-weight:500;              /* war 800 */
+    font-size:14px;
+  }
 
-    .Quote__meta{
-      margin-top: 10px;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px 14px;
-      align-items:baseline;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 14px;
-    }
+  .Quote__source{
+    color: rgba(14,17,22,.78);
+    font-weight:600;              /* war 900 */
+  }
 
-    .Quote__source{
-      color: rgba(14,17,22,.78);
-      font-weight: 900;
-    }
+  .Quote__date{
+    opacity:.9;
+    font-weight:400;
+  }
 
-    .Quote__date{
-      opacity:.9;
-    }
+  .Quote__link{
+    color: var(--purple);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight:600;              /* war 900 */
+  }
 
-    .Quote__link{
-      color: var(--purple);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-weight: 900;
-    }
-
-    .Empty{
-      margin-top: 18px;
-      border:1px dashed rgba(10,16,26,.22);
-      border-radius: var(--radius);
-      padding:16px 18px;
-      color:var(--muted);
-      box-sizing:border-box;
-      width:100%;
-      max-width: 760px;
-    }
-  </style>
+  .Empty{
+    margin-top:18px;
+    border:1px dashed rgba(10,16,26,.22);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    color:var(--muted);
+    box-sizing:border-box;
+    width:100%;
+    max-width:760px;
+    font-weight:400;
+  }
+</style>
 </head>
 
 <body>
@@ -187,7 +193,7 @@
         <h1 class="Page__title">Pressestimmen</h1>
         <div class="AccentRule"></div>
         <p class="Page__subtitle">
-          Pressestimmen – März 2026
+
         </p>
       </header>
 
@@ -200,10 +206,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">Haus Conrath</span>
-            <span class="Quote__date">März 2026</span>
-            <a class="Quote__link" href="https://haus-conrath.de/aktuelles/page/2/" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -213,10 +216,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">Haus Conrath</span>
-            <span class="Quote__date">März 2026</span>
-            <a class="Quote__link" href="https://haus-conrath.de/aktuelles/page/2/" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -227,10 +227,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">JazznRhythm</span>
-            <span class="Quote__date">21.02.2026</span>
-            <a class="Quote__link" href="https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -240,10 +237,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">JazznRhythm</span>
-            <span class="Quote__date">21.02.2026</span>
-            <a class="Quote__link" href="https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -253,10 +247,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">JazznRhythm</span>
-            <span class="Quote__date">21.02.2026</span>
-            <a class="Quote__link" href="https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -267,10 +258,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">JazznRhythm</span>
-            <span class="Quote__date">Februar 2026</span>
-            <a class="Quote__link" href="https://jazznrhythm.com/ankuendigung-sandrine-neye-in-der-hemingway-lounge-am-21-02-2026-um-1130" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -281,10 +269,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">Stuttgart Tourist</span>
-            <span class="Quote__date">2026</span>
-            <a class="Quote__link" href="https://www.stuttgart-tourist.de/e-sandie-wollasch-klaus-wagenleiter-trio-feat-klaus-graf-sandrine-neye" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -295,10 +280,7 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">BNN</span>
-            <span class="Quote__date">2024/2025</span>
-            <a class="Quote__link" href="https://bnn.de/karlsruhe/die-karlsruher-saengerin-sandrine-neye-singt-mit-sanftem-soul-ganz-wie-vorbild-whitney-houston" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
           </div>
         </article>
 
@@ -308,10 +290,8 @@
           </p>
           <div class="Quote__meta">
             <span class="Quote__source">BNN</span>
-            <span class="Quote__date">2024/2025</span>
-            <a class="Quote__link" href="https://bnn.de/karlsruhe/die-karlsruher-saengerin-sandrine-neye-singt-mit-sanftem-soul-ganz-wie-vorbild-whitney-houston" target="_blank" rel="noopener" aria-label="Quelle öffnen">
-              Quelle
-            </a>
+
+
           </div>
         </article>
 

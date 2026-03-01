@@ -38,111 +38,119 @@
   <script defer src="../Scripts/main.js"></script>
 
   <!-- Seiten-spezifisches CSS (nur Layout/Text) -->
-  <style>
-    html, body{
-      margin:0;
-      padding:0;
-      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#fff;
-      color:#0e1116;
-    }
+<style>
+  html, body{
+    margin:0;
+    padding:0;
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#fff;
+    color:#0e1116;
+  }
 
-    :root{
-      --purple:#680068;
-      --container:1120px;
-      --text:#0e1116;
-      --muted:rgba(14,17,22,.72);
-      --border:rgba(10,16,26,.12);
-      --radius:14px;
-    }
+  :root{
+    --purple:#680068;
+    --container:1120px;
+    --text:#0e1116;
+    --muted:rgba(14,17,22,.72);
+    --border:rgba(10,16,26,.12);
+    --radius:14px;
+  }
 
-    .Page{
-      max-width:var(--container);
-      margin:0 auto;
-      padding: 42px 18px 70px;
-    }
+  .Page{
+    max-width:var(--container);
+    margin:0 auto;
+    padding: 42px 18px 70px;
+    box-sizing:border-box;
+  }
 
-    .Page__head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-bottom: 22px;
-    }
+  .Page__head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-bottom: 22px;
+  }
 
-    .Page__title{
-      margin:0;
-      font-size: clamp(32px, 4.2vw, 52px);
-      font-weight: 900;
-      letter-spacing:-0.02em;
-    }
+  /* schlanker wie Index */
+  .Page__title{
+    margin:0;
+    font-size: clamp(32px, 4.2vw, 52px);
+    font-weight:300;           /* war 900 */
+    letter-spacing:0.004em;    /* bei dünn wirkt leicht positiv eleganter */
+    line-height:1.04;
+  }
 
-    .Page__subtitle{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size: 16.5px;
-      line-height:1.55;
-      max-width: 65ch;
-    }
+  .Page__subtitle{
+    margin:10px 0 0;
+    color:var(--muted);
+    font-size: 16.5px;
+    line-height:1.65;
+    max-width: 65ch;
+    font-weight:400;           /* schlanker */
+  }
 
-    .VitaGrid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 26px;
-      align-items:start;
-      margin-top: 26px;
-    }
+  .VitaGrid{
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 26px;
+    align-items:start;
+    margin-top: 26px;
+  }
 
-    .Card{
-      border:0px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 18px;
-      background:#fff;
-    }
+  .Card{
+    border:0;
+    border-radius: var(--radius);
+    padding: 18px 18px;
+    background:#fff;
+  }
 
-    /* Bild */
-    .VitaPic{
-      border-radius: var(--radius);
-      overflow:hidden;
-      border:1px solid var(--border);
-      background:#f3f3f6;
-    }
-    .VitaPic img{
-      width:100%;
-      height:auto;
-      display:block;
-    }
+  /* Bild */
+  .VitaPic{
+    border-radius: var(--radius);
+    overflow:hidden;
+    border:1px solid var(--border);
+    background:#f3f3f6;
+  }
+  .VitaPic img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
 
-    /* Text aus .txt */
-    .VitaText{
-      font-size: 16.8px;
-      line-height: 1.75;
-      color: rgba(14,17,22,.86);
-      white-space: pre-wrap; /* wichtig: Zeilenumbrüche aus .txt bleiben */
+  /* Text aus .txt */
+  .VitaText{
+    font-size: 16.8px;
+    line-height: 1.78;
+    color: rgba(14,17,22,.86);
+    white-space: pre-wrap;     /* Zeilenumbrüche aus .txt bleiben */
+    text-align: justify;
 
-      text-align: justify;
-    }
+    font-weight:400;           /* schlanker */
+    letter-spacing:0.002em;
+  }
 
-    .Hint{
-      color:var(--muted);
-      font-size: 14px;
-      margin-top: 8px;
-    }
+  .Hint{
+    color:var(--muted);
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight:400;           /* schlanker */
+  }
 
-    /* kleine Akzentlinie */
-    .AccentRule{
-      height:3px;
-      width:56px;
-      background: var(--purple);
-      border-radius: 2px;
-      margin-top: 14px;
-    }
+  /* kleine Akzentlinie */
+  .AccentRule{
+    height:3px;
+    width:56px;
+    background: var(--purple);
+    border-radius: 2px;
+    margin-top: 14px;
+    opacity:.9;
+  }
 
-    @media (max-width: 940px){
-      .VitaGrid{ grid-template-columns: 1fr; }
-    }
-  </style>
+  @media (max-width: 940px){
+    .VitaGrid{ grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 
 <body>

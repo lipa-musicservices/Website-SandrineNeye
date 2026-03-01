@@ -20,156 +20,168 @@
   <script defer src="../Scripts/main.js"></script>
 
   <style>
-    html, body{
-      margin:0;
-      padding:0;
-      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#fff;
-      color:#0e1116;
-    }
+  html, body{
+    margin:0;
+    padding:0;
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#fff;
+    color:#0e1116;
+  }
 
-    :root{
-      --purple:#680068;
-      --container:1120px;
-      --border:rgba(10,16,26,.12);
-      --radius:14px;
-      --muted:rgba(14,17,22,.7);
-      --hbH:74px;
-    }
+  :root{
+    --purple:#680068;
+    --container:1120px;
+    --border:rgba(10,16,26,.12);
+    --radius:14px;
+    --muted:rgba(14,17,22,.7);
+    --hbH:74px;
+  }
 
-    #MainContent{
-      min-height: calc(100vh - var(--hbH));
-      display:flex;
-      flex-direction:column;
-      width:100%;
-    }
+  #MainContent{
+    min-height: calc(100vh - var(--hbH));
+    display:flex;
+    flex-direction:column;
+    width:100%;
+  }
 
-    .Page{
-      flex:1;
-      width:100%;
-      max-width:var(--container);
-      margin:0 auto;
-      padding: 42px 18px 70px;
-      box-sizing:border-box;
-    }
+  .Page{
+    flex:1;
+    width:100%;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:42px 18px 70px;
+    box-sizing:border-box;
+  }
 
-    /* Links wie vorher */
-    .Page__head{
-      width:100%;
-      text-align:left;
-      margin-bottom: 6px;
-    }
+  /* Head */
+  .Page__head{
+    width:100%;
+    text-align:left;
+    margin-bottom:6px;
+  }
 
-    .Page__title{
-      margin:0;
-      font-size: clamp(32px, 4.2vw, 52px);
-      font-weight:900;
-      letter-spacing:-0.02em;
-    }
+  /* schlank wie überall */
+  .Page__title{
+    margin:0;
+    font-size:clamp(32px, 4.2vw, 52px);
+    font-weight:300;          /* war 900 */
+    letter-spacing:0.004em;
+    line-height:1.05;
+  }
 
-    /* Links, nicht mittig */
-    .AccentRule{
-      height:3px;
-      width:56px;
-      background: var(--purple);
-      border-radius:2px;
-      margin:14px 0 0;
-    }
+  .AccentRule{
+    height:3px;
+    width:56px;
+    background:var(--purple);
+    border-radius:2px;
+    margin:14px 0 0;
+    opacity:.9;
+  }
 
-    .Count{
-      margin-top:18px;
-      font-weight:900;
-      color:var(--muted);
-      font-size:14px;
-      text-align:left;
-    }
+  .Count{
+    margin-top:18px;
+    font-weight:500;          /* war 900 */
+    color:var(--muted);
+    font-size:14px;
+    text-align:left;
+    letter-spacing:.04em;
+  }
 
-    /* Breite fix: Grid IMMER 100% */
-    .Grid{
-      width:100%;
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap:12px;
-    }
+  /* Grid */
+  .Grid{
+    width:100%;
+    margin-top:22px;
+    display:grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap:14px;
+  }
 
-    .Tile{
-      width:100%;
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      overflow:hidden;
-      background:#f4f4f8;
-      cursor:pointer;
-    }
+  .Tile{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:#f4f4f8;
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
 
-    .Tile img{
-      width:100%;
-      height:240px;
-      object-fit:cover;
-      display:block;
-      transition:transform .2s ease;
-    }
+  .Tile img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+    display:block;
+    transition:transform .25s ease;
+  }
 
-    .Tile:hover img{
-      transform:scale(1.05);
-    }
+  .Tile:hover{
+    transform:translateY(-2px);
+  }
 
-    /* Error/Empty: links, aber trotzdem "stabil breit" */
-    .Empty{
-      width:100%;
-      max-width: 760px;   /* kannst du auch wegnehmen, wenn du 100% willst */
-      margin:16px 0 0;    /* links statt auto */
-      border:1px dashed rgba(10,16,26,.22);
-      border-radius: var(--radius);
-      padding:16px 18px;
-      color:var(--muted);
-      box-sizing:border-box;
-      text-align:left;
-    }
+  .Tile:hover img{
+    transform:scale(1.04);
+  }
 
-    /* Lightbox */
-    .Lightbox{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.85);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-      padding:20px;
-    }
-    .Lightbox.is-open{ display:flex; }
+  /* Empty */
+  .Empty{
+    width:100%;
+    max-width:760px;
+    margin:16px 0 0;
+    border:1px dashed rgba(10,16,26,.22);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    color:var(--muted);
+    box-sizing:border-box;
+    text-align:left;
+    font-weight:400;
+  }
 
-    .Lightbox img{
-      max-width:95vw;
-      max-height:90vh;
-      border-radius:12px;
-    }
+  /* Lightbox */
+  .Lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    padding:20px;
+  }
+  .Lightbox.is-open{ display:flex; }
 
-    .Lightbox button{
-      position:fixed;
-      top:20px;
-      right:20px;
-      padding:10px 14px;
-      border-radius:10px;
-      border:2px solid #fff;
-      background:transparent;
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;
-    }
+  .Lightbox img{
+    max-width:95vw;
+    max-height:90vh;
+    border-radius:12px;
+  }
 
-    @media (max-width: 1000px){
-      .Grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-    @media (max-width: 700px){
-      .Grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 450px){
-      .Grid{ grid-template-columns: 1fr; }
-      .Tile img{ height: 220px; }
-    }
-  </style>
+  .Lightbox button{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:10px 14px;
+    border-radius:10px;
+    border:2px solid #fff;
+    background:transparent;
+    color:#fff;
+    font-weight:600;          /* war 900 */
+    letter-spacing:.04em;
+    cursor:pointer;
+  }
+
+  @media (max-width:1000px){
+    .Grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (max-width:700px){
+    .Grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width:450px){
+    .Grid{ grid-template-columns: 1fr; }
+    .Tile img{ height:220px; }
+  }
+</style>
 </head>
 
 <body>

@@ -34,192 +34,236 @@
   <link rel="stylesheet" href="../style.css" />
   <script defer src="../Scripts/includes.js"></script>
   <script defer src="../Scripts/main.js"></script>
+<style>
+  html, body{
+    margin:0;
+    padding:0;
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#fff;
+    color:#0e1116;
+  }
 
-  <style>
-    html, body{
-      margin:0;
-      padding:0;
-      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#fff;
-      color:#0e1116;
-    }
+  :root{
+    --purple:#680068;
+    --purpleDark:#4b004b;
 
-    :root{
-      --purple:#680068;
-      --purpleDark:#4b004b;
+    --container:1120px;
+    --hbH:74px;
 
-      --container:1120px;
-      --hbH:74px;
+    --muted:rgba(14,17,22,.70);
+    --border:rgba(10,16,26,.10);
 
-      --muted:rgba(14,17,22,.70);
-      --border:rgba(10,16,26,.12);
+    --radius:16px;
+    --shadow: 0 22px 60px rgba(10,16,26,.10);
+    --shadow2: 0 12px 32px rgba(10,16,26,.07);
+  }
 
-      --radius:14px;
-    }
+  #MainContent{
+    min-height: calc(100vh - var(--hbH));
+    display:flex;
+    flex-direction:column;
+    width:100%;
+  }
 
-    /* Footer nicht in der Luft */
-    #MainContent{
-      min-height: calc(100vh - var(--hbH));
-      display:flex;
-      flex-direction:column;
-      width:100%;
-    }
+  .Page{
+    flex:1;
+    width:100%;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:44px 18px 78px;
+    box-sizing:border-box;
+  }
 
-    .Page{
-      flex:1;
-      width:100%;
-      max-width:var(--container);
-      margin:0 auto;
-      padding: 44px 18px 78px;
-      box-sizing:border-box;
-    }
+  /* ===== Typography schlank ===== */
 
-    .Title{
-      margin:0;
-      font-size: clamp(34px, 4.2vw, 54px);
-      font-weight: 900;
-      letter-spacing:-0.02em;
-      line-height:1.05;
-    }
+  .Title{
+    margin:0;
+    font-size: clamp(34px, 4.2vw, 54px);
+    font-weight:300;              /* war 950 */
+    letter-spacing:0.004em;
+    line-height:1.05;
+  }
 
-    .Rule{
-      height:3px;
-      width:56px;
-      background: var(--purple);
-      border-radius: 2px;
-      margin:14px 0 0;
-    }
+  .Rule{
+    height:3px;
+    width:56px;
+    background: var(--purple);
+    border-radius:2px;
+    margin:14px 0 0;
+    opacity:.9;
+  }
 
-    .Sub{
-      margin:12px 0 0;
-      color:var(--muted);
-      font-size: 16.8px;
-      line-height:1.65;
-      max-width: 78ch;
-    }
+  .Sub{
+    margin:14px 0 0;
+    color:var(--muted);
+    font-size:16.6px;
+    line-height:1.65;
+    max-width:78ch;
+    font-weight:400;              /* war 650 */
+  }
 
-    /* Grid */
-    .Grid{
-      margin-top: 26px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      align-items:stretch;
-    }
+  /* ===== Grid ===== */
 
-    .Release{
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      background:#fff;
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
-      min-width:0;
-    }
+  .Grid{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+    align-items:stretch;
+  }
 
-    .Cover{
-      background: rgba(10,16,26,.02);
-      border-bottom:1px solid rgba(10,16,26,.08);
-      aspect-ratio: 1 / 1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
+  .Release{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:#fff;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    box-shadow:var(--shadow2);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
 
-    .Cover img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
+  .Release:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow);
+    border-color: rgba(104,0,104,.16);
+  }
 
-    .Body{
-      padding: 14px 14px 16px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      flex:1;
-    }
+  .Cover{
+    background: rgba(10,16,26,.02);
+    border-bottom:1px solid rgba(10,16,26,.06);
+    aspect-ratio: 1 / 1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
 
-    .MetaTop{
-      display:flex;
-      gap:10px;
-      align-items:baseline;
-      flex-wrap:wrap;
-      color: rgba(14,17,22,.62);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing:.06em;
-      text-transform: uppercase;
-    }
+  .Cover img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
 
-    .Badge{
-      color: rgba(14,17,22,.60);
-      background: rgba(10,16,26,.04);
-      border:1px solid rgba(10,16,26,.08);
-      padding: 6px 8px;
-      border-radius: 10px; /* leicht rund, keine Pillen */
-    }
+  .Body{
+    padding:16px 16px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    flex:1;
+  }
 
-    .Name{
-      margin:0;
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing:-0.01em;
-      line-height:1.2;
-    }
+  .MetaTop{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
 
-    .Desc{
-      margin:0;
-      color: rgba(14,17,22,.80);
-      font-size: 15.6px;
-      line-height: 1.65;
-      font-weight: 650;
-    }
+  .Badge{
+    font-weight:500;             /* war 950 */
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color: rgba(14,17,22,.65);
+  }
 
-    /* Links: Textlinks (keine Buttons) */
-    .Links{
-      margin-top:auto;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      padding-top: 4px;
-    }
+  .Date{
+    font-weight:400;             /* war 900 */
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color: rgba(14,17,22,.45);
+  }
 
-    .Links a{
-      color: var(--purple);
-      text-decoration: none;
-      border-bottom: 2px solid rgba(104,0,104,.18);
-      padding-bottom: 2px;
-      font-weight: 900;
-      width: fit-content;
-      max-width:100%;
-      word-break: break-word;
-    }
+  .Name{
+    margin:0;
+    font-size:19px;
+    font-weight:500;             /* war 950 */
+    letter-spacing:-0.004em;
+    line-height:1.2;
+  }
 
-    .Links a:hover{
-      color: var(--purpleDark);
-      border-bottom-color: rgba(75,0,75,.34);
-    }
+  .Desc{
+    margin:0;
+    color: rgba(14,17,22,.82);
+    font-size:15.8px;
+    line-height:1.7;
+    font-weight:400;             /* war 650 */
+  }
 
-    .Empty{
-      margin-top: 22px;
-      border:1px dashed rgba(10,16,26,.22);
-      border-radius: var(--radius);
-      padding:16px;
-      color: var(--muted);
-      background: rgba(10,16,26,.02);
-      max-width: 860px;
-    }
+  /* ===== Icon Links ===== */
 
-    @media (max-width: 1020px){
-      .Grid{ grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 680px){
-      .Grid{ grid-template-columns: 1fr; }
-      .Badge{ width: fit-content; }
-    }
-  </style>
+  .IconLinks{
+    margin-top:auto;
+    display:flex;
+    gap:10px;
+    padding-top:10px;
+    flex-wrap:wrap;
+  }
+
+  .IconBtn{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid rgba(10,16,26,.12);
+    background: rgba(10,16,26,.02);
+
+    color: rgba(14,17,22,.80);
+    text-decoration:none;
+
+    transition: transform .15s ease,
+                background .15s ease,
+                border-color .15s ease,
+                color .15s ease;
+  }
+
+  .IconBtn:hover{
+    transform:translateY(-2px);
+    background: rgba(104,0,104,.06);
+    border-color: rgba(104,0,104,.22);
+    color: var(--purpleDark);
+  }
+
+  .IconBtn svg{
+    width:20px;
+    height:20px;
+    display:block;
+  }
+
+  .Empty{
+    margin-top:22px;
+    border:1px dashed rgba(10,16,26,.18);
+    border-radius:var(--radius);
+    padding:16px;
+    color:var(--muted);
+    background: rgba(10,16,26,.02);
+    max-width:860px;
+    font-weight:400;             /* war 650 */
+  }
+
+  @media (max-width:1020px){
+    .Grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width:680px){
+    .Grid{ grid-template-columns: 1fr; }
+  }
+
+  .sr-only{
+    position:absolute !important;
+    width:1px; height:1px;
+    padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0);
+    white-space:nowrap; border:0;
+  }
+</style>
 </head>
 
 <body>
@@ -236,46 +280,125 @@
 
       <section class="Grid" aria-label="Releases">
 
-        <!-- Release 1 -->
+        <!-- Release 2 (newest first) -->
         <article class="Release">
           <div class="Cover">
-            <img src="../Resources/Content/Release1.webp" alt="Cover – Release 1" loading="lazy">
+            <img src="../Resources/Content/Release2.webp" alt="Cover – Memories to save" loading="lazy">
           </div>
+
           <div class="Body">
             <div class="MetaTop">
-              <span class="Badge">EP</span>
-              <span>24.06.2022</span>
+              <span class="Badge">Single</span>
+              <span class="Date">30.06.2023</span>
             </div>
-            <h2 class="Name">Dreaming Like Flying</h2>
+
+            <h2 class="Name">Memories to save</h2>
+
             <p class="Desc">
-              
+              <!-- optional description -->
             </p>
-            <div class="Links">
-              <a href="https://open.spotify.com/intl-de/album/3mW7D3neDSlCZ5gxC0VlX9" target="_blank" rel="noopener">Spotify öffnen</a>
-              <a href="https://music.apple.com/de/album/dreaming-like-flying-ep/1629703552" target="_blank" rel="noopener">Apple Music öffnen</a>
-              <a href="https://www.amazon.com/Far-Away/dp/B0B43878W4" target="_blank" rel="noopener">Amazon Music öffnen</a>
+
+            <div class="IconLinks" aria-label="Streaming Links">
+              <!-- Spotify -->
+              <a class="IconBtn" href="https://open.spotify.com/intl-de/album/2lZqHQetjrCnFik88MUk9e?si=wcFd5WdqRdaBl-YhGLUTKw" target="_blank" rel="noopener" aria-label="Spotify öffnen">
+                <span class="sr-only">Spotify</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M7.7 10.3c2.9-1 6.7-.8 9.2.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M8.2 13.2c2.4-.7 5.5-.5 7.5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+                  <path d="M8.7 15.9c1.9-.4 3.8-.3 5.3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+                </svg>
+              </a>
+
+              <!-- Apple Music -->
+              <a class="IconBtn" href="https://music.apple.com/de/album/memories-to-save-single/1692427122" target="_blank" rel="noopener" aria-label="Apple Music öffnen">
+                <span class="sr-only">Apple Music</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M16.8 13.2c0-1.7 1-2.8 2.2-3.5-0.7-1-1.8-1.6-3.1-1.7-1.3-.1-2.6.8-3.2.8-.7 0-1.7-.8-2.8-.8-2.2.1-4.4 1.8-4.4 5.4 0 1.1.2 2.3.7 3.4.6 1.3 1.5 2.9 2.7 2.9 1.0 0 1.7-.7 3-.7 1.2 0 1.8.7 3 .7 1.3 0 2.1-1.5 2.6-2.8.2-.5.4-1 .5-1.6-1.4-.6-2.2-1.9-2.2-3.5Z" fill="currentColor"/>
+                  <path d="M14.3 4.6c.6-.7 1-1.7.9-2.6-1 .1-2 .7-2.7 1.5-.6.7-1 1.7-.9 2.6 1-.1 2-.6 2.7-1.5Z" fill="currentColor"/>
+                </svg>
+              </a>
+
+              <!-- Amazon Music -->
+              <a class="IconBtn" href="https://amazon.com/music/player/albums/B0C7YF4XDC?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_2vsVI1Bkc9jgPZZgbydShywjn" target="_blank" rel="noopener" aria-label="Amazon Music öffnen">
+                <span class="sr-only">Amazon Music</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6.2 16.3c3.1 2 8.2 2 11.4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M15.8 16.4l2 .2-.8 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7.2 8.6c1.2-1.1 2.9-1.8 4.8-1.8 3.6 0 6.5 2.3 6.5 5.2 0 1.2-.5 2.3-1.4 3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+                </svg>
+              </a>
+
+              <!-- YouTube Music (or YouTube) -->
+              <a class="IconBtn" href="https://music.youtube.com/watch?v=Pype5ksHVb4&si=mhCSOERAvc4URRu3" target="_blank" rel="noopener" aria-label="YouTube Music öffnen">
+                <span class="sr-only">YouTube Music</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21.5 8.2a3.2 3.2 0 0 0-2.3-2.3C17.3 5.4 12 5.4 12 5.4s-5.3 0-7.2.5A3.2 3.2 0 0 0 2.5 8.2 33.6 33.6 0 0 0 2.5 12s0 2.7.3 3.8a3.2 3.2 0 0 0 2.3 2.3c1.9.5 7 .5 7 .5s5.3 0 7.2-.5a3.2 3.2 0 0 0 2.3-2.3c.3-1.1.3-3.8.3-3.8s0-2.7-.3-3.8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M10.3 9.7 15.7 12l-5.4 2.3V9.7Z" fill="currentColor"/>
+                </svg>
+              </a>
             </div>
           </div>
         </article>
 
-        <!-- Release 2 -->
+
+        <!-- Release 1 -->
         <article class="Release">
           <div class="Cover">
-            <img src="../Resources/Content/Release2.webp" alt="Cover – Release 2" loading="lazy">
+            <img src="../Resources/Content/Release1.webp" alt="Cover – Dreaming Like Flying" loading="lazy">
           </div>
+
           <div class="Body">
             <div class="MetaTop">
-              <span class="Badge">Single</span>
-              <span>—</span>
+              <span class="Badge">EP</span>
+              <span class="Date">24.06.2022</span>
             </div>
-            <h2 class="Name">Memories to save</h2>
+
+            <h2 class="Name">Dreaming Like Flying</h2>
+
             <p class="Desc">
-              
+              <!-- optional description -->
             </p>
-            <div class="Links">
-              <a href="https://open.spotify.com/intl-de/album/2lZqHQetjrCnFik88MUk9e?si=wcFd5WdqRdaBl-YhGLUTKw" target="_blank" rel="noopener">Spotify öffnen</a>
-              <a href="https://music.apple.com/de/album/memories-to-save-single/1692427122" target="_blank" rel="noopener">Apple Music öffnen</a>
-              <a href="https://amazon.com/music/player/albums/B0C7YF4XDC?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_2vsVI1Bkc9jgPZZgbydShywjn" target="_blank" rel="noopener">Amazon Music öffnen</a>
+
+            <div class="IconLinks" aria-label="Streaming Links">
+              <!-- Spotify -->
+              <a class="IconBtn" href="https://open.spotify.com/intl-de/album/3mW7D3neDSlCZ5gxC0VlX9" target="_blank" rel="noopener" aria-label="Spotify öffnen">
+                <span class="sr-only">Spotify</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M7.7 10.3c2.9-1 6.7-.8 9.2.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M8.2 13.2c2.4-.7 5.5-.5 7.5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+                  <path d="M8.7 15.9c1.9-.4 3.8-.3 5.3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+                </svg>
+              </a>
+
+              <!-- Apple Music -->
+              <a class="IconBtn" href="https://music.apple.com/de/album/dreaming-like-flying-ep/1629703552" target="_blank" rel="noopener" aria-label="Apple Music öffnen">
+                <span class="sr-only">Apple Music</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M16.8 13.2c0-1.7 1-2.8 2.2-3.5-0.7-1-1.8-1.6-3.1-1.7-1.3-.1-2.6.8-3.2.8-.7 0-1.7-.8-2.8-.8-2.2.1-4.4 1.8-4.4 5.4 0 1.1.2 2.3.7 3.4.6 1.3 1.5 2.9 2.7 2.9 1.0 0 1.7-.7 3-.7 1.2 0 1.8.7 3 .7 1.3 0 2.1-1.5 2.6-2.8.2-.5.4-1 .5-1.6-1.4-.6-2.2-1.9-2.2-3.5Z" fill="currentColor"/>
+                  <path d="M14.3 4.6c.6-.7 1-1.7.9-2.6-1 .1-2 .7-2.7 1.5-.6.7-1 1.7-.9 2.6 1-.1 2-.6 2.7-1.5Z" fill="currentColor"/>
+                </svg>
+              </a>
+
+              <!-- Amazon Music -->
+              <a class="IconBtn" href="https://www.amazon.com/Far-Away/dp/B0B43878W4" target="_blank" rel="noopener" aria-label="Amazon Music öffnen">
+                <span class="sr-only">Amazon Music</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6.2 16.3c3.1 2 8.2 2 11.4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M15.8 16.4l2 .2-.8 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7.2 8.6c1.2-1.1 2.9-1.8 4.8-1.8 3.6 0 6.5 2.3 6.5 5.2 0 1.2-.5 2.3-1.4 3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+                </svg>
+              </a>
+
+              <!-- YouTube Music (or YouTube) -->
+              <a class="IconBtn" href="https://music.youtube.com/playlist?list=OLAK5uy_m-SsyOI0589-99zwvwE0vw9e9MLJRpd60&si=wEJCamWbey7PgxkQ" target="_blank" rel="noopener" aria-label="YouTube Music öffnen">
+                <span class="sr-only">YouTube Music</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21.5 8.2a3.2 3.2 0 0 0-2.3-2.3C17.3 5.4 12 5.4 12 5.4s-5.3 0-7.2.5A3.2 3.2 0 0 0 2.5 8.2 33.6 33.6 0 0 0 2.5 12s0 2.7.3 3.8a3.2 3.2 0 0 0 2.3 2.3c1.9.5 7 .5 7 .5s5.3 0 7.2-.5a3.2 3.2 0 0 0 2.3-2.3c.3-1.1.3-3.8.3-3.8s0-2.7-.3-3.8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M10.3 9.7 15.7 12l-5.4 2.3V9.7Z" fill="currentColor"/>
+                </svg>
+              </a>
             </div>
           </div>
         </article>
@@ -300,7 +423,7 @@
 
   <script>
     // Optional: wenn du später Releases dynamisch laden willst, kann man hier umstellen.
-    // Für jetzt: statische Platzhalter, fertig.
+    // Für jetzt: statische Releases, newest-first, fertig.
   </script>
 </body>
 </html>

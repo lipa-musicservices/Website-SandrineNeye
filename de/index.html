@@ -1,10 +1,11 @@
 <!--
 ==============================================================================
-    __    _ ____            __  ___           _         _____                 _
+
+    __    _ ____            __  ___           _         _____                 _               
    / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
   / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
- / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  )
-/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
 
    LiPa Music Services – Abteilung Webentwicklung
    © 2026 LiPa Music Services GbR
@@ -38,388 +39,390 @@
   <script defer src="../Scripts/main.js"></script>
 
   <!-- INDEX-spezifisches CSS -->
-  <style>
-    html, body{
-      margin:0;
-      padding:0;
-      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#fff;
-      color:#0e1116;
-    }
+<style>
+  html, body{
+    margin:0;
+    padding:0;
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#fff;
+    color:#0e1116;
+  }
 
-    :root{
-      --purple:#680068;
-      --purpleDark:#4b004b;
-      --container:1120px;
-      --border:rgba(10,16,26,.12);
-      --muted:rgba(14,17,22,.70);
-      --radius:14px;
-      --hbH:74px;
-    }
+  :root{
+    --purple:#680068;
+    --purpleDark:#4b004b;
+    --container:1120px;
+    --border:rgba(10,16,26,.12);
+    --muted:rgba(14,17,22,.70);
+    --radius:14px;
+    --hbH:74px;
+  }
 
-    /* =========================
-       HERO (full-bleed)
-       ========================= */
-    .Hero{
-      position:relative;
-      min-height: calc(100vh - var(--hbH));
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      overflow:hidden;
-      background:#111;
-    }
+  /* =========================
+     HERO (full-bleed)
+     ========================= */
+  .Hero{
+    position:relative;
+    min-height: calc(100vh - var(--hbH));
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    overflow:hidden;
+    background:#111;
+  }
 
-    .Hero__bg{
-      position:absolute;
-      inset:0;
-      background-image:url("../Resources/HeroTitle.jpg");
-      background-size:cover;
-      background-position:center 35%;
-      transform:scale(1.02);
-    }
+  .Hero__bg{
+    position:absolute;
+    inset:0;
+    background-image:url("../Resources/HeroTitle.jpg");
+    background-size:cover;
+    background-position:center 35%;
+    transform:scale(1.02);
+  }
 
-    .Hero__overlay{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to top,
-        rgba(0,0,0,.70) 0%,
-        rgba(0,0,0,.45) 28%,
-        rgba(0,0,0,.12) 65%,
-        rgba(0,0,0,0) 100%);
-    }
+  .Hero__overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,
+      rgba(0,0,0,.70) 0%,
+      rgba(0,0,0,.45) 28%,
+      rgba(0,0,0,.12) 65%,
+      rgba(0,0,0,0) 100%);
+  }
 
-    .Hero__inner{
-      position:relative;
-      width:100%;
-      max-width:var(--container);
-      padding:0 18px 58px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      text-align:left;
-    }
+  .Hero__inner{
+    position:relative;
+    width:100%;
+    max-width:var(--container);
+    padding:0 18px 58px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    text-align:left;
+  }
 
-    .Hero__kicker{
-      color:rgba(255,255,255,.88);
-      font-weight:600;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      font-size:12px;
-    }
+  .Hero__kicker{
+    color:rgba(255,255,255,.88);
+    font-weight:500;            /* dünner */
+    letter-spacing:.14em;       /* etwas “luxury” */
+    text-transform:uppercase;
+    font-size:12px;
+  }
 
-    .Hero h1{
-      margin:0;
-      color:#fff;
-      font-weight:900;
-      line-height:1.02;
-      font-size: clamp(34px, 5.2vw, 74px);
-      letter-spacing:-0.02em;
-      text-shadow: 0 12px 34px rgba(0,0,0,.38);
-    }
+  /* Noch dünner + eleganter */
+  .Hero h1{
+    margin:0;
+    color:#fff;
 
-    .Hero__sub{
-      margin:0;
-      color:rgba(255,255,255,.86);
-      font-size: clamp(16px, 2.2vw, 20px);
-      font-weight:500;
-      max-width: 62ch;
-      text-shadow: 0 10px 26px rgba(0,0,0,.30);
-    }
+    font-weight:300;            /* dünner als vorher */
+    line-height:1.02;
+    font-size: clamp(34px, 5.2vw, 74px);
 
-    .Hero__cta{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
+    letter-spacing: 0.004em;    /* bei dünn wirkt leicht positiv besser */
+    text-shadow: 0 16px 46px rgba(0,0,0,.48);
+  }
 
-    /* Buttons: leicht rund, keine Pills */
-    .Btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height:46px;
-      padding:0 18px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:800;
-      border:2px solid transparent;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
-      user-select:none;
-    }
+  .Hero__sub{
+    margin:0;
+    color:rgba(255,255,255,.86);
+    font-size: clamp(16px, 2.2vw, 20px);
+    font-weight:400;            /* dünner */
+    max-width: 62ch;
+    text-shadow: 0 12px 32px rgba(0,0,0,.34);
+  }
 
-    .Btn--primary{ background:var(--purple); color:#fff; }
-    .Btn--primary:hover{ background:var(--purpleDark); transform: translateY(-1px); }
+  .Hero__cta{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top: 10px;
+  }
 
-    .Btn--ghost{
-      background:transparent;
-      color:#fff;
-      border-color: rgba(255,255,255,.55);
-    }
-    .Btn--ghost:hover{
-      opacity:.9;
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.75);
-    }
+  /* Buttons: leicht rund, keine Pills */
+  .Btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:46px;
+    padding:0 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;            /* etwas weniger “Brett” */
+    border:2px solid transparent;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+    user-select:none;
+  }
 
-    /* =========================
-       Sections
-       ========================= */
-    .Section{
-      padding: 70px 18px;
-    }
-    .Section__inner{
-      max-width: 920px;
-      margin: 0 auto;
-    }
-    .Section h2{
-      margin:0 0 14px;
-      font-size: 30px;
-      font-weight: 850;
-      letter-spacing:-0.01em;
-    }
-    .Section p{
-      margin:0;
-      color: rgba(14,17,22,.70);
-      font-size: 17px;
-      line-height: 1.65;
-    }
+  .Btn--primary{ background:var(--purple); color:#fff; }
+  .Btn--primary:hover{ background:var(--purpleDark); transform: translateY(-1px); }
 
-    /* =========================
-       GALLERY MARQUEE
-       ========================= */
-    .GallerySection{
-      padding: 38px 0 76px; /* full-bleed look */
-    }
-    .GalleryHead{
-      max-width:var(--container);
-      margin:0 auto;
-      padding:0 18px 16px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-      box-sizing:border-box;
-    }
-    .GalleryHead h2{
-      margin:0;
-      font-size: 30px;
-      font-weight: 850;
-      letter-spacing:-0.01em;
-    }
-    .GalleryHead p{
-      margin:10px 0 0;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.55;
-      max-width:70ch;
-    }
-    .GalleryHead__left{ min-width:0; }
-    .GalleryHead__right{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .GalleryMini{
-      font-weight:900;
-      color:var(--muted);
-      font-size:13px;
-      white-space:nowrap;
-    }
+  .Btn--ghost{
+    background:transparent;
+    color:#fff;
+    border-color: rgba(255,255,255,.55);
+  }
+  .Btn--ghost:hover{
+    opacity:.9;
+    transform: translateY(-1px);
+    border-color: rgba(255,255,255,.75);
+  }
 
-    .MarqueeWrap{
-      position:relative;
-      width:100%;
-      overflow:hidden;
-      border-top:1px solid rgba(10,16,26,.06);
-      border-bottom:1px solid rgba(10,16,26,.06);
-      background:#fff;
-    }
+  /* =========================
+     Sections
+     ========================= */
+  .Section{
+    padding: 70px 18px;
+  }
+  .Section__inner{
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .Section h2{
+    margin:0 0 14px;
+    font-size: 30px;
+    font-weight:500;            /* dünner */
+    letter-spacing:-0.004em;
+  }
+  .Section p{
+    margin:0;
+    color: rgba(14,17,22,.70);
+    font-size: 17px;
+    line-height: 1.65;
+    font-weight:400;
+  }
 
-    /* soft fades left/right */
-    .MarqueeWrap::before,
-    .MarqueeWrap::after{
-      content:"";
-      position:absolute;
-      top:0;
-      bottom:0;
-      width:80px;
-      pointer-events:none;
-      z-index:2;
-    }
-    .MarqueeWrap::before{
-      left:0;
+  /* =========================
+     GALLERY MARQUEE
+     ========================= */
+  .GallerySection{
+    padding: 38px 0 76px; /* full-bleed look */
+  }
+  .GalleryHead{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 18px 16px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:14px;
+    box-sizing:border-box;
+  }
+  .GalleryHead h2{
+    margin:0;
+    font-size: 30px;
+    font-weight:500;            /* dünner */
+    letter-spacing:-0.004em;
+  }
+  .GalleryHead p{
+    margin:10px 0 0;
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.55;
+    max-width:70ch;
+    font-weight:400;
+  }
+  .GalleryHead__left{ min-width:0; }
+  .GalleryHead__right{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:flex-end;
+  }
+  .GalleryMini{
+    font-weight:600;            /* dünner */
+    color:var(--muted);
+    font-size:13px;
+    white-space:nowrap;
+    letter-spacing:.02em;
+  }
 
-    }
-    .MarqueeWrap::after{
-      right:0;
-    }
+  .MarqueeWrap{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    border-top:1px solid rgba(10,16,26,.06);
+    border-bottom:1px solid rgba(10,16,26,.06);
+    background:#fff;
+  }
 
-    .MarqueeTrack{
-      display:flex;
-      gap:12px;
-      padding:14px 18px;
-      width:max-content;
-      animation: marquee 70s linear infinite;
-      will-change:transform;
-    }
+  /* soft fades left/right */
+  .MarqueeWrap::before,
+  .MarqueeWrap::after{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:80px;
+    pointer-events:none;
+    z-index:2;
+  }
+  .MarqueeWrap::before{ left:0; }
+  .MarqueeWrap::after{ right:0; }
 
-    /* stop animation on hover (nice for usability) */
-    .MarqueeWrap:hover .MarqueeTrack{ animation-play-state: paused; }
+  .MarqueeTrack{
+    display:flex;
+    gap:12px;
+    padding:14px 18px;
+    width:max-content;
+    animation: marquee 70s linear infinite;
+    will-change:transform;
+  }
 
-    @keyframes marquee{
-      from{ transform:translate3d(0,0,0); }
-      to{ transform:translate3d(-50%,0,0); } /* because we duplicate items */
-    }
+  /* stop animation on hover (nice for usability) */
+  .MarqueeWrap:hover .MarqueeTrack{ animation-play-state: paused; }
 
-    .MarqueeItem{
-      width:260px;
-      height:170px;
-      border-radius: var(--radius);
-      overflow:hidden;
-      border:1px solid var(--border);
-      background:#f4f4f8;
-      flex:0 0 auto;
-      cursor:pointer;
-      position:relative;
-    }
-    .MarqueeItem img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      transition:transform .2s ease;
-    }
-    .MarqueeItem:hover img{ transform:scale(1.04); }
+  @keyframes marquee{
+    from{ transform:translate3d(0,0,0); }
+    to{ transform:translate3d(-50%,0,0); } /* because we duplicate items */
+  }
 
-    .MarqueeHint{
-      max-width:var(--container);
-      margin:0 auto;
-      padding:12px 18px 0;
-      box-sizing:border-box;
-      color:rgba(14,17,22,.62);
-      font-size:13px;
-      font-weight:800;
-    }
+  .MarqueeItem{
+    width:260px;
+    height:170px;
+    border-radius: var(--radius);
+    overflow:hidden;
+    border:1px solid var(--border);
+    background:#f4f4f8;
+    flex:0 0 auto;
+    cursor:pointer;
+    position:relative;
+  }
+  .MarqueeItem img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .2s ease;
+  }
+  .MarqueeItem:hover img{ transform:scale(1.04); }
 
-    /* =========================
-       PRESS MARQUEE (added)
-       ========================= */
-    .PressSection{
-      padding: 0 0 76px;
-    }
-    .PressHead{
-      max-width:var(--container);
-      margin:0 auto;
-      padding:0 18px 16px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-      box-sizing:border-box;
-    }
-    .PressHead h2{
-      margin:0;
-      font-size: 30px;
-      font-weight: 850;
-      letter-spacing:-0.01em;
-    }
+  .MarqueeHint{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:12px 18px 0;
+    box-sizing:border-box;
+    color:rgba(14,17,22,.62);
+    font-size:13px;
+    font-weight:600;            /* dünner */
+  }
 
-    .PressCard{
-      flex:0 0 auto;
-      width:min(560px, 78vw);
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      background:#fff;
-      padding: 16px 18px;
-      box-sizing:border-box;
-    }
-    .PressText{
-      margin:0;
-      font-size: 16.5px;
-      line-height: 1.7;
-      color: rgba(14,17,22,.86);
-      font-weight: 500;
-    }
-    .PressText::before{
-      content:"“";
-      color: rgba(104,0,104,.45);
-      font-weight: 900;
-      margin-right: 2px;
-    }
-    .PressText::after{
-      content:"”";
-      color: rgba(104,0,104,.45);
-      font-weight: 900;
-      margin-left: 2px;
-    }
-    .PressMeta{
-      margin-top: 10px;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px 14px;
-      align-items:baseline;
-      color: rgba(14,17,22,.62);
-      font-weight: 900;
-      font-size: 13.5px;
-    }
-    .PressSource{
-      color: rgba(14,17,22,.80);
-      font-weight: 950;
-    }
-    .PressLink{
-      color: var(--purple);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-weight: 950;
-    }
+  /* =========================
+     PRESS MARQUEE (added)
+     ========================= */
+  .PressSection{
+    padding: 0 0 76px;
+  }
+  .PressHead{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 18px 16px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:14px;
+    box-sizing:border-box;
+  }
+  .PressHead h2{
+    margin:0;
+    font-size: 30px;
+    font-weight:500;            /* dünner */
+    letter-spacing:-0.004em;
+  }
 
-    /* Lightbox (same as gallery) */
-    .Lightbox{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.85);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-      padding:20px;
-    }
-    .Lightbox.is-open{ display:flex; }
-    .Lightbox img{
-      max-width:95vw;
-      max-height:90vh;
-      border-radius:12px;
-    }
-    .Lightbox button{
-      position:fixed;
-      top:20px;
-      right:20px;
-      padding:10px 14px;
-      border-radius:10px;
-      border:2px solid #fff;
-      background:transparent;
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;
-    }
+  .PressCard{
+    flex:0 0 auto;
+    width:min(560px, 78vw);
+    border:1px solid var(--border);
+    border-radius: var(--radius);
+    background:#fff;
+    padding: 16px 18px;
+    box-sizing:border-box;
+  }
+  .PressText{
+    margin:0;
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: rgba(14,17,22,.86);
+    font-weight: 400;           /* dünner */
+  }
+  .PressText::before,
+  .PressText::after{
+    color: rgba(104,0,104,.45);
+    font-weight: 500;           /* dünner */
+  }
+  .PressText::before{
+    content:"“";
+    margin-right: 2px;
+  }
+  .PressText::after{
+    content:"”";
+    margin-left: 2px;
+  }
+  .PressMeta{
+    margin-top: 10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px 14px;
+    align-items:baseline;
+    color: rgba(14,17,22,.62);
+    font-weight: 600;           /* dünner */
+    font-size: 13.5px;
+  }
+  .PressSource{
+    color: rgba(14,17,22,.80);
+    font-weight: 650;           /* dünner */
+  }
+  .PressLink{
+    color: var(--purple);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 650;           /* dünner */
+  }
 
-    @media (max-width: 680px){
-      .Hero{ min-height: calc(92vh - var(--hbH)); }
-      .Hero__inner{ padding-bottom: 42px; }
-      .Btn{ width:100%; }
-      .GalleryHead{ flex-direction:column; align-items:flex-start; }
-      .GalleryHead__right{ justify-content:flex-start; }
-      .MarqueeItem{ width:220px; height:150px; }
-      .MarqueeWrap::before, .MarqueeWrap::after{ width:46px; }
+  /* Lightbox (same as gallery) */
+  .Lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    padding:20px;
+  }
+  .Lightbox.is-open{ display:flex; }
+  .Lightbox img{
+    max-width:95vw;
+    max-height:90vh;
+    border-radius:12px;
+  }
+  .Lightbox button{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:10px 14px;
+    border-radius:10px;
+    border:2px solid #fff;
+    background:transparent;
+    color:#fff;
+    font-weight:650;            /* dünner */
+    cursor:pointer;
+  }
 
-      .PressHead{ flex-direction:column; align-items:flex-start; }
-      .PressCard{ width:86vw; }
-    }
-  </style>
+  @media (max-width: 680px){
+    .Hero{ min-height: calc(92vh - var(--hbH)); }
+    .Hero__inner{ padding-bottom: 42px; }
+    .Btn{ width:100%; }
+    .GalleryHead{ flex-direction:column; align-items:flex-start; }
+    .GalleryHead__right{ justify-content:flex-start; }
+    .MarqueeItem{ width:220px; height:150px; }
+    .MarqueeWrap::before, .MarqueeWrap::after{ width:46px; }
+
+    .PressHead{ flex-direction:column; align-items:flex-start; }
+    .PressCard{ width:86vw; }
+  }
+</style>
 </head>
 
 <body>

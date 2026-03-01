@@ -267,7 +267,7 @@ html, body{
 /* Hover: text color slightly changes */
 .Headbar__menu a:hover .NavLabel::before,
 .Headbar__menu a:hover .NavLabel::after{
-  color: rgba(255,255,255,.96); /* vorher #fff -> minimal softer/brighter */
+  color: rgba(255,255,255,.6); /* vorher #fff -> minimal softer/brighter */
 }
 
 
@@ -791,4 +791,122 @@ html, body{
   .CookieBanner{ padding:22px 18px; }
   .CookieBanner__actions{ justify-content:stretch; }
   .CookieBtn{ flex:1; }
+}
+
+/* =========================
+   HEADBAR SOCIAL (Desktop)
+   ========================= */
+.Headbar__social{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-left:10px; /* Abstand zur Nav */
+}
+
+.Headbar__socialLink{
+  width:42px;
+  height:42px;
+  border-radius:var(--r);
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+  color:rgba(255,255,255,.86);
+
+  background:transparent;
+  border:1px solid rgba(255,255,255,.18);
+
+  transition: background .15s ease, border-color .15s ease, transform .15s ease, color .15s ease;
+}
+
+.Headbar__socialLink:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.26);
+  color:#ffffff;
+  transform:translateY(-1px);
+}
+
+.Headbar__socialLink:active{
+  transform:translateY(0);
+  background:rgba(255,255,255,.06);
+}
+
+.Headbar__socialLink:focus-visible{
+  outline:2px solid rgba(255,255,255,.42);
+  outline-offset:2px;
+}
+
+.Headbar__socialLink svg{
+  width:18px;
+  height:18px;
+  display:block;
+  fill:currentColor;
+}
+
+
+/* =========================
+   MOBILE SOCIAL (inside panel)
+   ========================= */
+.MobileMenu__social{
+  padding: 6px 16px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.MobileMenu__socialLink{
+  height:46px;
+  border-radius:var(--r);
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  text-decoration:none;
+  color:rgba(255,255,255,.92);
+
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+
+  padding:0 12px;
+
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.MobileMenu__socialLink:hover{
+  background:rgba(255,255,255,.10);
+  border-color:rgba(255,255,255,.20);
+  transform:translateY(-1px);
+}
+
+.MobileMenu__socialLink:active{
+  transform:translateY(0);
+}
+
+.MobileMenu__socialLink:focus-visible{
+  outline:2px solid rgba(255,255,255,.42);
+  outline-offset:2px;
+}
+
+.MobileMenu__socialLink svg{
+  width:18px;
+  height:18px;
+  display:block;
+  fill:currentColor;
+}
+
+.MobileMenu__socialLink span{
+  font-weight:850;
+  letter-spacing:.02em;
+}
+
+
+/* =========================
+   RESPONSIVE: hide desktop socials when burger mode
+   (optional, but usually wanted)
+   ========================= */
+.Headbar.is-mobile .Headbar__social{
+  display:none;
 }

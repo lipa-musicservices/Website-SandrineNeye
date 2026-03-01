@@ -35,217 +35,219 @@
   <script defer src="../Scripts/includes.js"></script>
   <script defer src="../Scripts/main.js"></script>
 
-  <style>
-    html, body{
-      margin:0;
-      padding:0;
-      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#fff;
-      color:#0e1116;
-    }
+<style>
+  html, body{
+    margin:0;
+    padding:0;
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#fff;
+    color:#0e1116;
+  }
 
-    :root{
-      --purple:#680068;
-      --purpleDark:#4b004b;
+  :root{
+    --purple:#680068;
+    --purpleDark:#4b004b;
 
-      --container:1120px;
-      --hbH:74px;
+    --container:1120px;
+    --hbH:74px;
 
-      --muted:rgba(14,17,22,.70);
-      --border:rgba(10,16,26,.12);
+    --muted:rgba(14,17,22,.70);
+    --border:rgba(10,16,26,.12);
 
-      --radius:14px;
-    }
+    --radius:14px;
+  }
 
-    /* Footer nicht in der Luft */
-    #MainContent{
-      min-height: calc(100vh - var(--hbH));
-      display:flex;
-      flex-direction:column;
-      width:100%;
-    }
+  /* Footer nicht in der Luft */
+  #MainContent{
+    min-height: calc(100vh - var(--hbH));
+    display:flex;
+    flex-direction:column;
+    width:100%;
+  }
 
-    .Page{
-      flex:1;
-      width:100%;
-      max-width:var(--container);
-      margin:0 auto;
-      padding: 44px 18px 78px;
-      box-sizing:border-box;
-    }
+  .Page{
+    flex:1;
+    width:100%;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:44px 18px 78px;
+    box-sizing:border-box;
+  }
 
-    /* Head */
-    .Title{
-      margin:0;
-      font-size: clamp(34px, 4.2vw, 54px);
-      font-weight: 900;
-      letter-spacing:-0.02em;
-      line-height:1.05;
-    }
+  /* Head */
+  .Title{
+    margin:0;
+    font-size: clamp(34px, 4.2vw, 54px);
+    font-weight:300;              /* war 900 */
+    letter-spacing:0.004em;       /* eleganter statt super-tight */
+    line-height:1.05;
+  }
 
-    .Rule{
-      height:3px;
-      width:56px;
-      background: var(--purple);
-      border-radius: 2px;
-      margin:14px 0 0;
-    }
+  .Rule{
+    height:3px;
+    width:56px;
+    background: var(--purple);
+    border-radius:2px;
+    margin:14px 0 0;
+    opacity:.9;
+  }
 
-    .Sub{
-      margin:12px 0 0;
-      color:var(--muted);
-      font-size: 16.8px;
-      line-height:1.65;
-      max-width: 75ch;
-    }
+  .Sub{
+    margin:12px 0 0;
+    color:var(--muted);
+    font-size:16.8px;
+    line-height:1.7;
+    max-width:75ch;
+    font-weight:400;
+  }
 
-    /* Layout */
-    .Wrap{
-      margin-top: 26px;
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 18px;
-      align-items:start;
-      max-width: 980px;
-    }
+  /* Layout */
+  .Wrap{
+    margin-top:26px;
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap:18px;
+    align-items:start;
+    max-width:980px;
+  }
 
-    .Card{
-      border:0px solid var(--border);
-      border-radius: var(--radius);
-      background:#fff;
-      padding: 18px 18px;
-      box-sizing:border-box;
-    }
+  .Card{
+    border:0px solid var(--border);
+    border-radius:var(--radius);
+    background:#fff;
+    padding:18px 18px;
+    box-sizing:border-box;
+  }
 
-    .CardTitle{
-      margin:0 0 10px;
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing:.12em;
-      text-transform: uppercase;
-      color: rgba(14,17,22,.60);
-    }
+  .CardTitle{
+    margin:0 0 10px;
+    font-size:13px;
+    font-weight:600;              /* war 900 */
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color: rgba(14,17,22,.60);
+  }
 
-    /* Contact rows */
-    .ContactList{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
+  /* Contact rows */
+  .ContactList{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
 
-    .Item{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      padding: 12px 12px;
-      border:1px solid rgba(10,16,26,.08);
-      border-radius: 12px;
-      background: rgba(10,16,26,.02);
-    }
+  .Item{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    padding:12px 12px;
+    border:1px solid rgba(10,16,26,.08);
+    border-radius:12px;
+    background: rgba(10,16,26,.02);
+  }
 
-    .ItemLabel{
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing:.08em;
-      text-transform: uppercase;
-      color: rgba(14,17,22,.55);
-    }
+  .ItemLabel{
+    font-size:12px;
+    font-weight:600;              /* war 900 */
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color: rgba(14,17,22,.55);
+  }
 
-    .ItemValue{
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing:-0.01em;
-      line-height:1.25;
-      word-break: break-word;
-    }
+  .ItemValue{
+    font-size:18px;
+    font-weight:500;              /* war 900 */
+    letter-spacing:-0.005em;
+    line-height:1.25;
+    word-break: break-word;
+  }
 
-    a.Link{
-      color: var(--purple);
-      text-decoration: none;
-      border-bottom: 2px solid rgba(104,0,104,.20);
-      padding-bottom: 2px;
-    }
-    a.Link:hover{
-      color: var(--purpleDark);
-      border-bottom-color: rgba(75,0,75,.35);
-    }
+  a.Link{
+    color: var(--purple);
+    text-decoration:none;
+    border-bottom:2px solid rgba(104,0,104,.20);
+    padding-bottom:2px;
+  }
+  a.Link:hover{
+    color: var(--purpleDark);
+    border-bottom-color: rgba(75,0,75,.35);
+  }
 
-    .Hint{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-      font-weight: 650;
-    }
+  .Hint{
+    margin-top:10px;
+    color: var(--muted);
+    font-size:14px;
+    line-height:1.65;
+    font-weight:400;              /* war 650 */
+  }
 
-    /* Links list */
-    .Links{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin:0;
-      padding:0;
-      list-style:none;
-    }
+  /* Links list */
+  .Links{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
 
-    .Links li{
-      display:flex;
-      gap:10px;
-      align-items:baseline;
-      line-height:1.55;
-    }
+  .Links li{
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+    line-height:1.55;
+  }
 
-    .Chip{
-      min-width: 110px;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing:.08em;
-      text-transform: uppercase;
-      color: rgba(14,17,22,.55);
-    }
+  .Chip{
+    min-width:110px;
+    font-size:12px;
+    font-weight:600;              /* war 900 */
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color: rgba(14,17,22,.55);
+  }
 
-    .Url{
-      font-weight: 800;
-      color: rgba(14,17,22,.86);
-      word-break: break-word;
-    }
+  .Url{
+    font-weight:500;              /* war 800 */
+    color: rgba(14,17,22,.86);
+    word-break: break-word;
+  }
 
-    /* =========================
-       Link Icons (inline SVG)
-       ========================= */
-    .Links a.Link{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-    }
+  /* =========================
+     Link Icons (inline SVG)
+     ========================= */
+  .Links a.Link{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
 
-    .Icon{
-      width:18px;
-      height:18px;
-      flex:0 0 18px;
-      display:inline-block;
-      color: rgba(14,17,22,.72);
-      transform: translateY(1px);
-    }
+  .Icon{
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+    display:inline-block;
+    color: rgba(14,17,22,.72);
+    transform: translateY(1px);
+  }
 
-    .Links a.Link:hover .Icon{
-      color: var(--purpleDark);
-    }
+  .Links a.Link:hover .Icon{
+    color: var(--purpleDark);
+  }
 
-    .Icon svg{
-      width:100%;
-      height:100%;
-      display:block;
-    }
+  .Icon svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
 
-    @media (max-width: 920px){
-      .Wrap{ grid-template-columns: 1fr; max-width: 720px; }
-      .Chip{ min-width: 96px; }
+  @media (max-width: 920px){
+    .Wrap{ grid-template-columns:1fr; max-width:720px; }
+    .Chip{ min-width:96px; }
 
-      .Links a.Link{ gap:9px; }
-      .Icon{ width:17px; height:17px; flex-basis:17px; }
-    }
-  </style>
+    .Links a.Link{ gap:9px; }
+    .Icon{ width:17px; height:17px; flex-basis:17px; }
+  }
+</style>
 </head>
 
 <body>

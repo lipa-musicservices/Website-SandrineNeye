@@ -35,162 +35,185 @@
   <script defer src="../Scripts/includes.js"></script>
   <script defer src="../Scripts/main.js"></script>
 
-  <style>
-    html, body{
-      margin:0;
-      padding:0;
-      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#fff;
-      color:#0e1116;
-    }
+<style>
+  html, body{
+    margin:0;
+    padding:0;
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#fff;
+    color:#0e1116;
+  }
 
-    :root{
-      --purple:#680068;
-      --purpleDark:#4b004b;
-      --container:1120px;
-      --muted:rgba(14,17,22,.72);
-      --border:rgba(10,16,26,.12);
-      --radius:14px;
-      --hbH:74px;
-    }
+  :root{
+    --purple:#680068;
+    --purpleDark:#4b004b;
+    --container:1120px;
+    --muted:rgba(14,17,22,.72);
+    --border:rgba(10,16,26,.12);
+    --radius:14px;
+    --hbH:74px;
+  }
 
-    /* Footer nicht "im Raum": Seite füllt Höhe */
-    #MainContent{
-      min-height: calc(100vh - var(--hbH));
-      display:flex;
-      flex-direction:column;
-      width:100%;
-    }
+  /* Footer nicht "im Raum": Seite füllt Höhe */
+  #MainContent{
+    min-height: calc(100vh - var(--hbH));
+    display:flex;
+    flex-direction:column;
+    width:100%;
+  }
 
-    .Page{
-      flex:1;
-      width:100%;
-      max-width:var(--container);
-      margin:0 auto;
-      padding: 42px 18px 70px;
-      box-sizing:border-box;
-    }
+  .Page{
+    flex:1;
+    width:100%;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:42px 18px 70px;
+    box-sizing:border-box;
+  }
 
-    .Page__head{
-      width:100%;
-      text-align:left;
-      margin-bottom: 22px;
-    }
+  .Page__head{
+    width:100%;
+    text-align:left;
+    margin-bottom:22px;
+  }
 
-    .Page__title{
-      margin:0;
-      font-size: clamp(32px, 4.2vw, 52px);
-      font-weight: 900;
-      letter-spacing:-0.02em;
-    }
+  /* schlank wie bei Index/Gallery */
+  .Page__title{
+    margin:0;
+    font-size: clamp(32px, 4.2vw, 52px);
+    font-weight:300;            /* war 900 */
+    letter-spacing:0.004em;
+    line-height:1.05;
+  }
 
-    .AccentRule{
-      height:3px;
-      width:56px;
-      background: var(--purple);
-      border-radius: 2px;
-      margin:14px 0 0;
-    }
+  .AccentRule{
+    height:3px;
+    width:56px;
+    background: var(--purple);
+    border-radius:2px;
+    margin:14px 0 0;
+    opacity:.9;
+  }
 
-    .Page__subtitle{
-      margin:12px 0 0;
-      color:var(--muted);
-      font-size: 16.5px;
-      line-height:1.6;
-      max-width: 78ch;
-    }
+  .Page__subtitle{
+    margin:12px 0 0;
+    color:var(--muted);
+    font-size:16.5px;
+    line-height:1.6;
+    max-width:78ch;
+    font-weight:400;
+  }
 
-    .ListHint{
-      margin: 18px 0 0;
-      padding-left: 18px;
-      color: rgba(14,17,22,.78);
-      font-weight: 700;
-      line-height:1.7;
-    }
+  .ListHint{
+    margin:18px 0 0;
+    padding-left:18px;
+    color: rgba(14,17,22,.78);
+    font-weight:500;           /* war 700 */
+    line-height:1.7;
+  }
 
-    /* Project cards */
-    .Projects{
-      margin-top: 28px;
-      display:flex;
-      flex-direction:column;
-      gap: 14px;
-    }
+  /* Project cards */
+  .Projects{
+    margin-top:28px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
 
+  .Project{
+    width:100%;
+    border:1px solid var(--border);     /* vorher 0px -> jetzt sauberer Rahmen */
+    border-radius:var(--radius);
+    background:#fff;
+    overflow:hidden;
+
+    display:grid;
+    grid-template-columns: 360px 1fr;
+    gap:0;
+
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+
+  .Project:hover{
+    transform:translateY(-2px);
+    border-color: rgba(10,16,26,.16);
+    box-shadow: 0 18px 46px rgba(10,16,26,.10);
+  }
+
+  .Project__media{
+    background:#f4f4f8;
+    border-right:1px solid var(--border);
+    min-height:220px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .Project__media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transform:scale(1.01);
+    transition:transform .25s ease;
+  }
+
+  .Project:hover .Project__media img{
+    transform:scale(1.04);
+  }
+
+  .Project__body{
+    padding:16px 18px 18px;
+    box-sizing:border-box;
+    min-width:0;
+  }
+
+  /* schlankere Typo */
+  .Project__title{
+    margin:0;
+    font-weight:550;           /* war 900 */
+    font-size:20px;
+    letter-spacing:-0.006em;
+    line-height:1.18;
+  }
+
+  .Project__meta{
+    margin:7px 0 0;
+    color: var(--muted);
+    font-weight:450;           /* war 750 */
+    font-size:14.5px;
+    line-height:1.45;
+    letter-spacing:.02em;
+  }
+
+  .Project__text{
+    margin:12px 0 0;
+    color: rgba(14,17,22,.82);
+    font-size:16.2px;
+    line-height:1.72;
+    white-space: pre-wrap;
+    font-weight:400;
+  }
+
+  /* optional small divider */
+  .Project__rule{
+    margin-top:12px;
+    height:2px;
+    width:44px;
+    background: rgba(104,0,104,.18);
+    border-radius:2px;
+  }
+
+  @media (max-width: 980px){
     .Project{
-      width:100%;
-      border:0px solid var(--border);
-      border-radius: var(--radius);
-      background:#fff;
-      overflow:hidden;
-
-      display:grid;
-      grid-template-columns: 360px 1fr;
-      gap: 0;
+      grid-template-columns:1fr;
     }
-
     .Project__media{
-      background:#f4f4f8;
-      border-right:1px solid var(--border);
-      min-height: 220px;
-      position:relative;
+      border-right:0;
+      border-bottom:1px solid var(--border);
+      min-height:240px;
     }
-
-    .Project__media img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .Project__body{
-      padding: 16px 18px 18px;
-      box-sizing:border-box;
-      min-width:0;
-    }
-
-    .Project__title{
-      margin:0;
-      font-weight: 900;
-      font-size: 20px;
-      letter-spacing:-0.01em;
-    }
-
-    .Project__meta{
-      margin:6px 0 0;
-      color: var(--muted);
-      font-weight: 750;
-      font-size: 14.5px;
-      line-height:1.4;
-    }
-
-    .Project__text{
-      margin: 12px 0 0;
-      color: rgba(14,17,22,.82);
-      font-size: 16.2px;
-      line-height: 1.72;
-      white-space: pre-wrap;
-    }
-
-    /* optional small divider */
-    .Project__rule{
-      margin-top: 12px;
-      height:2px;
-      width:44px;
-      background: rgba(104,0,104,.18);
-      border-radius:2px;
-    }
-
-    @media (max-width: 980px){
-      .Project{
-        grid-template-columns: 1fr;
-      }
-      .Project__media{
-        border-right:0;
-        border-bottom:1px solid var(--border);
-        min-height: 240px;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
