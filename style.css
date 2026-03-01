@@ -15,7 +15,7 @@
    - Headbar + MobileMenu + Footbar: SOLID purple (no transparency mix)
    - No pill buttons (slight rounding only)
    - Desktop nav hover: Shirin-style text fly-out/in
-   - Footer: clean grid + one social system (FootbarSocial)
+   - Footer: social icons bottom row + legal in bottom bar
    - Cookie banner included
    ========================================================= */
 
@@ -30,10 +30,10 @@
   /* Corner radius (NOT pills) */
   --r:10px;
 
-/* MORE LILAC (flieder) – still dark-ish, just a touch brighter */
---purple:#6a2f86;        /* main bar: fliederiger (mehr blau/magenta) */
---purpleDark:#5a2874;    /* hover */
---purpleDarker:#4b2162;  /* active */
+  /* MORE LILAC (flieder) – still dark-ish, just a touch brighter */
+  --purple:#6a2f86;        /* main bar: fliederiger (mehr blau/magenta) */
+  --purpleDark:#5a2874;    /* hover */
+  --purpleDarker:#4b2162;  /* active */
 
   /* Menu text */
   --menuText:#ffffff;
@@ -434,7 +434,9 @@ html, body{
 
 
 /* =========================================================
-   FOOTBAR – CLEAN
+   FOOTBAR – CLEAN (UPDATED)
+   - Social icons: bottom horizontal row
+   - Legal links: moved to bottom bar
    ========================================================= */
 .Footbar{
   background:var(--bar);
@@ -447,6 +449,9 @@ html, body{
   padding:34px 18px;
 
   display:grid;
+  /* Previously: 4 cols incl Social+Legal.
+     New: keep your HTML compatible, but layout prefers content columns.
+     If your HTML still has 4 cols, it will still work; see responsive rules below. */
   grid-template-columns: 1.05fr .95fr 1.25fr .75fr;
   gap:34px;
 
@@ -525,8 +530,13 @@ html, body{
 
 
 /* =========================================================
-   FOOTER SOCIAL – GRID (3 per row) + PNG Icons
+   FOOTER SOCIAL – COMPAT + NEW BOTTOM ROW
    ========================================================= */
+
+/* --- Compatibility: your HTML currently uses .FootbarSocial__btn/.FootbarSocial__img
+   but previous CSS used .FootbarSocial__link/.FootbarSocial__iconImg.
+   Support BOTH, so nothing breaks. --- */
+
 .FootbarSocial{
   list-style:none;
   padding:0;
@@ -540,8 +550,9 @@ html, body{
 
 .FootbarSocial__item{ margin:0; }
 
-/* Icon button */
-.FootbarSocial__link{
+/* support both class names */
+.FootbarSocial__link,
+.FootbarSocial__btn{
   width:var(--socBtn);
   height:var(--socBtn);
   border-radius:12px;
@@ -559,19 +570,25 @@ html, body{
   transition: transform .12s ease, background .12s ease, border-color .12s ease;
 }
 
-.FootbarSocial__link:hover{
+.FootbarSocial__link:hover,
+.FootbarSocial__btn:hover{
   background: rgba(255,255,255,.11);
   border-color: rgba(255,255,255,.20);
   transform: translateY(-1px);
 }
 
-.FootbarSocial__link:active{ transform: translateY(0); }
+.FootbarSocial__link:active,
+.FootbarSocial__btn:active{
+  transform: translateY(0);
+}
 
-.FootbarSocial__link:focus-visible{
+.FootbarSocial__link:focus-visible,
+.FootbarSocial__btn:focus-visible{
   outline: 2px solid rgba(255,255,255,.42);
   outline-offset: 2px;
 }
 
+/* legacy wrappers still fine */
 .FootbarSocial__icon{
   width:var(--socIcon);
   height:var(--socIcon);
@@ -580,7 +597,65 @@ html, body{
   justify-content:center;
 }
 
-.FootbarSocial__iconImg{
+/* support both image class names */
+.FootbarSocial__iconImg,
+.FootbarSocial__img{
+  width:var(--socIcon);
+  height:var(--socIcon);
+  display:block;
+  object-fit:contain;
+  object-position:center;
+}
+
+/* --- NEW: bottom horizontal social row (recommended) --- */
+.FootbarSocialRow{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0;
+
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+
+  box-sizing:border-box;
+}
+
+.FootbarSocialRow li{ margin:0; }
+
+.FootbarSocialRow__btn{
+  width:var(--socBtn);
+  height:var(--socBtn);
+  border-radius:12px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.FootbarSocialRow__btn:hover{
+  background: rgba(255,255,255,.11);
+  border-color: rgba(255,255,255,.20);
+  transform: translateY(-1px);
+}
+
+.FootbarSocialRow__btn:active{ transform: translateY(0); }
+
+.FootbarSocialRow__btn:focus-visible{
+  outline: 2px solid rgba(255,255,255,.42);
+  outline-offset: 2px;
+}
+
+.FootbarSocialRow__img{
   width:var(--socIcon);
   height:var(--socIcon);
   display:block;
@@ -590,11 +665,63 @@ html, body{
 
 
 /* =========================
-   FOOTBAR BOTTOM / POWERED
+   FOOTBAR BOTTOM / LEGAL / POWERED (UPDATED)
    ========================= */
 .Footbar__bottom{
-  border-top:1px solid rgba(255,255,255,.14);
-  padding:16px 18px 18px;
+  border-top:0px solid rgba(255,255,255,.14);
+  padding:14px 18px 18px;
+}
+
+/* optional inner wrapper (if present in HTML) */
+.Footbar__bottomInner{
+  max-width:var(--container);
+  margin:0 auto;
+  margin-top: 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  padding-top:12px;
+  box-sizing:border-box;
+
+  border-top: 1px solid rgba(255,255,255,.14);
+
+}
+
+/* Legal links in bottom bar */
+.FootbarLegal{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.FootbarLegal a{
+  color: rgba(255,255,255,.86);
+  text-decoration:none;
+  font-weight:520;
+  letter-spacing:.02em;
+
+  padding:6px 8px;
+  border-radius:10px;
+
+  border:1px solid transparent;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease, color .15s ease;
+}
+
+.FootbarLegal a:hover{
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.18);
+  color:#fff;
+  transform: translateY(-1px);
+}
+
+.FootbarLegal a:active{ transform: translateY(0); }
+
+.FootbarLegal__sep{
+  color: rgba(255,255,255,.45);
+  user-select:none;
 }
 
 .Footbar__powered{
@@ -605,7 +732,7 @@ html, body{
 
 .Footbar__powered a{
   text-decoration:none;
-  font-weight:560;            /* thinner */
+  font-weight:520;            /* slightly slimmer */
   letter-spacing:.04em;
   font-size:13px;
 
@@ -653,6 +780,15 @@ html, body{
     gap:22px;
     padding:28px 16px;
   }
+
+  .Footbar__bottom{
+    padding:12px 16px 16px;
+  }
+
+  .Footbar__bottomInner{
+    justify-content:center;
+  }
+
   .FootbarSocial{ gap:10px; }
 }
 
@@ -726,7 +862,7 @@ html, body{
 
   border-radius:10px;
   font-weight:600;            /* thinner */
-  border:2px solid #680068;
+  border:2px solid #6a2f86;
 
   cursor:pointer;
   transition:.15s ease;
@@ -734,7 +870,7 @@ html, body{
 }
 
 .CookieBtn--primary{
-  background:#680068;
+  background:#6a2f86;
   color:#fff;
 }
 
@@ -742,11 +878,11 @@ html, body{
 
 .CookieBtn--ghost{
   background:transparent;
-  color:#680068;
+  color:#6a2f86;
 }
 
 .CookieBtn--ghost:hover{
-  background:#680068;
+  background:#6a2f86;
   color:#fff;
 }
 
