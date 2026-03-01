@@ -30,10 +30,10 @@
   /* Corner radius (NOT pills) */
   --r:10px;
 
-  /* Brand Purple -> MORE LILAC, same darkness vibe, slightly lighter */
-  --purple:#54205f;        /* more flieder */
-  --purpleDark:#471a52;    /* slightly darker */
-  --purpleDarker:#3b1445;  /* active */
+/* MORE LILAC (flieder) – still dark-ish, just a touch brighter */
+--purple:#6a2f86;        /* main bar: fliederiger (mehr blau/magenta) */
+--purpleDark:#5a2874;    /* hover */
+--purpleDarker:#4b2162;  /* active */
 
   /* Menu text */
   --menuText:#ffffff;
