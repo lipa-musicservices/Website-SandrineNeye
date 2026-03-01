@@ -1,11 +1,11 @@
 <!--
 ==============================================================================
 
-    __    _ ____            __  ___           _         _____                 _               
+    __    _ ____            __  ___           _         _____                 _
    / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
   / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
- / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
-/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  )
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/
 
    LiPa Music Services – Abteilung Webentwicklung
    © 2026 LiPa Music Services GbR
@@ -19,26 +19,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- WICHTIG: nicht "../" (macht dir die Partials kaputt) -->
   <base href="./">
 
   <title>Sandrine Neye – Singer & Songwriter</title>
   <meta name="description" content="Offizielle Website von Sandrine Neye – Singer & Songwriter. Konzerte, Projekte, Galerie und Kontakt." />
   <meta name="theme-color" content="#680068" />
 
-  <!-- Google Font gehört in den HEAD der Seite -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Root assets: immer ../ -->
   <link rel="icon" href="../Resources/Content/Favicon.ico" />
   <link rel="stylesheet" href="../style.css" />
 
   <script defer src="../Scripts/includes.js"></script>
   <script defer src="../Scripts/main.js"></script>
 
-  <!-- INDEX-spezifisches CSS -->
 <style>
   html, body{
     margin:0;
@@ -57,6 +53,11 @@
     --radius:14px;
     --hbH:74px;
   }
+
+
+  html, body{
+  overflow-x: hidden;
+}
 
   /* =========================
      HERO (full-bleed)
@@ -103,22 +104,19 @@
 
   .Hero__kicker{
     color:rgba(255,255,255,.88);
-    font-weight:500;            /* dünner */
-    letter-spacing:.14em;       /* etwas “luxury” */
+    font-weight:500;
+    letter-spacing:.14em;
     text-transform:uppercase;
     font-size:12px;
   }
 
-  /* Noch dünner + eleganter */
   .Hero h1{
     margin:0;
     color:#fff;
-
-    font-weight:300;            /* dünner als vorher */
+    font-weight:300;
     line-height:1.02;
     font-size: clamp(34px, 5.2vw, 74px);
-
-    letter-spacing: 0.004em;    /* bei dünn wirkt leicht positiv besser */
+    letter-spacing: 0.004em;
     text-shadow: 0 16px 46px rgba(0,0,0,.48);
   }
 
@@ -126,7 +124,7 @@
     margin:0;
     color:rgba(255,255,255,.86);
     font-size: clamp(16px, 2.2vw, 20px);
-    font-weight:400;            /* dünner */
+    font-weight:400;
     max-width: 62ch;
     text-shadow: 0 12px 32px rgba(0,0,0,.34);
   }
@@ -138,7 +136,6 @@
     margin-top: 10px;
   }
 
-  /* Buttons: leicht rund, keine Pills */
   .Btn{
     display:inline-flex;
     align-items:center;
@@ -147,7 +144,7 @@
     padding:0 18px;
     border-radius:10px;
     text-decoration:none;
-    font-weight:700;            /* etwas weniger “Brett” */
+    font-weight:700;
     border:2px solid transparent;
     transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
     user-select:none;
@@ -180,7 +177,7 @@
   .Section h2{
     margin:0 0 14px;
     font-size: 30px;
-    font-weight:500;            /* dünner */
+    font-weight:500;
     letter-spacing:-0.004em;
   }
   .Section p{
@@ -195,7 +192,7 @@
      GALLERY MARQUEE
      ========================= */
   .GallerySection{
-    padding: 38px 0 76px; /* full-bleed look */
+    padding: 38px 0 76px;
   }
   .GalleryHead{
     max-width:var(--container);
@@ -210,16 +207,8 @@
   .GalleryHead h2{
     margin:0;
     font-size: 30px;
-    font-weight:500;            /* dünner */
+    font-weight:500;
     letter-spacing:-0.004em;
-  }
-  .GalleryHead p{
-    margin:10px 0 0;
-    color:var(--muted);
-    font-size:16px;
-    line-height:1.55;
-    max-width:70ch;
-    font-weight:400;
   }
   .GalleryHead__left{ min-width:0; }
   .GalleryHead__right{
@@ -230,7 +219,7 @@
     justify-content:flex-end;
   }
   .GalleryMini{
-    font-weight:600;            /* dünner */
+    font-weight:600;
     color:var(--muted);
     font-size:13px;
     white-space:nowrap;
@@ -246,7 +235,6 @@
     background:#fff;
   }
 
-  /* soft fades left/right */
   .MarqueeWrap::before,
   .MarqueeWrap::after{
     content:"";
@@ -262,25 +250,24 @@
 
   .MarqueeTrack{
     display:flex;
-    gap:12px;
+    gap:14px;
     padding:14px 18px;
     width:max-content;
-    animation: marquee 70s linear infinite;
+    animation: marquee 115s linear infinite;
     will-change:transform;
   }
 
-  /* stop animation on hover (nice for usability) */
   .MarqueeWrap:hover .MarqueeTrack{ animation-play-state: paused; }
 
   @keyframes marquee{
     from{ transform:translate3d(0,0,0); }
-    to{ transform:translate3d(-50%,0,0); } /* because we duplicate items */
+    to{ transform:translate3d(-50%,0,0); }
   }
 
   .MarqueeItem{
-    width:260px;
-    height:170px;
-    border-radius: var(--radius);
+    width: 340px;
+    height: 230px;
+    border-radius: 0px;
     overflow:hidden;
     border:1px solid var(--border);
     background:#f4f4f8;
@@ -293,30 +280,20 @@
     height:100%;
     object-fit:cover;
     display:block;
+    border-radius:0px;
     transition:transform .2s ease;
   }
   .MarqueeItem:hover img{ transform:scale(1.04); }
 
-  .MarqueeHint{
-    max-width:var(--container);
-    margin:0 auto;
-    padding:12px 18px 0;
-    box-sizing:border-box;
-    color:rgba(14,17,22,.62);
-    font-size:13px;
-    font-weight:600;            /* dünner */
-  }
-
   /* =========================
-     PRESS MARQUEE (added)
+     PRESS – STEP CAROUSEL (tief + zoom mittig)
      ========================= */
-  .PressSection{
-    padding: 0 0 76px;
-  }
+  .PressSection{ padding: 0 0 76px; }
+
   .PressHead{
     max-width:var(--container);
     margin:0 auto;
-    padding:0 18px 16px;
+    padding:0 18px 10px;
     display:flex;
     align-items:flex-end;
     justify-content:space-between;
@@ -326,8 +303,33 @@
   .PressHead h2{
     margin:0;
     font-size: 30px;
-    font-weight:500;            /* dünner */
+    font-weight:500;
     letter-spacing:-0.004em;
+  }
+
+  /* Leiste tiefer + mehr “Bühne” für Shadow/3D */
+  #PressWrap{
+    margin-top: 18px;           /* <-- tiefer (weg von der Überschrift) */
+    padding: 26px 0 34px;       /* <-- Center-Zoom bleibt im Feld */
+    overflow: visible;          /* <-- darf über Rand */
+    perspective: 1100px;
+    isolation: isolate;
+  }
+
+  /* Fades beim Press: hinter die Karten (und etwas milder) */
+  #PressWrap::before,
+  #PressWrap::after{
+    z-index:0;
+    opacity:.30;
+  }
+
+  #PressTrack{
+    animation:none !important;
+    transition: transform 450ms cubic-bezier(.2,.9,.2,1);
+    will-change: transform;
+    position:relative;
+    z-index:1;
+    transform-style: preserve-3d;
   }
 
   .PressCard{
@@ -338,27 +340,57 @@
     background:#fff;
     padding: 16px 18px;
     box-sizing:border-box;
+
+    position:relative;
+    z-index:1;
+
+    transform: translateZ(0px) scale(.86);
+    opacity:.78;
+
+    transition:
+      transform 1100ms cubic-bezier(.22, .8, .18, 1),
+      opacity  1100ms cubic-bezier(.22, .8, .18, 1),
+      box-shadow 1100ms cubic-bezier(.22, .8, .18, 1),
+      border-color 1100ms cubic-bezier(.22, .8, .18, 1);
+
+    will-change: transform;
   }
+
+  /* Zoom bleibt mittig: kein “hochziehen”, nur Z/Scale */
+  .PressCard.is-center{
+    z-index: 20;
+    transform: translateY(0px) translateZ(95px) scale(1.22);
+    opacity: 1;
+    box-shadow: 0 34px 96px rgba(10,16,26,.26);
+    border-color: rgba(104,0,104,.34);
+  }
+
+  .PressCard{
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  .PressCard.is-center{
+    transform: translateZ(0) scale(1.22);  /* translateZ kann GPU-Layer stabilisieren */
+  }
+
   .PressText{
     margin:0;
     font-size: 16.5px;
     line-height: 1.7;
     color: rgba(14,17,22,.86);
-    font-weight: 400;           /* dünner */
+    font-weight: 400;
   }
   .PressText::before,
   .PressText::after{
     color: rgba(104,0,104,.45);
-    font-weight: 500;           /* dünner */
+    font-weight: 500;
   }
-  .PressText::before{
-    content:"“";
-    margin-right: 2px;
-  }
-  .PressText::after{
-    content:"”";
-    margin-left: 2px;
-  }
+  .PressText::before{ content:"“"; margin-right:2px; }
+  .PressText::after{ content:"”"; margin-left:2px; }
+
   .PressMeta{
     margin-top: 10px;
     display:flex;
@@ -366,21 +398,21 @@
     gap: 10px 14px;
     align-items:baseline;
     color: rgba(14,17,22,.62);
-    font-weight: 600;           /* dünner */
+    font-weight: 600;
     font-size: 13.5px;
   }
   .PressSource{
     color: rgba(14,17,22,.80);
-    font-weight: 650;           /* dünner */
+    font-weight: 650;
   }
   .PressLink{
     color: var(--purple);
     text-decoration: underline;
     text-underline-offset: 3px;
-    font-weight: 650;           /* dünner */
+    font-weight: 650;
   }
 
-  /* Lightbox (same as gallery) */
+  /* Lightbox */
   .Lightbox{
     position:fixed;
     inset:0;
@@ -406,21 +438,27 @@
     border:2px solid #fff;
     background:transparent;
     color:#fff;
-    font-weight:650;            /* dünner */
+    font-weight:650;
     cursor:pointer;
   }
 
+  @media (max-width: 900px){
+    .MarqueeItem{ width: 300px; height: 205px; }
+  }
   @media (max-width: 680px){
     .Hero{ min-height: calc(92vh - var(--hbH)); }
     .Hero__inner{ padding-bottom: 42px; }
     .Btn{ width:100%; }
     .GalleryHead{ flex-direction:column; align-items:flex-start; }
     .GalleryHead__right{ justify-content:flex-start; }
-    .MarqueeItem{ width:220px; height:150px; }
+    .MarqueeItem{ width: 260px; height: 180px; }
     .MarqueeWrap::before, .MarqueeWrap::after{ width:46px; }
 
     .PressHead{ flex-direction:column; align-items:flex-start; }
     .PressCard{ width:86vw; }
+
+    /* auf Mobile nicht zu “hoch” wirken lassen */
+    #PressWrap{ padding: 18px 0 26px; }
   }
 </style>
 </head>
@@ -464,37 +502,27 @@
       <div class="GalleryHead">
         <div class="GalleryHead__left">
           <h2>Galerie</h2>
-          <!-- <p>Ein paar Eindrücke – klick ein Bild an, um es groß zu sehen.</p> -->
         </div>
         <div class="GalleryHead__right">
           <span class="GalleryMini" id="GalCount">Lade…</span>
-          <!-- <a class="Btn Btn--primary" href="gallery.html" style="height:42px;">Zur Galerie</a> -->
         </div>
       </div>
 
       <div class="MarqueeWrap">
-        <div class="MarqueeTrack" id="MarqueeTrack" aria-label="Galerie Marquee">
-          <!-- JS inject -->
-        </div>
+        <div class="MarqueeTrack" id="MarqueeTrack" aria-label="Galerie Marquee"></div>
       </div>
-
-<!--       <div class="MarqueeHint">
-        Tipp: Hover hält an · Klick öffnet groß · Mehr Bilder in der Galerie
-      </div> -->
     </section>
 
     <!-- =========================
-         Pressestimmen Marquee (added)
+         Press – Step Carousel
     ========================== -->
     <section class="PressSection" aria-label="Pressestimmen Vorschau">
       <div class="PressHead">
         <h2>Pressestimmen</h2>
       </div>
 
-      <div class="MarqueeWrap">
-        <div class="MarqueeTrack" id="PressTrack" aria-label="Pressestimmen Marquee">
-          <!-- JS inject -->
-        </div>
+      <div class="MarqueeWrap" id="PressWrap">
+        <div class="MarqueeTrack" id="PressTrack" aria-label="Pressestimmen Carousel"></div>
       </div>
     </section>
 
@@ -568,10 +596,8 @@
           return;
         }
 
-        // cnt.textContent = items.length + "+ Bilder";
         cnt.textContent = "";
 
-        // Build once, then duplicate for seamless loop
         const htmlOnce = items.map(item => `
           <div class="MarqueeItem" data-full="${esc(item.full)}" aria-label="${esc(item.name)}">
             <img src="${esc(item.thumb)}" alt="${esc(item.name)}" loading="lazy">
@@ -597,64 +623,25 @@
     loadMarquee();
 
     /* =========================
-       PRESS MARQUEE (added)
-       - NO dates
-       ========================= */
+       PRESS – Stepper (5s hold, quick snap)
+    ========================= */
     const press = [
-      {
-        text: "Mit einem beeindruckenden Solokonzert „unplugged“ – also nur mit ihrer Stimme und ihrer Gitarre – zog sie das Publikum in ihren Bann.",
-        source: "Haus Conrath",
-        url: "https://haus-conrath.de/aktuelles/page/2/"
-      },
-      {
-        text: "Und mit ihrer natürlichen Art gelang es ihr spielend, den Kontakt zum Publikum herzustellen. Man spürte, welch große Bedeutung Musik im Leben von Sandrine Neye spielt.",
-        source: "Haus Conrath",
-        url: "https://haus-conrath.de/aktuelles/page/2/"
-      },
-      {
-        text: "Eine Stimme, die sich geschult und mit Leichtigkeit durch das Repertoire ihrer Vorbilder (Whitney Houston, Adele) bewegte, um eine individuelle Version der Stücke zu kreieren.",
-        source: "JazznRhythm",
-        url: "https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026"
-      },
-      {
-        text: "…gehört sie zu den aufstrebenden Talenten, die zwischen Jazz, Pop, Neosoul und brasilianischen MPB/Bossa-Nova-Rhythm eine Sprache und Richtung suchen, die in Groove und Handwerk viel Übung und vor allem Anschluss an die klassischen Namen verrät.",
-        source: "JazznRhythm",
-        url: "https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026"
-      },
-      {
-        text: "Das Songwriting verrät ein gutes Händchen für Rhythmus und Melodie, die Wahl der Vorbilder ist gut getroffen.",
-        source: "JazznRhythm",
-        url: "https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026"
-      },
-      {
-        text: "Sandrine Neye ist eine jener Sängerinnen in Karlsruhe, deren außergewöhnliche Stimme schon bei den Konzerten von Sandie Wollasch erstaunt haben.",
-        source: "JazznRhythm",
-        url: "https://jazznrhythm.com/ankuendigung-sandrine-neye-in-der-hemingway-lounge-am-21-02-2026-um-1130"
-      },
-      {
-        text: "Sandrine Neye (eine der talentiertesten deutschen Nachwuchssängerinnen)",
-        source: "Stuttgart Tourist",
-        url: "https://www.stuttgart-tourist.de/e-sandie-wollasch-klaus-wagenleiter-trio-feat-klaus-graf-sandrine-neye"
-      },
-      {
-        text: "Sie selbst bezeichnet ihre Musik als „Soulful Pop“, eine Bekannte bezeichnete sie gar als „Seelenzauber“.",
-        source: "BNN",
-        url: "https://bnn.de/karlsruhe/die-karlsruher-saengerin-sandrine-neye-singt-mit-sanftem-soul-ganz-wie-vorbild-whitney-houston"
-      },
-      {
-        text: "Die Karlsruher Sängerin Sandrine Neye singt mit sanftem Soul ganz wie Vorbild Whitney Houston.",
-        source: "BNN",
-        url: "https://bnn.de/karlsruhe/die-karlsruher-saengerin-sandrine-neye-singt-mit-sanftem-soul-ganz-wie-vorbild-whitney-houston"
-      },
-      {
-        text: "Ein Höhepunkt war sicher der Auftritt der Sängerin Sandrine, die bei „Whats Going On“ ihre beeindruckende Soulstimme klingen ließ.",
-        source: "BNN (Printartikel)",
-        url: ""
-      }
+      { text:"Mit einem beeindruckenden Solokonzert „unplugged“ – also nur mit ihrer Stimme und ihrer Gitarre – zog sie das Publikum in ihren Bann.", source:"Haus Conrath", url:"https://haus-conrath.de/aktuelles/page/2/" },
+      { text:"Und mit ihrer natürlichen Art gelang es ihr spielend, den Kontakt zum Publikum herzustellen. Man spürte, welch große Bedeutung Musik im Leben von Sandrine Neye spielt.", source:"Haus Conrath", url:"https://haus-conrath.de/aktuelles/page/2/" },
+      { text:"Eine Stimme, die sich geschult und mit Leichtigkeit durch das Repertoire ihrer Vorbilder (Whitney Houston, Adele) bewegte, um eine individuelle Version der Stücke zu kreieren.", source:"JazznRhythm", url:"https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026" },
+      { text:"…gehört sie zu den aufstrebenden Talenten, die zwischen Jazz, Pop, Neosoul und brasilianischen MPB/Bossa-Nova-Rhythm eine Sprache und Richtung suchen, die in Groove und Handwerk viel Übung und vor allem Anschluss an die klassischen Namen verrät.", source:"JazznRhythm", url:"https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026" },
+      { text:"Das Songwriting verrät ein gutes Händchen für Rhythmus und Melodie, die Wahl der Vorbilder ist gut getroffen.", source:"JazznRhythm", url:"https://jazznrhythm.com/sandrine-neye-alfred-mueller-in-der-hemingway-lounge-am-21-02-2026" },
+      { text:"Sandrine Neye ist eine jener Sängerinnen in Karlsruhe, deren außergewöhnliche Stimme schon bei den Konzerten von Sandie Wollasch erstaunt haben.", source:"JazznRhythm", url:"https://jazznrhythm.com/ankuendigung-sandrine-neye-in-der-hemingway-lounge-am-21-02-2026-um-1130" },
+      { text:"Sandrine Neye (eine der talentiertesten deutschen Nachwuchssängerinnen)", source:"Stuttgart Tourist", url:"https://www.stuttgart-tourist.de/e-sandie-wollasch-klaus-wagenleiter-trio-feat-klaus-graf-sandrine-neye" },
+      { text:"Sie selbst bezeichnet ihre Musik als „Soulful Pop“, eine Bekannte bezeichnete sie gar als „Seelenzauber“.", source:"BNN", url:"https://bnn.de/karlsruhe/die-karlsruher-saengerin-sandrine-neye-singt-mit-sanftem-soul-ganz-wie-vorbild-whitney-houston" },
+      { text:"Die Karlsruher Sängerin Sandrine Neye singt mit sanftem Soul ganz wie Vorbild Whitney Houston.", source:"BNN", url:"https://bnn.de/karlsruhe/die-karlsruher-saengerin-sandrine-neye-singt-mit-sanftem-soul-ganz-wie-vorbild-whitney-houston" },
+      { text:"Ein Höhepunkt war sicher der Auftritt der Sängerin Sandrine, die bei „Whats Going On“ ihre beeindruckende Soulstimme klingen ließ.", source:"BNN (Printartikel)", url:"" }
     ];
 
     const pressTrack = document.getElementById("PressTrack");
-    if(pressTrack){
+    const pressWrap  = document.getElementById("PressWrap");
+
+    if(pressTrack && pressWrap && press.length){
       const once = press.map(q => `
         <article class="PressCard">
           <p class="PressText">${esc(q.text)}</p>
@@ -665,7 +652,72 @@
         </article>
       `).join("");
 
-      pressTrack.innerHTML = once + once;
+      pressTrack.innerHTML = once + once + once;
+
+      const N = press.length;
+      let idx = N;
+
+      let holdMs = 5000;
+      let moveMs = 450;
+      let timer = null;
+
+      function cards(){
+        return Array.from(pressTrack.querySelectorAll(".PressCard"));
+      }
+
+      function setTransition(ms){
+        pressTrack.style.transitionDuration = ms + "ms";
+      }
+
+      function centerTo(index){
+        const cs = cards();
+        const card = cs[index];
+        if(!card) return;
+
+        cs.forEach((c,i) => c.classList.toggle("is-center", i === index));
+
+        const wrapW = pressWrap.clientWidth;
+        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+        const targetX = (wrapW / 2) - cardCenter;
+
+        pressTrack.style.transform = `translate3d(${targetX}px,0,0)`;
+      }
+
+      function step(){
+        setTransition(0);
+        centerTo(idx);
+
+        timer = window.setTimeout(() => {
+          idx += 1;
+
+          setTransition(moveMs);
+          centerTo(idx);
+
+          window.setTimeout(() => {
+            if(idx >= N*2){
+              setTransition(0);
+              idx = N;
+              centerTo(idx);
+            }
+            step();
+          }, moveMs + 20);
+
+        }, holdMs);
+      }
+
+      requestAnimationFrame(() => {
+        setTransition(0);
+        centerTo(idx);
+        step();
+      });
+
+      window.addEventListener("resize", () => {
+        setTransition(0);
+        centerTo(idx);
+      });
+
+      pressWrap.addEventListener("mouseenter", () => { if(timer) clearTimeout(timer); });
+      pressWrap.addEventListener("mouseleave", () => { step(); });
     }
 
   })();
