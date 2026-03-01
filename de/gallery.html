@@ -13,175 +13,205 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Root assets (2 Ebenen hoch) -->
   <link rel="icon" href="../Resources/Content/Favicon.ico" />
   <link rel="stylesheet" href="../style.css" />
   <script defer src="../Scripts/includes.js"></script>
   <script defer src="../Scripts/main.js"></script>
 
   <style>
-  html, body{
-    margin:0;
-    padding:0;
-    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background:#fff;
-    color:#0e1116;
-  }
+    html, body{
+      margin:0;
+      padding:0;
+      font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#fff;
+      color:#0e1116;
+    }
 
-  :root{
-    --purple:#680068;
-    --container:1120px;
-    --border:rgba(10,16,26,.12);
-    --radius:14px;
-    --muted:rgba(14,17,22,.7);
-    --hbH:74px;
-  }
+    :root{
+      --purple:#680068;
+      --container:1120px;
+      --border:rgba(10,16,26,.12);
+      --radius:14px;
+      --muted:rgba(14,17,22,.7);
+      --hbH:74px;
+    }
 
-  #MainContent{
-    min-height: calc(100vh - var(--hbH));
-    display:flex;
-    flex-direction:column;
-    width:100%;
-  }
+    #MainContent{
+      min-height: calc(100vh - var(--hbH));
+      display:flex;
+      flex-direction:column;
+      width:100%;
+    }
 
-  .Page{
-    flex:1;
-    width:100%;
-    max-width:var(--container);
-    margin:0 auto;
-    padding:42px 18px 70px;
-    box-sizing:border-box;
-  }
+    .Page{
+      flex:1;
+      width:100%;
+      max-width:var(--container);
+      margin:0 auto;
+      padding:42px 18px 70px;
+      box-sizing:border-box;
+    }
 
-  /* Head */
-  .Page__head{
-    width:100%;
-    text-align:left;
-    margin-bottom:6px;
-  }
+    .Page__head{
+      width:100%;
+      text-align:left;
+      margin-bottom:6px;
+    }
 
-  /* schlank wie überall */
-  .Page__title{
-    margin:0;
-    font-size:clamp(32px, 4.2vw, 52px);
-    font-weight:300;          /* war 900 */
-    letter-spacing:0.004em;
-    line-height:1.05;
-  }
+    .Page__title{
+      margin:0;
+      font-size:clamp(32px, 4.2vw, 52px);
+      font-weight:300;
+      letter-spacing:0.004em;
+      line-height:1.05;
+    }
 
-  .AccentRule{
-    height:3px;
-    width:56px;
-    background:var(--purple);
-    border-radius:2px;
-    margin:14px 0 0;
-    opacity:.9;
-  }
+    .AccentRule{
+      height:3px;
+      width:56px;
+      background:var(--purple);
+      border-radius:2px;
+      margin:14px 0 0;
+      opacity:.9;
+    }
 
-  .Count{
-    margin-top:18px;
-    font-weight:500;          /* war 900 */
-    color:var(--muted);
-    font-size:14px;
-    text-align:left;
-    letter-spacing:.04em;
-  }
+    .Count{
+      margin-top:18px;
+      font-weight:500;
+      color:var(--muted);
+      font-size:14px;
+      text-align:left;
+      letter-spacing:.04em;
+    }
 
-  /* Grid */
-  .Grid{
-    width:100%;
-    margin-top:22px;
-    display:grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap:14px;
-  }
+    .Grid{
+      width:100%;
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap:14px;
+    }
 
-  .Tile{
-    width:100%;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    overflow:hidden;
-    background:#f4f4f8;
-    cursor:pointer;
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
+    .Tile{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:#f4f4f8;
+      cursor:pointer;
+      transition:transform .18s ease;
+    }
 
-  .Tile img{
-    width:100%;
-    height:240px;
-    object-fit:cover;
-    display:block;
-    transition:transform .25s ease;
-  }
+    .Tile img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      display:block;
+      transition:transform .25s ease;
+    }
 
-  .Tile:hover{
-    transform:translateY(-2px);
-  }
+    .Tile:hover{ transform:translateY(-2px); }
+    .Tile:hover img{ transform:scale(1.04); }
 
-  .Tile:hover img{
-    transform:scale(1.04);
-  }
+    .Empty{
+      width:100%;
+      max-width:760px;
+      margin:16px 0 0;
+      border:1px dashed rgba(10,16,26,.22);
+      border-radius:var(--radius);
+      padding:16px 18px;
+      color:var(--muted);
+      box-sizing:border-box;
+      text-align:left;
+      font-weight:400;
+    }
 
-  /* Empty */
-  .Empty{
-    width:100%;
-    max-width:760px;
-    margin:16px 0 0;
-    border:1px dashed rgba(10,16,26,.22);
-    border-radius:var(--radius);
-    padding:16px 18px;
-    color:var(--muted);
-    box-sizing:border-box;
-    text-align:left;
-    font-weight:400;
-  }
+    /* Lightbox */
+    .Lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.85);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:20px;
+    }
+    .Lightbox.is-open{ display:flex; }
 
-  /* Lightbox */
-  .Lightbox{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.85);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-    padding:20px;
-  }
-  .Lightbox.is-open{ display:flex; }
+    .Lightbox__wrap{
+      position:relative;
+      max-width:95vw;
+      max-height:90vh;
+      width:auto;
+      height:auto;
+    }
 
-  .Lightbox img{
-    max-width:95vw;
-    max-height:90vh;
-    border-radius:12px;
-  }
+    .Lightbox img{
+      display:block;
+      max-width:95vw;
+      max-height:90vh;
+      border-radius:12px;
+      background:rgba(255,255,255,.06);
+    }
 
-  .Lightbox button{
-    position:fixed;
-    top:20px;
-    right:20px;
-    padding:10px 14px;
-    border-radius:10px;
-    border:2px solid #fff;
-    background:transparent;
-    color:#fff;
-    font-weight:600;          /* war 900 */
-    letter-spacing:.04em;
-    cursor:pointer;
-  }
+    .Lightbox__loading{
+      position:absolute;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight:600;
+      letter-spacing:.04em;
+      text-shadow:0 8px 20px rgba(0,0,0,.35);
+      pointer-events:none;
+    }
+    .Lightbox.is-loading .Lightbox__loading{
+      display:flex;
+    }
 
-  @media (max-width:1000px){
-    .Grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  }
+    .Lightbox__error{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-38px;
+      color:rgba(255,255,255,.82);
+      font-size:13px;
+      font-weight:500;
+      letter-spacing:.02em;
+      text-align:center;
+      display:none;
+    }
+    .Lightbox.has-error .Lightbox__error{
+      display:block;
+    }
 
-  @media (max-width:700px){
-    .Grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
+    .Lightbox button{
+      position:fixed;
+      top:20px;
+      right:20px;
+      padding:10px 14px;
+      border-radius:10px;
+      border:2px solid #fff;
+      background:transparent;
+      color:#fff;
+      font-weight:600;
+      letter-spacing:.04em;
+      cursor:pointer;
+    }
 
-  @media (max-width:450px){
-    .Grid{ grid-template-columns: 1fr; }
-    .Tile img{ height:220px; }
-  }
-</style>
+    @media (max-width:1000px){
+      .Grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width:700px){
+      .Grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width:450px){
+      .Grid{ grid-template-columns: 1fr; }
+      .Tile img{ height:220px; }
+    }
+  </style>
 </head>
 
 <body>
@@ -207,96 +237,182 @@
 
   <div class="Lightbox" id="Lightbox" aria-hidden="true">
     <button id="LbClose" type="button">Schließen</button>
-    <img id="LbImg" alt="">
+
+    <div class="Lightbox__wrap">
+      <div class="Lightbox__loading">Lade Bild…</div>
+      <img id="LbImg" alt="">
+      <div class="Lightbox__error" id="LbErr">Bild konnte nicht geladen werden.</div>
+    </div>
   </div>
 
-<script>
-(function(){
-  "use strict";
+  <script>
+  (function(){
+    "use strict";
 
-  const ENDPOINT = "https://script.google.com/macros/s/AKfycbx41vfB3zcZ2sPY8EIb6rqT6mEfxvNLtcU0Xb1UInRGPe9EoR2HqmjwjkPO7LeeeHATSQ/exec";
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbx41vfB3zcZ2sPY8EIb6rqT6mEfxvNLtcU0Xb1UInRGPe9EoR2HqmjwjkPO7LeeeHATSQ/exec";
 
-  const grid = document.getElementById("Grid");
-  const err  = document.getElementById("Error");
-  const cnt  = document.getElementById("Count");
+    const grid = document.getElementById("Grid");
+    const err  = document.getElementById("Error");
+    const cnt  = document.getElementById("Count");
 
-  const lb = document.getElementById("Lightbox");
-  const lbImg = document.getElementById("LbImg");
-  const lbClose = document.getElementById("LbClose");
+    const lb = document.getElementById("Lightbox");
+    const lbImg = document.getElementById("LbImg");
+    const lbClose = document.getElementById("LbClose");
+    const lbErr = document.getElementById("LbErr");
 
-  function esc(s){
-    return String(s ?? "").replace(/[&<>"']/g, m => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[m]));
-  }
+    function escHtml(s){
+      return String(s ?? "").replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
+    }
 
-  function openLb(src){
-    lbImg.src = src;
-    lb.classList.add("is-open");
-    lb.setAttribute("aria-hidden","false");
-    document.body.style.overflow = "hidden";
-  }
+    // Escape only quotes for attributes. Keep & intact, otherwise URLs break.
+    function escAttr(s){
+      return String(s ?? "").replace(/"/g, "&quot;");
+    }
 
-  function closeLb(){
-    lb.classList.remove("is-open");
-    lb.setAttribute("aria-hidden","true");
-    lbImg.src = "";
-    document.body.style.overflow = "";
-  }
+    // Convert typical Google Drive share links to direct image URLs.
+    function toDirectImageUrl(url){
+      const u = String(url || "").trim();
+      if(!u) return "";
 
-  lbClose.addEventListener("click", closeLb);
-  lb.addEventListener("click", e => { if(e.target === lb) closeLb(); });
-  document.addEventListener("keydown", e => { if(e.key === "Escape") closeLb(); });
+      // If someone accidentally stored HTML-escaped ampersands:
+      const fixed = u.replaceAll("&amp;", "&");
 
-  function showError(msg){
-    err.style.display = "block";
-    err.innerHTML = msg;
-  }
-
-  async function load(){
-    err.style.display = "none";
-    err.textContent = "";
-    grid.innerHTML = "";
-    cnt.textContent = "Lade Bilder…";
-
-    try{
-      const res = await fetch(ENDPOINT + "?max=150", { cache:"no-cache" });
-      if(!res.ok) throw new Error("HTTP " + res.status);
-      const data = await res.json();
-
-      const items = Array.isArray(data.items) ? data.items : [];
-
-      if(items.length === 0){
-        cnt.textContent = "0 Bilder";
-        showError("Keine Bilder gefunden. (Ordner leer oder Freigabe/Script prüfen)");
-        return;
+      // Already a direct drive "uc" link or raw image:
+      if(fixed.includes("drive.google.com/uc?") || fixed.match(/\.(jpg|jpeg|png|webp|gif)(\?|#|$)/i)){
+        return fixed;
       }
 
-      cnt.textContent = items.length + " Bilder";
+      // Patterns:
+      // 1) https://drive.google.com/file/d/<ID>/view?usp=sharing
+      let m = fixed.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
 
-      grid.innerHTML = items.map(item => `
-        <div class="Tile" data-full="${esc(item.full)}" aria-label="${esc(item.name)}">
-          <img src="${esc(item.thumb)}" alt="${esc(item.name)}" loading="lazy">
-        </div>
-      `).join("");
+      // 2) https://drive.google.com/open?id=<ID>
+      m = fixed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
 
-      grid.addEventListener("click", e => {
-        const tile = e.target.closest(".Tile");
-        if(!tile) return;
-        const src = tile.dataset.full;
-        if(src) openLb(src);
-      });
+      // 3) https://drive.google.com/uc?id=<ID>&export=download
+      m = fixed.match(/drive\.google\.com\/uc\?id=([a-zA-Z0-9_-]+)/);
+      if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
 
-    }catch(e){
-      console.warn(e);
-      cnt.textContent = "—";
-      showError("Galerie konnte nicht geladen werden.<br><br><small>" + esc(String(e)) + "</small>");
+      // Otherwise: return as-is (might already be a direct CDN link)
+      return fixed;
     }
-  }
 
-  load();
-})();
-</script>
+    function openLb(fullUrl, thumbUrl){
+      lb.classList.add("is-open", "is-loading");
+      lb.classList.remove("has-error");
+      lbErr.textContent = "Bild konnte nicht geladen werden.";
+      lb.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+
+      // Reset image first so the browser really reloads
+      lbImg.removeAttribute("src");
+      lbImg.removeAttribute("srcset");
+
+      const direct = toDirectImageUrl(fullUrl);
+
+      // Loading handlers
+      const onLoad = () => {
+        lb.classList.remove("is-loading");
+        lbImg.removeEventListener("load", onLoad);
+        lbImg.removeEventListener("error", onErr);
+      };
+
+      const onErr = () => {
+        // Fallback 1: try thumb as "full" (better than nothing)
+        if(thumbUrl && lbImg.src !== thumbUrl){
+          lbImg.src = thumbUrl;
+          lbErr.textContent = "";
+          lb.classList.add("has-error");
+          return;
+        }
+
+        lb.classList.remove("is-loading");
+        lb.classList.add("has-error");
+        lbErr.textContent = "Bild konnte nicht geladen werden. (Link ist vermutlich kein Direktbild / Drive-Freigabe)";
+        lbImg.removeEventListener("load", onLoad);
+        lbImg.removeEventListener("error", onErr);
+      };
+
+      lbImg.addEventListener("load", onLoad);
+      lbImg.addEventListener("error", onErr);
+
+      // Bust cache a tiny bit so changes propagate fast
+      const cacheBust = (direct.includes("?") ? "&" : "?") + "v=" + Date.now();
+      lbImg.src = direct + cacheBust;
+    }
+
+    function closeLb(){
+      lb.classList.remove("is-open", "is-loading", "has-error");
+      lb.setAttribute("aria-hidden","true");
+      lbImg.removeAttribute("src");
+      document.body.style.overflow = "";
+    }
+
+    lbClose.addEventListener("click", closeLb);
+    lb.addEventListener("click", e => { if(e.target === lb) closeLb(); });
+    document.addEventListener("keydown", e => { if(e.key === "Escape") closeLb(); });
+
+    function showError(msg){
+      err.style.display = "block";
+      err.innerHTML = msg;
+    }
+
+    async function load(){
+      err.style.display = "none";
+      err.textContent = "";
+      grid.innerHTML = "";
+      cnt.textContent = "Lade Bilder…";
+
+      try{
+        const res = await fetch(ENDPOINT + "?max=150", { cache:"no-cache" });
+        if(!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+
+        const items = Array.isArray(data.items) ? data.items : [];
+
+        if(items.length === 0){
+          cnt.textContent = "0 Bilder";
+          showError("Keine Bilder gefunden. (Ordner leer oder Freigabe/Script prüfen)");
+          return;
+        }
+
+        cnt.textContent = items.length + " Bilder";
+
+        grid.innerHTML = items.map(item => `
+          <div class="Tile"
+               data-full="${escAttr(item.full)}"
+               data-thumb="${escAttr(item.thumb)}"
+               aria-label="${escHtml(item.name)}">
+            <img src="${escAttr(item.thumb)}" alt="${escHtml(item.name)}" loading="lazy">
+          </div>
+        `).join("");
+
+        grid.onclick = (e) => {
+          const tile = e.target.closest(".Tile");
+          if(!tile) return;
+
+          // IMPORTANT: dataset gives us the raw attribute value (not HTML-decoded),
+          // but we keep a safety replace anyway.
+          const full = (tile.dataset.full || "").replaceAll("&amp;", "&");
+          const thumb = (tile.dataset.thumb || "").replaceAll("&amp;", "&");
+
+          openLb(full, thumb);
+        };
+
+      }catch(e){
+        console.warn(e);
+        cnt.textContent = "—";
+        showError("");
+      }
+    }
+
+    load();
+  })();
+  </script>
 
 </body>
 </html>
