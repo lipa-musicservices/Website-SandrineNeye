@@ -42,6 +42,7 @@
     font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     background:#fff;
     color:#0e1116;
+    overflow-x:hidden; /* kein rüberscrollen */
   }
 
   :root{
@@ -53,11 +54,6 @@
     --radius:14px;
     --hbH:74px;
   }
-
-
-  html, body{
-  overflow-x: hidden;
-}
 
   /* =========================
      HERO (full-bleed)
@@ -286,7 +282,7 @@
   .MarqueeItem:hover img{ transform:scale(1.04); }
 
   /* =========================
-     PRESS – STEP CAROUSEL (tief + zoom mittig)
+     PRESS – STEP CAROUSEL (Mobile safe)
      ========================= */
   .PressSection{ padding: 0 0 76px; }
 
@@ -307,16 +303,14 @@
     letter-spacing:-0.004em;
   }
 
-  /* Leiste tiefer + mehr “Bühne” für Shadow/3D */
   #PressWrap{
-    margin-top: 18px;           /* <-- tiefer (weg von der Überschrift) */
-    padding: 26px 0 34px;       /* <-- Center-Zoom bleibt im Feld */
-    overflow: visible;          /* <-- darf über Rand */
+    margin-top: 18px;
+    padding: 26px 0 34px;
+    overflow: visible;
     perspective: 1100px;
     isolation: isolate;
   }
 
-  /* Fades beim Press: hinter die Karten (und etwas milder) */
   #PressWrap::before,
   #PressWrap::after{
     z-index:0;
@@ -330,11 +324,18 @@
     position:relative;
     z-index:1;
     transform-style: preserve-3d;
+    display:flex;
+    width:max-content;
   }
 
+  /* >>> FIX: Breite responsive runter, damit Center-Zoom NIE über 100vw geht <<< */
   .PressCard{
     flex:0 0 auto;
-    width:min(560px, 78vw);
+
+    /* war min(560px, 78vw) – das killt dich auf Mobile beim Zoom.
+       Neu: clamp() limitiert sauber nach unten */
+    width: clamp(280px, 78vw, 520px);
+
     border:1px solid var(--border);
     border-radius: var(--radius);
     background:#fff;
@@ -344,7 +345,7 @@
     position:relative;
     z-index:1;
 
-    transform: translateZ(0px) scale(.86);
+    transform: translateZ(0) scale(.86);
     opacity:.78;
 
     transition:
@@ -354,26 +355,21 @@
       border-color 1100ms cubic-bezier(.22, .8, .18, 1);
 
     will-change: transform;
-  }
-
-  /* Zoom bleibt mittig: kein “hochziehen”, nur Z/Scale */
-  .PressCard.is-center{
-    z-index: 20;
-    transform: translateY(0px) translateZ(95px) scale(1.22);
-    opacity: 1;
-    box-shadow: 0 34px 96px rgba(10,16,26,.26);
-    border-color: rgba(104,0,104,.34);
-  }
-
-  .PressCard{
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
+    backface-visibility:hidden;
+    transform-style:preserve-3d;
     -webkit-font-smoothing: antialiased;
     text-rendering: geometricPrecision;
   }
 
+  /* Center: zusätzlich hard-cap auf Viewport (Padding 18+18=36) */
   .PressCard.is-center{
-    transform: translateZ(0) scale(1.22);  /* translateZ kann GPU-Layer stabilisieren */
+    z-index: 20;
+    transform: translateZ(0) scale(1.22);
+    opacity: 1;
+    box-shadow: 0 34px 96px rgba(10,16,26,.26);
+    border-color: rgba(104,0,104,.34);
+
+    max-width: calc(100vw - 36px);
   }
 
   .PressText{
@@ -445,6 +441,7 @@
   @media (max-width: 900px){
     .MarqueeItem{ width: 300px; height: 205px; }
   }
+
   @media (max-width: 680px){
     .Hero{ min-height: calc(92vh - var(--hbH)); }
     .Hero__inner{ padding-bottom: 42px; }
@@ -455,10 +452,11 @@
     .MarqueeWrap::before, .MarqueeWrap::after{ width:46px; }
 
     .PressHead{ flex-direction:column; align-items:flex-start; }
-    .PressCard{ width:86vw; }
-
-    /* auf Mobile nicht zu “hoch” wirken lassen */
     #PressWrap{ padding: 18px 0 26px; }
+
+    /* optional: auf sehr klein etwas weniger Zoom,
+       falls du 1.22 doch noch zu fett findest */
+    .PressCard.is-center{ transform: translateZ(0) scale(1.16); }
   }
 </style>
 </head>
@@ -495,9 +493,7 @@
       </div>
     </section>
 
-    <!-- =========================
-         Galerie Marquee
-    ========================== -->
+    <!-- Galerie -->
     <section class="GallerySection" aria-label="Galerie Vorschau">
       <div class="GalleryHead">
         <div class="GalleryHead__left">
@@ -513,9 +509,7 @@
       </div>
     </section>
 
-    <!-- =========================
-         Press – Step Carousel
-    ========================== -->
+    <!-- Press -->
     <section class="PressSection" aria-label="Pressestimmen Vorschau">
       <div class="PressHead">
         <h2>Pressestimmen</h2>
