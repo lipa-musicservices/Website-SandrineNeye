@@ -894,3 +894,49 @@ html, body{
 .Footbar__col--social a:active{
   text-decoration:none;
 }
+
+/* =========================================
+   LiPa Powered By Styling
+   ========================================= */
+
+.Footbar__powered{
+  text-align:center;
+  padding:18px 0;
+}
+
+.Footbar__powered a{
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:.04em;
+  font-size:13px;
+
+  color: rgba(255,255,255,.75);
+
+  position:relative;
+  display:inline-block;
+  transition: color .2s ease, transform .2s ease;
+}
+
+/* Dezente Linie drunter */
+.Footbar__powered a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:100%;
+  height:1px;
+  background:rgba(255,255,255,.25);
+  transform:scaleX(.4);
+  transform-origin:center;
+  transition:transform .25s ease, background .25s ease;
+}
+
+.Footbar__powered a:hover{
+  color:#ffffff;
+  transform:translateY(-1px);
+}
+
+.Footbar__powered a:hover::after{
+  transform:scaleX(1);
+  background:rgba(255,255,255,.6);
+}
