@@ -54,16 +54,12 @@ html, body{
   -moz-osx-font-smoothing:grayscale;
 }
 
-
-/* =========================================================
-   HARD GUARANTEE COLOR (scoped, robust vs other themes)
-   ========================================================= */
 .Headbar,
 .MobileMenu,
 .Footbar{
-  --purple:#1d001d;
-  --purpleDark:#1d001d;
-  --purpleDarker:#1d001d;
+  --purple:#341034;
+  --purpleDark:#2c0d2c;
+  --purpleDarker:#260a26;
 }
 
 
@@ -851,8 +847,7 @@ html, body{
   padding:4px 8px;
   border-radius:999px;
 
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.14);
+  border: 0px solid rgba(255,255,255,.14);
 
   color: rgba(255,255,255,.92);
   opacity:1;
