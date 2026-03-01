@@ -735,3 +735,162 @@ html, body{
   .CookieBanner__actions{ justify-content:stretch; }
   .CookieBtn{ flex:1; }
 }
+
+/* =========================
+   FOOTER – FORCE SOCIAL VISIBILITY
+   ========================= */
+.Footbar .Links,
+.Footbar .Links *{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.Footbar .Links li{
+  color: rgba(255,255,255,.92) !important;
+}
+
+.Footbar .Links .Chip{
+  color: rgba(255,255,255,.92) !important;
+  background: rgba(255,255,255,.10) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+}
+
+.Footbar .Links .Url,
+.Footbar .Links .Link{
+  color: rgba(255,255,255,.92) !important;
+}
+
+.Footbar .Links .Link:hover{
+  color: #fff !important;
+}
+
+.Footbar .Links .Icon{
+  color: rgba(255,255,255,.92) !important; /* currentColor für SVG */
+}
+
+.Footbar .Links svg{
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* =========================================================
+   FootbarSocial (NEW) – stable, no dependency on old .Link/.Chip
+   ========================================================= */
+
+/* List reset */
+.FootbarSocial{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* Each row */
+.FootbarSocial__item{
+  margin:0;
+}
+
+/* The clickable row */
+.FootbarSocial__link{
+  display:grid;
+  grid-template-columns: 18px auto 1fr;
+  align-items:center;
+  gap:10px;
+
+  padding:8px 10px;
+  border-radius:12px;
+
+  text-decoration:none;
+
+  /* Footer is dark -> force visibility */
+  color: rgba(255,255,255,.92);
+  opacity:1;
+  visibility:visible;
+
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.FootbarSocial__link:hover{
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.16);
+  transform: translateY(-1px);
+}
+
+.FootbarSocial__link:focus-visible{
+  outline: 2px solid rgba(255,255,255,.38);
+  outline-offset: 2px;
+}
+
+/* Icon box */
+.FootbarSocial__icon{
+  width:18px;
+  height:18px;
+  display:grid;
+  place-items:center;
+  color: rgba(255,255,255,.92); /* currentColor drives SVG */
+}
+
+.FootbarSocial__icon svg{
+  width:18px;
+  height:18px;
+  display:block;
+}
+
+/* Label like a chip */
+.FootbarSocial__label{
+  font-weight:800;
+  letter-spacing:.02em;
+  font-size:12px;
+  text-transform:uppercase;
+
+  padding:4px 8px;
+  border-radius:999px;
+
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.14);
+
+  color: rgba(255,255,255,.92);
+  opacity:1;
+}
+
+/* Right-side text (URL) */
+.FootbarSocial__text{
+  font-size:13px;
+  font-weight:600;
+
+  color: rgba(255,255,255,.86);
+
+  /* nicer breaking */
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* Slightly dim already visited links (optional) */
+.FootbarSocial__link:visited .FootbarSocial__text{
+  color: rgba(255,255,255,.78);
+}
+
+/* Make it breathe on narrow screens */
+@media (max-width: 720px){
+  .FootbarSocial__link{
+    grid-template-columns: 18px 1fr;
+    grid-template-rows: auto auto;
+    gap:8px;
+  }
+  .FootbarSocial__text{
+    grid-column: 1 / -1;
+    padding-left:28px; /* aligns under label nicely */
+  }
+}
+
+/* Defensive: ignore any global anchor styling */
+.Footbar__col--social a,
+.Footbar__col--social a:hover,
+.Footbar__col--social a:active{
+  text-decoration:none;
+}
