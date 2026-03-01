@@ -11,13 +11,12 @@
 ============================================================================== */
 
 /* =========================================================
-   Sandrine Neye – MENU + FOOTBAR
-   - Headbar + MobileMenu + Footbar: SOLID #1d001d (always)
-   - No transparency mixes on the bars
+   Sandrine Neye – MENU + FOOTER (CLEAN)
+   - Headbar + MobileMenu + Footbar: SOLID purple (no transparency mix)
    - No pill buttons (slight rounding only)
-   - Desktop hover: Shirin-style text fly-out/in (0.5s)
-   - Footbar pages: vertical list
-   - "powered..." never as pill
+   - Desktop nav hover: Shirin-style text fly-out/in
+   - Footer: clean grid + one social system (FootbarSocial)
+   - Cookie banner included
    ========================================================= */
 
 
@@ -31,9 +30,14 @@
   /* Corner radius (NOT pills) */
   --r:10px;
 
+  /* Brand Purple (slightly lighter than before) */
+  --purple:#3b133b;
+  --purpleDark:#321032;
+  --purpleDarker:#2a0d2a;
+
   /* Menu text */
   --menuText:#ffffff;
-  --menuTextSoft:rgba(255,255,255,.85);
+  --menuTextSoft:rgba(255,255,255,.86);
 
   /* Nav button height */
   --navH:42px;
@@ -54,12 +58,16 @@ html, body{
   -moz-osx-font-smoothing:grayscale;
 }
 
+
+/* =========================================================
+   HARD GUARANTEE COLOR (scoped for bars)
+   ========================================================= */
 .Headbar,
 .MobileMenu,
 .Footbar{
-  --purple:#341034;
-  --purpleDark:#2c0d2c;
-  --purpleDarker:#260a26;
+  --bar:var(--purple);
+  --barHover:var(--purple);
+  --barActive:var(--purpleDarker);
 }
 
 
@@ -70,9 +78,9 @@ html, body{
   position:sticky;
   top:0;
   z-index:500;
-  background:var(--purple);
-  background-color:var(--purple);
-  border-bottom:2px solid var(--purpleDark);
+
+  background:var(--bar);
+  border-bottom:1px solid rgba(255,255,255,.10);
 }
 
 /* Full width Headbar inner (NOT limited to container) */
@@ -123,13 +131,13 @@ html, body{
 
 
 /* =========================================================
-   DESKTOP NAV LINKS – Shirin-style (100% reliable)
+   DESKTOP NAV LINKS – Shirin-style (reliable)
    Markup:
    <a><span class="NavLabel" data-label="Home">Home</span></a>
    ========================================================= */
 .Headbar__menu a{
   display:inline-flex;
-  align-items:flex-start;     /* deine Korrektur */
+  align-items:flex-start; /* gewünscht */
   justify-content:center;
 
   height:var(--navH);
@@ -147,7 +155,7 @@ html, body{
 
   position:relative;
   overflow:hidden; /* CLIP */
-  transition:background .15s ease, transform .15s ease;
+  transition:background .15s ease, transform .15s ease, border-color .15s ease;
 }
 
 /* Wrapper: is 2 lines tall, we slide it by -50% */
@@ -184,23 +192,24 @@ html, body{
 
 /* Hover: bg + lift */
 .Headbar__menu a:hover{
-  background:var(--purpleDark);
+  background:var(--barHover);
   transform:translateY(-1px);
 }
 
-/* Hover: slide up by one line (1 line / 2 lines = 50%) */
+/* Hover: slide up by one line */
 .Headbar__menu a:hover .NavLabel{
   transform:translate3d(0,-50%,0);
 }
 
 .Headbar__menu a:active{
   transform:translateY(0);
-  background:var(--purpleDarker);
+  background:var(--barActive);
+  border-color:rgba(255,255,255,.14);
 }
 
 /* Active item */
 .Headbar__menu a.is-active{
-  background:var(--purpleDark);
+  background:var(--barHover);
   border-color:rgba(255,255,255,.26);
 }
 
@@ -240,12 +249,12 @@ html, body{
 }
 
 .Headbar__langItem:hover{
-  background:var(--purpleDark);
+  background:var(--barHover);
   color:var(--menuText);
 }
 
 .Headbar__langItem.is-active{
-  background:var(--purpleDark);
+  background:var(--barHover);
   color:var(--menuText);
 }
 
@@ -253,6 +262,12 @@ html, body{
   color:rgba(255,255,255,.55);
   font-weight:900;
   user-select:none;
+}
+
+/* Hover: text color slightly changes */
+.Headbar__menu a:hover .NavLabel::before,
+.Headbar__menu a:hover .NavLabel::after{
+  color: rgba(255,255,255,.96); /* vorher #fff -> minimal softer/brighter */
 }
 
 
@@ -267,7 +282,7 @@ html, body{
   background:transparent;
   border:1px solid rgba(255,255,255,.22);
 
-  display:none;            /* mobile only */
+  display:none; /* mobile only */
   flex-direction:column;
   align-items:center;
   justify-content:center;
@@ -286,14 +301,14 @@ html, body{
 }
 
 .Headbar__burger:hover{
-  background:var(--purpleDark);
+  background:var(--barHover);
   border-color:rgba(255,255,255,.28);
   transform:translateY(-1px);
 }
 
 .Headbar__burger:active{
   transform:translateY(0);
-  background:var(--purpleDarker);
+  background:var(--barActive);
 }
 
 /* Responsive switch: Desktop -> Burger (JS toggled) */
@@ -314,10 +329,8 @@ html, body{
   width:min(420px, 88vw);
   z-index:800;
 
-  background:var(--purple);
-  background-color:var(--purple);
-
-  border-left:2px solid var(--purpleDark);
+  background:var(--bar);
+  border-left:1px solid rgba(255,255,255,.10);
 
   transform:translateX(102%);
   pointer-events:none;
@@ -325,7 +338,7 @@ html, body{
   transition:transform .22s ease;
   padding-top:calc(var(--hbH) + 12px);
 
-  opacity:.9;
+  opacity:.96; /* less “foggy” */
 }
 
 .MobileMenu.is-open{
@@ -358,14 +371,14 @@ html, body{
   letter-spacing:.1px;
 
   color:var(--menuText);
-  background:var(--purpleDark);
+  background:var(--barHover);
   border:1px solid rgba(255,255,255,.16);
 
   transition:transform .15s ease, background .15s ease, border-color .15s ease;
 }
 
 .MobileMenu__list a:hover{
-  background:var(--purpleDarker);
+  background:var(--barActive);
   border-color:rgba(255,255,255,.24);
   transform:translateY(-1px);
 }
@@ -400,29 +413,27 @@ html, body{
 }
 
 .MobileMenu__lang a:hover{
-  background:var(--purpleDark);
+  background:var(--barHover);
   color:var(--menuText);
   border-color:rgba(255,255,255,.28);
 }
 
 .MobileMenu__lang a.is-active{
-  background:var(--purpleDark);
+  background:var(--barHover);
   color:var(--menuText);
   border-color:rgba(255,255,255,.28);
 }
 
 
 /* =========================================================
-   FOOTBAR – FINAL (CLEAN, NO DUPLICATES)
-   - Solid #1d001d (via --purple)
+   FOOTBAR – CLEAN
+   - Solid purple
    - Clean grid
-   - Social list "icon + text"
-   - Powered-by line centered bottom (full width)
+   - Pages + Legal: vertical list
+   - Social: FootbarSocial (single system)
    ========================================================= */
-
 .Footbar{
-  background:var(--purple);
-  background-color:var(--purple);
+  background:var(--bar);
   color:#fff;
 }
 
@@ -445,7 +456,7 @@ html, body{
   letter-spacing:.25px;
   font-size:11.2pt;
   margin:0 0 12px;
-  color:rgba(255,255,255,.92);
+  color:rgba(255,255,255,.95);
 }
 
 /* Brand */
@@ -457,18 +468,15 @@ html, body{
 
 .Footbar__copy{
   margin-top:8px;
-  color:rgba(255,255,255,.78);
+  color:rgba(255,255,255,.82);
   font-weight:700;
 }
 
-.Footbar__text{
-  color:rgba(255,255,255,.82);
+.Footbar__location{
+  margin-top:6px;
+  color:rgba(255,255,255,.86);
   font-weight:750;
   line-height:1.55;
-}
-
-.Footbar__spacer{
-  height:18px;
 }
 
 /* Lists (Pages + Legal) */
@@ -483,7 +491,7 @@ html, body{
 }
 
 .Footbar__list a{
-  color:rgba(255,255,255,.90);
+  color:rgba(255,255,255,.92);
   text-decoration:none;
   font-weight:850;
   letter-spacing:.1px;
@@ -501,8 +509,8 @@ html, body{
 }
 
 .Footbar__list a:hover{
-  background:rgba(255,255,255,.06);
-  border-color:rgba(255,255,255,.14);
+  background:rgba(255,255,255,.09);
+  border-color:rgba(255,255,255,.18);
   transform:translateY(-1px);
 }
 
@@ -511,111 +519,164 @@ html, body{
   opacity:.92;
 }
 
-/* Social list */
-.Footbar__socialList{
+
+/* =========================================================
+   FOOTER SOCIAL – single system (FootbarSocial)
+   (Works with the new footer HTML)
+   ========================================================= */
+.FootbarSocial{
   list-style:none;
-  margin:0;
   padding:0;
+  margin:0;
 
   display:flex;
   flex-direction:column;
   gap:10px;
 }
 
-.Footbar__socialLink{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.FootbarSocial__item{
+  margin:0;
+}
 
-  padding:10px 12px;
+.FootbarSocial__link{
+  display:grid;
+  grid-template-columns: 18px auto 1fr;
+  align-items:center;
+  gap:10px;
+
+  padding:9px 10px;
   border-radius:12px;
 
   text-decoration:none;
-  color:rgba(255,255,255,.90);
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.92);
 
-  transition:background .15s ease, border-color .15s ease, transform .15s ease;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
 }
 
-.Footbar__socialLink:hover{
-  background:rgba(255,255,255,.07);
-  border-color:rgba(255,255,255,.18);
-  transform:translateY(-1px);
+.FootbarSocial__link:hover{
+  background: rgba(255,255,255,.11);
+  border-color: rgba(255,255,255,.20);
+  transform: translateY(-1px);
 }
 
-.Footbar__socialLink:active{
-  transform:translateY(0);
+.FootbarSocial__link:active{
+  transform: translateY(0);
 }
 
-.Footbar__socialIcon{
+.FootbarSocial__link:focus-visible{
+  outline: 2px solid rgba(255,255,255,.42);
+  outline-offset: 2px;
+}
+
+.FootbarSocial__icon{
   width:18px;
   height:18px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  opacity:.95;
-  color:#fff;
+  display:grid;
+  place-items:center;
+  color:rgba(255,255,255,.95); /* drives SVG via currentColor */
 }
 
-.Footbar__socialIcon svg{
+.FootbarSocial__icon svg{
   width:18px;
   height:18px;
   display:block;
 }
 
-.Footbar__socialText{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  min-width:0;
-}
-
-.Footbar__socialName{
+.FootbarSocial__label{
   font-weight:900;
-  letter-spacing:.15px;
-  font-size:10.8pt;
+  letter-spacing:.04em;
+  font-size:12px;
+  text-transform:uppercase;
+
+  padding:4px 8px;
+  border-radius:999px;
+
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.16);
+
+  color:rgba(255,255,255,.95);
 }
 
-.Footbar__socialUrl{
-  font-weight:750;
-  color:rgba(255,255,255,.76);
-  font-size:10.2pt;
+.FootbarSocial__text{
+  font-size:13px;
+  font-weight:650;
+  color: rgba(255,255,255,.84);
 
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:break-word;
 }
 
-/* Powered by – centered bottom, full width
-   NOTE: requires this element inside .Footbar__inner:
-   <div class="Footbar__poweredLine"><a ...>...</a></div>
-*/
-.Footbar__poweredLine{
-  grid-column: 1 / -1;
-  margin-top: 6px;
-  padding-top: 18px;
+/* Mobile layout */
+@media (max-width: 720px){
+  .FootbarSocial__link{
+    grid-template-columns: 18px 1fr;
+    grid-template-rows: auto auto;
+    gap:8px;
+  }
+  .FootbarSocial__text{
+    grid-column: 1 / -1;
+    padding-left:28px;
+  }
+}
 
+
+/* =========================
+   FOOTBAR BOTTOM / POWERED
+   ========================= */
+.Footbar__bottom{
+  border-top:1px solid rgba(255,255,255,.14);
+  padding:16px 18px 18px;
+}
+
+.Footbar__powered{
   display:flex;
   justify-content:center;
-
-  border-top:1px solid rgba(255,255,255,.10);
+  text-align:center;
 }
 
-.Footbar__poweredLine a{
-  color:rgba(255,255,255,.74);
-  text-decoration:underline;
-  text-underline-offset:3px;
+.Footbar__powered a{
+  text-decoration:none;
   font-weight:800;
-  transition:opacity .15s ease;
+  letter-spacing:.04em;
+  font-size:13px;
+
+  color: rgba(255,255,255,.80);
+
+  position:relative;
+  display:inline-block;
+  transition: color .2s ease, transform .2s ease, opacity .2s ease;
 }
 
-.Footbar__poweredLine a:hover{
-  opacity:.78;
+.Footbar__powered a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:100%;
+  height:1px;
+  background:rgba(255,255,255,.30);
+  transform:scaleX(.5);
+  transform-origin:center;
+  transition:transform .25s ease, background .25s ease;
 }
 
-/* Responsive */
+.Footbar__powered a:hover{
+  color:#ffffff;
+  transform:translateY(-1px);
+}
+
+.Footbar__powered a:hover::after{
+  transform:scaleX(1);
+  background:rgba(255,255,255,.65);
+}
+
+
+/* =========================
+   FOOTER RESPONSIVE GRID
+   ========================= */
 @media (max-width: 1100px){
   .Footbar__inner{
     grid-template-columns:1fr 1fr;
@@ -730,208 +791,4 @@ html, body{
   .CookieBanner{ padding:22px 18px; }
   .CookieBanner__actions{ justify-content:stretch; }
   .CookieBtn{ flex:1; }
-}
-
-/* =========================
-   FOOTER – FORCE SOCIAL VISIBILITY
-   ========================= */
-.Footbar .Links,
-.Footbar .Links *{
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.Footbar .Links li{
-  color: rgba(255,255,255,.92) !important;
-}
-
-.Footbar .Links .Chip{
-  color: rgba(255,255,255,.92) !important;
-  background: rgba(255,255,255,.10) !important;
-  border: 1px solid rgba(255,255,255,.14) !important;
-}
-
-.Footbar .Links .Url,
-.Footbar .Links .Link{
-  color: rgba(255,255,255,.92) !important;
-}
-
-.Footbar .Links .Link:hover{
-  color: #fff !important;
-}
-
-.Footbar .Links .Icon{
-  color: rgba(255,255,255,.92) !important; /* currentColor für SVG */
-}
-
-.Footbar .Links svg{
-  width: 18px;
-  height: 18px;
-  display: block;
-}
-
-/* =========================================================
-   FootbarSocial (NEW) – stable, no dependency on old .Link/.Chip
-   ========================================================= */
-
-/* List reset */
-.FootbarSocial{
-  list-style:none;
-  padding:0;
-  margin:0;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* Each row */
-.FootbarSocial__item{
-  margin:0;
-}
-
-/* The clickable row */
-.FootbarSocial__link{
-  display:grid;
-  grid-template-columns: 18px auto 1fr;
-  align-items:center;
-  gap:10px;
-
-  padding:8px 10px;
-  border-radius:12px;
-
-  text-decoration:none;
-
-  /* Footer is dark -> force visibility */
-  color: rgba(255,255,255,.92);
-  opacity:1;
-  visibility:visible;
-
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
-  transition: transform .12s ease, background .12s ease, border-color .12s ease;
-}
-
-.FootbarSocial__link:hover{
-  background: rgba(255,255,255,.07);
-  border-color: rgba(255,255,255,.16);
-  transform: translateY(-1px);
-}
-
-.FootbarSocial__link:focus-visible{
-  outline: 2px solid rgba(255,255,255,.38);
-  outline-offset: 2px;
-}
-
-/* Icon box */
-.FootbarSocial__icon{
-  width:18px;
-  height:18px;
-  display:grid;
-  place-items:center;
-  color: rgba(255,255,255,.92); /* currentColor drives SVG */
-}
-
-.FootbarSocial__icon svg{
-  width:18px;
-  height:18px;
-  display:block;
-}
-
-/* Label like a chip */
-.FootbarSocial__label{
-  font-weight:800;
-  letter-spacing:.02em;
-  font-size:12px;
-  text-transform:uppercase;
-
-  padding:4px 8px;
-  border-radius:999px;
-
-  border: 0px solid rgba(255,255,255,.14);
-
-  color: rgba(255,255,255,.92);
-  opacity:1;
-}
-
-/* Right-side text (URL) */
-.FootbarSocial__text{
-  font-size:13px;
-  font-weight:600;
-
-  color: rgba(255,255,255,.86);
-
-  /* nicer breaking */
-  overflow-wrap:anywhere;
-  word-break:break-word;
-}
-
-/* Slightly dim already visited links (optional) */
-.FootbarSocial__link:visited .FootbarSocial__text{
-  color: rgba(255,255,255,.78);
-}
-
-/* Make it breathe on narrow screens */
-@media (max-width: 720px){
-  .FootbarSocial__link{
-    grid-template-columns: 18px 1fr;
-    grid-template-rows: auto auto;
-    gap:8px;
-  }
-  .FootbarSocial__text{
-    grid-column: 1 / -1;
-    padding-left:28px; /* aligns under label nicely */
-  }
-}
-
-/* Defensive: ignore any global anchor styling */
-.Footbar__col--social a,
-.Footbar__col--social a:hover,
-.Footbar__col--social a:active{
-  text-decoration:none;
-}
-
-/* =========================================
-   LiPa Powered By Styling
-   ========================================= */
-
-.Footbar__powered{
-  text-align:center;
-  padding:18px 0;
-}
-
-.Footbar__powered a{
-  text-decoration:none;
-  font-weight:700;
-  letter-spacing:.04em;
-  font-size:13px;
-
-  color: rgba(255,255,255,.75);
-
-  position:relative;
-  display:inline-block;
-  transition: color .2s ease, transform .2s ease;
-}
-
-/* Dezente Linie drunter */
-.Footbar__powered a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-4px;
-  width:100%;
-  height:1px;
-  background:rgba(255,255,255,.25);
-  transform:scaleX(.4);
-  transform-origin:center;
-  transition:transform .25s ease, background .25s ease;
-}
-
-.Footbar__powered a:hover{
-  color:#ffffff;
-  transform:translateY(-1px);
-}
-
-.Footbar__powered a:hover::after{
-  transform:scaleX(1);
-  background:rgba(255,255,255,.6);
 }
