@@ -30,10 +30,10 @@
   /* Corner radius (NOT pills) */
   --r:10px;
 
-  /* Brand Purple (slightly lighter than before) */
-  --purple:#3b133b;
-  --purpleDark:#321032;
-  --purpleDarker:#2a0d2a;
+  /* Brand Purple -> MORE LILAC, same darkness vibe, slightly lighter */
+  --purple:#54205f;        /* more flieder */
+  --purpleDark:#471a52;    /* slightly darker */
+  --purpleDarker:#3b1445;  /* active */
 
   /* Menu text */
   --menuText:#ffffff;
@@ -42,14 +42,19 @@
   /* Nav button height */
   --navH:42px;
 
-  /* Hover motion */
-  --navDur:.5s;
+  /* Hover motion (slower “purzel” effect) */
+  --navDur:.95s; /* even a touch slower */
   --navEase:cubic-bezier(.2,.9,.2,1);
+
+  /* Social icon button size */
+  --socBtn:44px;
+  --socIcon:24px;
 }
 
 
 /* =========================
    GLOBAL FONT – Outfit
+   (generell dünner)
    ========================= */
 html, body{
   font-family:"Outfit", sans-serif;
@@ -137,7 +142,7 @@ html, body{
    ========================================================= */
 .Headbar__menu a{
   display:inline-flex;
-  align-items:flex-start; /* gewünscht */
+  align-items:flex-start;
   justify-content:center;
 
   height:var(--navH);
@@ -145,7 +150,7 @@ html, body{
   border-radius:var(--r);
 
   text-decoration:none;
-  font-weight:900;
+  font-weight:560;            /* thinner */
   font-size:10.9pt;
   letter-spacing:.2px;
   color:var(--menuText);
@@ -155,7 +160,10 @@ html, body{
 
   position:relative;
   overflow:hidden; /* CLIP */
-  transition:background .9s ease, transform .9s ease, border-color .9s ease;
+  transition:
+    background .9s ease,
+    transform .9s ease,
+    border-color .9s ease;
 }
 
 /* Wrapper: is 2 lines tall, we slide it by -50% */
@@ -185,7 +193,7 @@ html, body{
 
   /* explicit typography so it doesn't inherit font-size:0 */
   font-size:10.9pt;
-  font-weight:900;
+  font-weight:560;            /* thinner */
   letter-spacing:.2px;
   color:var(--menuText);
 }
@@ -237,7 +245,7 @@ html, body{
 
 .Headbar__langItem{
   text-decoration:none;
-  font-weight:900;
+  font-weight:560;            /* thinner */
   font-size:10.5pt;
   letter-spacing:.35px;
 
@@ -260,14 +268,14 @@ html, body{
 
 .Headbar__langDivider{
   color:rgba(255,255,255,.55);
-  font-weight:900;
+  font-weight:560;            /* thinner */
   user-select:none;
 }
 
 /* Hover: text color slightly changes */
 .Headbar__menu a:hover .NavLabel::before,
 .Headbar__menu a:hover .NavLabel::after{
-  color: rgba(255,255,255,.6); /* vorher #fff -> minimal softer/brighter */
+  color: rgba(255,255,255,.6);
 }
 
 
@@ -338,7 +346,7 @@ html, body{
   transition:transform .22s ease;
   padding-top:calc(var(--hbH) + 12px);
 
-  opacity:.96; /* less “foggy” */
+  opacity:.96;
 }
 
 .MobileMenu.is-open{
@@ -366,7 +374,7 @@ html, body{
   border-radius:var(--r);
 
   text-decoration:none;
-  font-weight:900;
+  font-weight:600;            /* thinner */
   font-size:11.6pt;
   letter-spacing:.1px;
 
@@ -403,7 +411,7 @@ html, body{
 
   border-radius:var(--r);
   text-decoration:none;
-  font-weight:900;
+  font-weight:600;            /* thinner */
 
   color:var(--menuTextSoft);
   background:transparent;
@@ -427,10 +435,6 @@ html, body{
 
 /* =========================================================
    FOOTBAR – CLEAN
-   - Solid purple
-   - Clean grid
-   - Pages + Legal: vertical list
-   - Social: FootbarSocial (single system)
    ========================================================= */
 .Footbar{
   background:var(--bar);
@@ -452,7 +456,7 @@ html, body{
 
 /* Titles */
 .Footbar__title{
-  font-weight:900;
+  font-weight:600;            /* thinner */
   letter-spacing:.25px;
   font-size:11.2pt;
   margin:0 0 12px;
@@ -461,7 +465,7 @@ html, body{
 
 /* Brand */
 .Footbar__brand{
-  font-weight:900;
+  font-weight:650;            /* thinner */
   letter-spacing:.35px;
   font-size:12.5pt;
 }
@@ -469,13 +473,13 @@ html, body{
 .Footbar__copy{
   margin-top:8px;
   color:rgba(255,255,255,.82);
-  font-weight:700;
+  font-weight:450;            /* thinner */
 }
 
 .Footbar__location{
-  margin-top:6px;
+  margin-top:10px;
   color:rgba(255,255,255,.86);
-  font-weight:750;
+  font-weight:450;            /* thinner */
   line-height:1.55;
 }
 
@@ -493,7 +497,7 @@ html, body{
 .Footbar__list a{
   color:rgba(255,255,255,.92);
   text-decoration:none;
-  font-weight:850;
+  font-weight:560;            /* thinner */
   letter-spacing:.1px;
 
   display:inline-flex;
@@ -521,37 +525,36 @@ html, body{
 
 
 /* =========================================================
-   FOOTER SOCIAL – single system (FootbarSocial)
-   (Works with the new footer HTML)
+   FOOTER SOCIAL – GRID (3 per row) + PNG Icons
    ========================================================= */
 .FootbarSocial{
   list-style:none;
   padding:0;
   margin:0;
 
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.FootbarSocial__item{
-  margin:0;
-}
-
-.FootbarSocial__link{
   display:grid;
-  grid-template-columns: 18px auto 1fr;
-  align-items:center;
-  gap:10px;
+  grid-template-columns: repeat(3, var(--socBtn));
+  gap:12px;
+  align-content:start;
+}
 
-  padding:9px 10px;
+.FootbarSocial__item{ margin:0; }
+
+/* Icon button */
+.FootbarSocial__link{
+  width:var(--socBtn);
+  height:var(--socBtn);
   border-radius:12px;
 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
   text-decoration:none;
-  color:rgba(255,255,255,.92);
 
   background: rgba(255,255,255,.07);
   border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
 
   transition: transform .12s ease, background .12s ease, border-color .12s ease;
 }
@@ -562,9 +565,7 @@ html, body{
   transform: translateY(-1px);
 }
 
-.FootbarSocial__link:active{
-  transform: translateY(0);
-}
+.FootbarSocial__link:active{ transform: translateY(0); }
 
 .FootbarSocial__link:focus-visible{
   outline: 2px solid rgba(255,255,255,.42);
@@ -572,51 +573,19 @@ html, body{
 }
 
 .FootbarSocial__icon{
-  width:18px;
-  height:18px;
-  display:grid;
-  place-items:center;
-  color:rgba(255,255,255,.95); /* drives SVG via currentColor */
+  width:var(--socIcon);
+  height:var(--socIcon);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.FootbarSocial__icon svg{
-  width:18px;
-  height:18px;
+.FootbarSocial__iconImg{
+  width:var(--socIcon);
+  height:var(--socIcon);
   display:block;
-}
-
-.FootbarSocial__label{
-  font-weight:900;
-  letter-spacing:.04em;
-  font-size:12px;
-  text-transform:uppercase;
-
-  padding:4px 8px;
-  border-radius:999px;
-
-  color:rgba(255,255,255,.95);
-}
-
-.FootbarSocial__text{
-  font-size:13px;
-  font-weight:650;
-  color: rgba(255,255,255,.84);
-
-  overflow-wrap:anywhere;
-  word-break:break-word;
-}
-
-/* Mobile layout */
-@media (max-width: 720px){
-  .FootbarSocial__link{
-    grid-template-columns: 18px 1fr;
-    grid-template-rows: auto auto;
-    gap:8px;
-  }
-  .FootbarSocial__text{
-    grid-column: 1 / -1;
-    padding-left:28px;
-  }
+  object-fit:contain;
+  object-position:center;
 }
 
 
@@ -636,7 +605,7 @@ html, body{
 
 .Footbar__powered a{
   text-decoration:none;
-  font-weight:800;
+  font-weight:560;            /* thinner */
   letter-spacing:.04em;
   font-size:13px;
 
@@ -675,9 +644,7 @@ html, body{
    FOOTER RESPONSIVE GRID
    ========================= */
 @media (max-width: 1100px){
-  .Footbar__inner{
-    grid-template-columns:1fr 1fr;
-  }
+  .Footbar__inner{ grid-template-columns:1fr 1fr; }
 }
 
 @media (max-width: 720px){
@@ -686,6 +653,7 @@ html, body{
     gap:22px;
     padding:28px 16px;
   }
+  .FootbarSocial{ gap:10px; }
 }
 
 
@@ -729,7 +697,7 @@ html, body{
 .CookieBanner h2{
   margin:0;
   font-size:20px;
-  font-weight:900;
+  font-weight:650;            /* thinner */
 }
 
 .CookieBanner p{
@@ -737,6 +705,7 @@ html, body{
   font-size:14.5px;
   line-height:1.55;
   color:rgba(14,17,22,.75);
+  font-weight:400;
 }
 
 .CookieBanner__hint{
@@ -756,11 +725,10 @@ html, body{
   padding:0 16px;
 
   border-radius:10px;
-  font-weight:800;
-
+  font-weight:600;            /* thinner */
   border:2px solid #680068;
-  cursor:pointer;
 
+  cursor:pointer;
   transition:.15s ease;
   font-family:inherit;
 }
@@ -770,9 +738,7 @@ html, body{
   color:#fff;
 }
 
-.CookieBtn--primary:hover{
-  background:#4b004b;
-}
+.CookieBtn--primary:hover{ background:#4b004b; }
 
 .CookieBtn--ghost{
   background:transparent;
@@ -790,6 +756,7 @@ html, body{
   .CookieBtn{ flex:1; }
 }
 
+
 /* =========================
    HEADBAR SOCIAL (Desktop)
    ========================= */
@@ -797,7 +764,7 @@ html, body{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  margin-left:10px; /* Abstand zur Nav */
+  margin-left:10px;
 }
 
 .Headbar__socialLink{
@@ -835,11 +802,13 @@ html, body{
   outline-offset:2px;
 }
 
-.Headbar__socialLink svg{
-  width:18px;
-  height:18px;
+/* PNG inside headbar social */
+.Headbar__socialIcon{
+  width:24px;
+  height:24px;
   display:block;
-  fill:currentColor;
+  object-fit:contain;
+  object-position:center;
 }
 
 
@@ -878,32 +847,55 @@ html, body{
   transform:translateY(-1px);
 }
 
-.MobileMenu__socialLink:active{
-  transform:translateY(0);
-}
+.MobileMenu__socialLink:active{ transform:translateY(0); }
 
 .MobileMenu__socialLink:focus-visible{
   outline:2px solid rgba(255,255,255,.42);
   outline-offset:2px;
 }
 
-.MobileMenu__socialLink svg{
-  width:18px;
-  height:18px;
-  display:block;
-  fill:currentColor;
+.MobileMenu__socialLink span{
+  font-weight:560;            /* thinner */
+  letter-spacing:.02em;
 }
 
-.MobileMenu__socialLink span{
-  font-weight:850;
-  letter-spacing:.02em;
+/* PNG inside mobile menu social */
+.MobileMenu__socialIcon{
+  width:24px;
+  height:24px;
+  display:block;
+  object-fit:contain;
+  object-position:center;
 }
 
 
 /* =========================
    RESPONSIVE: hide desktop socials when burger mode
-   (optional, but usually wanted)
    ========================= */
 .Headbar.is-mobile .Headbar__social{
   display:none;
+}
+
+
+/* =========================
+   FOOTBAR CONTACT LINKS (white, no underline)
+========================= */
+.Footbar__contactLink{
+  color:rgba(255,255,255,.92);
+  text-decoration:none;
+  font-weight:450;
+}
+
+.Footbar__contactLink:hover{
+  color:#ffffff;
+  text-decoration:none;
+}
+
+.Footbar__location .Footbar__contactLink{
+  display:block;
+  margin-top:8px;
+}
+
+.Footbar__location .Footbar__contactLink + .Footbar__contactLink{
+  margin-top:6px;
 }
