@@ -14,7 +14,7 @@
    Sandrine Neye – MENU + FOOTER (CLEAN)
    - Headbar + MobileMenu + Footbar: SOLID purple (no transparency mix)
    - No pill buttons (slight rounding only)
-   - Desktop nav hover: Shirin-style text fly-out/in
+   - Desktop nav hover: Shirin-style text fly-out/in (WIDTH LIKE BEFORE)
    - Footer: social icons bottom row + legal in bottom bar
    - Cookie banner included
    ========================================================= */
@@ -31,7 +31,7 @@
   --r:10px;
 
   /* MORE LILAC (flieder) – still dark-ish, just a touch brighter */
-  --purple:#6a2f86;        /* main bar: fliederiger (mehr blau/magenta) */
+  --purple:#6a2f86;        /* main bar */
   --purpleDark:#5a2874;    /* hover */
   --purpleDarker:#4b2162;  /* active */
 
@@ -42,9 +42,12 @@
   /* Nav button height */
   --navH:42px;
 
-  /* Hover motion (slower “purzel” effect) */
-  --navDur:.95s; /* even a touch slower */
+  /* Purzel animation */
+  --navDur:.85s; /* nicht so krass, aber noch smooth */
   --navEase:cubic-bezier(.2,.9,.2,1);
+
+  /* >>> HIER ist das Mittelding: kleiner als 42px, aber nicht mini <<< */
+  --navShift:28px; /* 24..32 nice; 28 = mittig */
 
   /* Social icon button size */
   --socBtn:44px;
@@ -54,7 +57,6 @@
 
 /* =========================
    GLOBAL FONT – Outfit
-   (generell dünner)
    ========================= */
 html, body{
   font-family:"Outfit", sans-serif;
@@ -106,9 +108,50 @@ html, body{
 /* Brand / Logo */
 .Headbar__brand{
   display:flex;
-  align-items:center;
+  flex-direction:column;
+  justify-content:center;
+  gap:2px;
+
   text-decoration:none;
+  color:var(--menuText);
+  padding:6px 10px;
+  border-radius:var(--r);
+
+  border:1px solid transparent;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+
   min-width:140px;
+}
+
+.Headbar__brand:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.18);
+  transform:translateY(-1px);
+}
+
+.Headbar__brand:active{
+  transform:translateY(0);
+}
+
+.Headbar__brandText{
+  font-weight:650;
+  letter-spacing:.35px;
+  font-size:12.2pt;
+  line-height:1.05;
+  color:#fff;
+}
+
+.Headbar__brandSub{
+  font-weight:450;
+  letter-spacing:.12px;
+  font-size:10.1pt;
+  line-height:1.05;
+  color:rgba(255,255,255,.78);
+}
+
+/* Mobile: Subline weg */
+.Headbar.is-mobile .Headbar__brandSub{
+  display:none;
 }
 
 .Headbar__logo{
@@ -124,49 +167,7 @@ html, body{
   justify-content:flex-end;
 }
 
-.Headbar__menu{
-  list-style:none;
-  margin:0;
-  padding:0;
-
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-
-
-/* =========================================================
-   DESKTOP NAV LINKS – Shirin-style (reliable)
-   Markup:
-   <a><span class="NavLabel" data-label="Home">Home</span></a>
-   ========================================================= */
-.Headbar__menu a{
-  display:inline-flex;
-  align-items:flex-start;
-  justify-content:center;
-
-  height:var(--navH);
-  padding:0 12px;
-  border-radius:var(--r);
-
-  text-decoration:none;
-  font-weight:560;            /* thinner */
-  font-size:10.9pt;
-  letter-spacing:.2px;
-  color:var(--menuText);
-
-  background:transparent;
-  border:1px solid transparent;
-
-  position:relative;
-  overflow:hidden; /* CLIP */
-  transition:
-    background .9s ease,
-    transform .9s ease,
-    border-color .9s ease;
-}
-
-/* Wrapper: is 2 lines tall, we slide it by -50% */
+/* Wrapper: wieder wie vorher (2 Zeilen im FLOW) */
 .Headbar__menu a .NavLabel{
   display:block;
   height:calc(var(--navH) * 2);
@@ -179,7 +180,7 @@ html, body{
   line-height:0;
 }
 
-/* Two real lines in normal flow */
+/* Zwei Zeilen wie vorher */
 .Headbar__menu a .NavLabel::before,
 .Headbar__menu a .NavLabel::after{
   content:attr(data-label);
@@ -191,22 +192,25 @@ html, body{
   width:100%;
   text-align:center;
 
-  /* explicit typography so it doesn't inherit font-size:0 */
   font-size:10.9pt;
-  font-weight:560;            /* thinner */
+  font-weight:560;
   letter-spacing:.2px;
   color:var(--menuText);
 }
 
-/* Hover: bg + lift */
-.Headbar__menu a:hover{
-  background:var(--barHover);
-  transform:translateY(-1px);
+/* >>> NUR DER ABSTAND: zweite Zeile rückt hoch (Mittelding) <<< */
+/*  --navShift bestimmt, wie “nah” die zweite Zeile sitzt */
+:root{
+  --navShift:30px; /* 28..34 ist meist sweet spot */
+}
+.Headbar__menu a .NavLabel::after{
+  /* vorher wäre “0”. Das hier macht den Abstand kleiner */
+  margin-top:calc(-1 * (var(--navH) - var(--navShift)));
 }
 
-/* Hover: slide up by one line */
+/* Hover: nicht mehr -50%, sondern genau um --navShift */
 .Headbar__menu a:hover .NavLabel{
-  transform:translate3d(0,-50%,0);
+  transform:translate3d(0, calc(-1 * var(--navShift)), 0);
 }
 
 .Headbar__menu a:active{
@@ -226,6 +230,11 @@ html, body{
   transform:translate3d(0,0,0);
 }
 
+/* Hover: text color slightly changes */
+.Headbar__menu a:hover .NavLabel::before,
+.Headbar__menu a:hover .NavLabel::after{
+  color: rgba(255,255,255,.6);
+}
 
 /* =========================
    LANGUAGE SWITCH
@@ -245,7 +254,7 @@ html, body{
 
 .Headbar__langItem{
   text-decoration:none;
-  font-weight:560;            /* thinner */
+  font-weight:560;
   font-size:10.5pt;
   letter-spacing:.35px;
 
@@ -268,14 +277,8 @@ html, body{
 
 .Headbar__langDivider{
   color:rgba(255,255,255,.55);
-  font-weight:560;            /* thinner */
+  font-weight:560;
   user-select:none;
-}
-
-/* Hover: text color slightly changes */
-.Headbar__menu a:hover .NavLabel::before,
-.Headbar__menu a:hover .NavLabel::after{
-  color: rgba(255,255,255,.6);
 }
 
 
@@ -374,7 +377,7 @@ html, body{
   border-radius:var(--r);
 
   text-decoration:none;
-  font-weight:600;            /* thinner */
+  font-weight:600;
   font-size:11.6pt;
   letter-spacing:.1px;
 
@@ -411,7 +414,7 @@ html, body{
 
   border-radius:var(--r);
   text-decoration:none;
-  font-weight:600;            /* thinner */
+  font-weight:600;
 
   color:var(--menuTextSoft);
   background:transparent;
@@ -449,9 +452,6 @@ html, body{
   padding:34px 18px;
 
   display:grid;
-  /* Previously: 4 cols incl Social+Legal.
-     New: keep your HTML compatible, but layout prefers content columns.
-     If your HTML still has 4 cols, it will still work; see responsive rules below. */
   grid-template-columns: 1.05fr .95fr 1.25fr .75fr;
   gap:34px;
 
@@ -459,18 +459,16 @@ html, body{
   box-sizing:border-box;
 }
 
-/* Titles */
 .Footbar__title{
-  font-weight:600;            /* thinner */
+  font-weight:600;
   letter-spacing:.25px;
   font-size:11.2pt;
   margin:0 0 12px;
   color:rgba(255,255,255,.95);
 }
 
-/* Brand */
 .Footbar__brand{
-  font-weight:650;            /* thinner */
+  font-weight:650;
   letter-spacing:.35px;
   font-size:12.5pt;
 }
@@ -478,17 +476,16 @@ html, body{
 .Footbar__copy{
   margin-top:8px;
   color:rgba(255,255,255,.82);
-  font-weight:450;            /* thinner */
+  font-weight:450;
 }
 
 .Footbar__location{
   margin-top:10px;
   color:rgba(255,255,255,.86);
-  font-weight:450;            /* thinner */
+  font-weight:450;
   line-height:1.55;
 }
 
-/* Lists (Pages + Legal) */
 .Footbar__list{
   list-style:none;
   padding:0;
@@ -502,7 +499,7 @@ html, body{
 .Footbar__list a{
   color:rgba(255,255,255,.92);
   text-decoration:none;
-  font-weight:560;            /* thinner */
+  font-weight:560;
   letter-spacing:.1px;
 
   display:inline-flex;
@@ -532,11 +529,6 @@ html, body{
 /* =========================================================
    FOOTER SOCIAL – COMPAT + NEW BOTTOM ROW
    ========================================================= */
-
-/* --- Compatibility: your HTML currently uses .FootbarSocial__btn/.FootbarSocial__img
-   but previous CSS used .FootbarSocial__link/.FootbarSocial__iconImg.
-   Support BOTH, so nothing breaks. --- */
-
 .FootbarSocial{
   list-style:none;
   padding:0;
@@ -550,7 +542,6 @@ html, body{
 
 .FootbarSocial__item{ margin:0; }
 
-/* support both class names */
 .FootbarSocial__link,
 .FootbarSocial__btn{
   width:var(--socBtn);
@@ -588,7 +579,6 @@ html, body{
   outline-offset: 2px;
 }
 
-/* legacy wrappers still fine */
 .FootbarSocial__icon{
   width:var(--socIcon);
   height:var(--socIcon);
@@ -597,7 +587,6 @@ html, body{
   justify-content:center;
 }
 
-/* support both image class names */
 .FootbarSocial__iconImg,
 .FootbarSocial__img{
   width:var(--socIcon);
@@ -607,7 +596,6 @@ html, body{
   object-position:center;
 }
 
-/* --- NEW: bottom horizontal social row (recommended) --- */
 .FootbarSocialRow{
   max-width:var(--container);
   margin:0 auto;
@@ -663,16 +651,14 @@ html, body{
   object-position:center;
 }
 
-
 /* =========================
-   FOOTBAR BOTTOM / LEGAL / POWERED (UPDATED)
+   FOOTBAR BOTTOM / LEGAL / POWERED
    ========================= */
 .Footbar__bottom{
   border-top:0px solid rgba(255,255,255,.14);
   padding:14px 18px 18px;
 }
 
-/* optional inner wrapper (if present in HTML) */
 .Footbar__bottomInner{
   max-width:var(--container);
   margin:0 auto;
@@ -686,10 +672,8 @@ html, body{
   box-sizing:border-box;
 
   border-top: 1px solid rgba(255,255,255,.14);
-
 }
 
-/* Legal links in bottom bar */
 .FootbarLegal{
   display:inline-flex;
   align-items:center;
@@ -732,7 +716,7 @@ html, body{
 
 .Footbar__powered a{
   text-decoration:none;
-  font-weight:520;            /* slightly slimmer */
+  font-weight:520;
   letter-spacing:.04em;
   font-size:13px;
 
@@ -765,7 +749,6 @@ html, body{
   transform:scaleX(1);
   background:rgba(255,255,255,.65);
 }
-
 
 /* =========================
    FOOTER RESPONSIVE GRID
@@ -833,7 +816,7 @@ html, body{
 .CookieBanner h2{
   margin:0;
   font-size:20px;
-  font-weight:650;            /* thinner */
+  font-weight:650;
 }
 
 .CookieBanner p{
@@ -861,7 +844,7 @@ html, body{
   padding:0 16px;
 
   border-radius:10px;
-  font-weight:600;            /* thinner */
+  font-weight:600;
   border:2px solid #6a2f86;
 
   cursor:pointer;
@@ -916,7 +899,7 @@ html, body{
   color:rgba(255,255,255,.86);
 
   background:transparent;
-  border:1px solid rgba(255,255,255,.18);
+  border:0px solid rgba(255,255,255,.18);
 
   transition: background .15s ease, border-color .15s ease, transform .15s ease, color .15s ease;
 }
@@ -938,7 +921,6 @@ html, body{
   outline-offset:2px;
 }
 
-/* PNG inside headbar social */
 .Headbar__socialIcon{
   width:24px;
   height:24px;
@@ -946,7 +928,6 @@ html, body{
   object-fit:contain;
   object-position:center;
 }
-
 
 /* =========================
    MOBILE SOCIAL (inside panel)
@@ -991,11 +972,10 @@ html, body{
 }
 
 .MobileMenu__socialLink span{
-  font-weight:560;            /* thinner */
+  font-weight:560;
   letter-spacing:.02em;
 }
 
-/* PNG inside mobile menu social */
 .MobileMenu__socialIcon{
   width:24px;
   height:24px;
@@ -1004,17 +984,14 @@ html, body{
   object-position:center;
 }
 
-
-/* =========================
-   RESPONSIVE: hide desktop socials when burger mode
-   ========================= */
+/* hide desktop socials when burger mode */
 .Headbar.is-mobile .Headbar__social{
   display:none;
 }
 
 
 /* =========================
-   FOOTBAR CONTACT LINKS (white, no underline)
+   FOOTBAR CONTACT LINKS
 ========================= */
 .Footbar__contactLink{
   color:rgba(255,255,255,.92);
