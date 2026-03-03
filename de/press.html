@@ -1,11 +1,11 @@
 <!--
 ==============================================================================
 
-    __    _ ____            __  ___           _         _____                 _
+    __    _ ____            __  ___           _         _____                 _               
    / /   (_) __ \____ _    /  |/  /_  _______(_)____   / ___/___  ______   __(_)_______  _____
   / /   / / /_/ / __ `/   / /|_/ / / / / ___/ / ___/   \__ \/ _ \/ ___/ | / / / ___/ _ \/ ___/
- / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  )
-/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/
+ / /___/ / ____/ /_/ /   / /  / / /_/ (__  ) / /__    ___/ /  __/ /   | |/ / / /__/  __(__  ) 
+/_____/_/_/    \__,_/   /_/  /_/\__,_/____/_/\___/   /____/\___/_/    |___/_/\___/\___/____/  
 
    LiPa Music Services – Abteilung Webentwicklung
    © 2026 LiPa Music Services GbR
@@ -23,10 +23,10 @@
   <title>Pressestimmen – Sandrine Neye</title>
   <meta name="description" content="Pressestimmen und Zitate über Sandrine Neye – Singer & Songwriter." />
 
-  <!-- Google Font: Outfit -->
+  <!-- Google Fonts: Outfit + Niconne -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Root assets (2 Ebenen hoch) -->
   <link rel="icon" href="../Resources/Content/Favicon.ico" />
@@ -41,6 +41,9 @@
     font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     background:#fff;
     color:#0e1116;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
 
   :root{
@@ -49,6 +52,9 @@
     --border:rgba(10,16,26,.12);
     --radius:14px;
     --hbH:74px;
+
+    --quoteInk:rgba(14,17,22,.86);
+    --quoteMark:rgba(104,0,104,.42);
   }
 
   /* Footer nicht im Raum */
@@ -118,26 +124,33 @@
     box-sizing:border-box;
   }
 
+  /* ✅ Niconne nur für den Zitattext */
   .Quote__text{
     margin:0;
-    font-size:17px;
-    line-height:1.7;
-    color: rgba(14,17,22,.86);
+    font-family:"Niconne", cursive;
+    font-size:28px;         /* wirkt “premium”, bleibt aber lesbar */
+    line-height:1.35;
+    color: var(--quoteInk);
     font-weight:400;
+    letter-spacing:.01em;
   }
 
+  /* Anführungszeichen bewusst NICHT in Niconne (sonst wird’s schnell kitschig) */
   .Quote__text::before,
   .Quote__text::after{
-    color: rgba(104,0,104,.42);
+    font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--quoteMark);
     font-weight:600;
+    font-size:18px;
+    vertical-align:top;
   }
   .Quote__text::before{
     content:"“";
-    margin-right:3px;
+    margin-right:6px;
   }
   .Quote__text::after{
     content:"”";
-    margin-left:3px;
+    margin-left:6px;
   }
 
   .Quote__meta{
@@ -178,6 +191,13 @@
     width:100%;
     max-width:760px;
     font-weight:400;
+  }
+
+  @media (max-width:700px){
+    .Quote__text{
+      font-size:24px;
+      line-height:1.35;
+    }
   }
 </style>
 </head>
@@ -304,10 +324,6 @@
         </article>
 
       </section>
-
-      <!-- Optionaler Empty State (falls du mal dynamisch lädst)
-      <div id="EmptyState" class="Empty" style="display:none;">Noch keine Pressestimmen hinterlegt.</div>
-      -->
 
     </div>
   </main>

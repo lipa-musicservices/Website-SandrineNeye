@@ -12,10 +12,12 @@
 
 /* =========================================================
    Sandrine Neye – MENU + FOOTER (CLEAN)
-   - Headbar + MobileMenu + Footbar: SOLID purple
-   - Desktop nav: cube effect (tight + centered)
-   - Mobile menu: NO cube effect, NO duplicates, NO bullets
-   - FIX: Desktop buttons wider
+   - Headbar + MobileMenu + Footbar: SOLID purple (no transparency mix)
+   - No pill buttons (slight rounding only)
+   - Desktop nav hover: Shirin-style text fly-out/in
+   - Footer pages: HORIZONTAL + WRAP
+   - Legal links: ONLY Impressum + Datenschutz get center-out underline hover
+   - Cookie banner included
    ========================================================= */
 
 
@@ -37,20 +39,10 @@
 
   --navH:42px;
 
-  --navDur:.45s;
+  --navDur:.95s;
   --navEase:cubic-bezier(.2,.9,.2,1);
 
-  --navTight:8px;
-
-  /* Hover end position: small DOWN nudge */
-  --navHoverNudge:6px;
-
-  /* ✅ Wider desktop buttons */
-  --navPadX:18px;        /* was 12px */
-  --navMinW:56px;        /* helps tiny labels like "Hor" etc. */
-
-  /* Slightly more breathing room between items */
-  --navGap:8px;          /* was 6px-ish */
+  --navTight:10px;
 
   --socBtn:44px;
   --socIcon:24px;
@@ -105,7 +97,10 @@ html, body{
   box-sizing:border-box;
 }
 
-/* Brand */
+
+/* =========================
+   BRAND (TEXT VERSION)
+   ========================= */
 .Headbar__brand{
   display:flex;
   flex-direction:column;
@@ -114,6 +109,7 @@ html, body{
 
   text-decoration:none;
   color:var(--menuText);
+
   padding:6px 10px;
   border-radius:var(--r);
 
@@ -146,15 +142,16 @@ html, body{
   color:rgba(255,255,255,.78);
 }
 
-.Headbar.is-mobile .Headbar__brandSub{ display:none; }
-
 .Headbar__logo{
   height:40px;
   width:auto;
   display:block;
 }
 
-/* Desktop Nav: right aligned */
+.Headbar.is-mobile .Headbar__brandSub{ display:none; }
+
+
+/* Desktop Nav */
 .Headbar__nav{
   flex:1;
   display:flex;
@@ -168,24 +165,20 @@ html, body{
 
   display:flex;
   align-items:center;
-  gap:var(--navGap);
+  gap:6px;
 }
 
 
-/* =========================================================
-   DESKTOP NAV LINKS – cube effect (ONLY desktop)
-   ========================================================= */
+/* =========================
+   DESKTOP NAV LINKS – Shirin-style
+   ========================= */
 .Headbar__menu a{
   display:inline-flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
 
   height:var(--navH);
-
-  /* ✅ wider */
-  padding:0 var(--navPadX);
-  min-width:var(--navMinW);
-
+  padding:0 12px;
   border-radius:var(--r);
 
   text-decoration:none;
@@ -199,23 +192,15 @@ html, body{
 
   position:relative;
   overflow:hidden;
-
   transition:
-    background .45s ease,
-    transform .45s ease,
-    border-color .45s ease;
+    background .5s ease,
+    transform .5s ease,
+    border-color .9s ease;
 }
 
-/* NavLabel pinned to top inside the 42px window */
 .Headbar__menu a .NavLabel{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-
   display:block;
   height:calc(var(--navH) * 2);
-
   transform:translate3d(0,0,0);
   transition:transform var(--navDur) var(--navEase);
   will-change:transform;
@@ -224,7 +209,6 @@ html, body{
   line-height:0;
 }
 
-/* Two lines */
 .Headbar__menu a .NavLabel::before,
 .Headbar__menu a .NavLabel::after{
   content:attr(data-label);
@@ -232,6 +216,7 @@ html, body{
 
   height:var(--navH);
   line-height:var(--navH);
+
   width:100%;
   text-align:center;
 
@@ -241,20 +226,17 @@ html, body{
   color:var(--menuText);
 }
 
-/* Tighten second line */
 .Headbar__menu a .NavLabel::after{
   transform:translateY(calc(-1 * var(--navTight)));
 }
 
-/* Hover */
 .Headbar__menu a:hover{
   background:var(--barHover);
   transform:translateY(-1px);
 }
 
-/* Slide exactly one line + nudge down */
 .Headbar__menu a:hover .NavLabel{
-  transform:translate3d(0, calc(-1 * var(--navH) + var(--navHoverNudge)), 0);
+  transform:translate3d(0,-37%,0);
 }
 
 .Headbar__menu a:active{
@@ -274,7 +256,7 @@ html, body{
 
 .Headbar__menu a:hover .NavLabel::before,
 .Headbar__menu a:hover .NavLabel::after{
-  color:rgba(255,255,255,.6);
+  color: rgba(255,255,255,.6);
 }
 
 
@@ -325,59 +307,6 @@ html, body{
 
 
 /* =========================
-   HEADBAR SOCIAL (Desktop)
-   ========================= */
-.Headbar__social{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  margin-left:10px;
-}
-
-.Headbar__socialLink{
-  width:42px;
-  height:42px;
-  border-radius:var(--r);
-
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  text-decoration:none;
-  color:rgba(255,255,255,.86);
-
-  background:transparent;
-  border:0;
-
-  transition: background .15s ease, transform .15s ease, color .15s ease;
-}
-
-.Headbar__socialLink:hover{
-  background:rgba(255,255,255,.08);
-  color:#fff;
-  transform:translateY(-1px);
-}
-
-.Headbar__socialLink:active{
-  transform:translateY(0);
-  background:rgba(255,255,255,.06);
-}
-
-.Headbar__socialLink:focus-visible{
-  outline:2px solid rgba(255,255,255,.42);
-  outline-offset:2px;
-}
-
-.Headbar__socialIcon{
-  width:24px;
-  height:24px;
-  display:block;
-  object-fit:contain;
-  object-position:center;
-}
-
-
-/* =========================
    BURGER
    ========================= */
 .Headbar__burger{
@@ -417,10 +346,8 @@ html, body{
   background:var(--barActive);
 }
 
-/* Responsive switch */
 .Headbar.is-mobile .Headbar__nav{ display:none; }
 .Headbar.is-mobile .Headbar__burger{ display:inline-flex; }
-.Headbar.is-mobile .Headbar__social{ display:none; }
 
 
 /* =========================
@@ -453,20 +380,14 @@ html, body{
   pointer-events:auto;
 }
 
-/* HARD kill bullets */
 .MobileMenu__list{
-  list-style:none !important;
-  margin:0 !important;
-  padding:14px 16px 10px !important;
+  list-style:none;
+  margin:0;
+  padding:14px 16px 10px;
 
   display:flex;
   flex-direction:column;
   gap:8px;
-}
-.MobileMenu__list li{
-  list-style:none !important;
-  margin:0 !important;
-  padding:0 !important;
 }
 
 .MobileMenu__list a{
@@ -498,31 +419,420 @@ html, body{
 
 .MobileMenu__list a:active{ transform:translateY(0); }
 
-/* disable cube/NavLabel inside MobileMenu */
-.MobileMenu .NavLabel{
-  position:static !important;
-  top:auto !important;
-  left:auto !important;
-  width:auto !important;
-  height:auto !important;
-
-  transform:none !important;
-  transition:none !important;
-  will-change:auto !important;
-
-  font-size:inherit !important;
-  line-height:inherit !important;
-}
-.MobileMenu .NavLabel::before,
-.MobileMenu .NavLabel::after{
-  content:none !important;
-  display:none !important;
+.MobileMenu__lang{
+  display:flex;
+  gap:10px;
+  padding:10px 16px 16px;
 }
 
+.MobileMenu__lang a{
+  flex:1;
+  height:44px;
 
-/* Mobile Social */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:var(--r);
+  text-decoration:none;
+  font-weight:600;
+
+  color:var(--menuTextSoft);
+  background:transparent;
+  border:1px solid rgba(255,255,255,.22);
+
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.MobileMenu__lang a:hover{
+  background:var(--barHover);
+  color:var(--menuText);
+  border-color:rgba(255,255,255,.28);
+}
+
+.MobileMenu__lang a.is-active{
+  background:var(--barHover);
+  color:var(--menuText);
+  border-color:rgba(255,255,255,.28);
+}
+
+
+/* =========================================================
+   FOOTBAR
+   ========================================================= */
+.Footbar{
+  background:var(--bar);
+  color:#fff;
+}
+
+.Footbar__inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:34px 18px;
+
+  display:grid;
+  grid-template-columns: 1.05fr 1.35fr .60fr;
+  gap:34px;
+
+  align-items:start;
+  box-sizing:border-box;
+}
+
+.Footbar__title{
+  font-weight:600;
+  letter-spacing:.25px;
+  font-size:11.2pt;
+  margin:0 0 12px;
+  color:rgba(255,255,255,.95);
+}
+
+.Footbar__brand{
+  font-weight:650;
+  letter-spacing:.35px;
+  font-size:12.5pt;
+}
+
+.Footbar__copy{
+  margin-top:8px;
+  color:rgba(255,255,255,.82);
+  font-weight:450;
+}
+
+.Footbar__location{
+  margin-top:10px;
+  color:rgba(255,255,255,.86);
+  font-weight:450;
+  line-height:1.55;
+}
+
+/* Pages list horizontal */
+.Footbar__list{
+  list-style:none;
+  padding:0;
+  margin:0;
+
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+
+  gap:10px 12px;
+  align-items:flex-start;
+}
+
+.Footbar__list li{
+  margin:0;
+  padding:0;
+}
+
+.Footbar__list a{
+  color:rgba(255,255,255,.92);
+  text-decoration:none;
+  font-weight:560;
+  letter-spacing:.1px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:8px 12px;
+  border-radius:10px;
+
+  border:1px solid transparent;
+  background:rgba(255,255,255,.00);
+
+  transition:background .15s ease, border-color .15s ease, transform .15s ease, opacity .15s ease;
+}
+
+.Footbar__list a:hover{
+  background:rgba(255,255,255,.09);
+  border-color:rgba(255,255,255,.18);
+  transform:translateY(-1px);
+}
+
+.Footbar__list a:active{
+  transform:translateY(0);
+  opacity:.92;
+}
+
+
+/* Contact links */
+.Footbar__contactLink{
+  color:rgba(255,255,255,.92);
+  text-decoration:none;
+  font-weight:450;
+}
+
+.Footbar__contactLink:hover{
+  color:#ffffff;
+  text-decoration:none;
+}
+
+.Footbar__location .Footbar__contactLink{
+  display:block;
+  margin-top:8px;
+}
+
+.Footbar__location .Footbar__contactLink + .Footbar__contactLink{
+  margin-top:6px;
+}
+
+
+/* =========================================================
+   SOCIAL ROW (in Footbar__bottom)
+   ========================================================= */
+.Footbar__bottom{
+  padding:14px 18px 18px;
+}
+
+.FootbarSocialRow{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0;
+
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+
+  box-sizing:border-box;
+}
+
+.FootbarSocialRow li{ margin:0; }
+
+.FootbarSocialRow__btn{
+  width:var(--socBtn);
+  height:var(--socBtn);
+  border-radius:12px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+
+  opacity: 0.5;
+
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.FootbarSocialRow__btn:hover{
+  transform: translateY(-1px);
+
+  opacity: 1;
+}
+
+.FootbarSocialRow__btn:active{ transform: translateY(0); }
+
+.FootbarSocialRow__btn:focus-visible{
+  outline: 2px solid rgba(255,255,255,.42);
+  outline-offset: 2px;
+}
+
+.FootbarSocialRow__img{
+  width:var(--socIcon);
+  height:var(--socIcon);
+  display:block;
+  object-fit:contain;
+  object-position:center;
+}
+
+
+/* =========================================================
+   BOTTOM BAR (legal + powered)
+   ========================================================= */
+.Footbar__bottomInner{
+  max-width:var(--container);
+  margin:0 auto;
+  margin-top: 15px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+
+  padding-top:12px;
+  box-sizing:border-box;
+  border-top: 1px solid rgba(255,255,255,.14);
+}
+
+.FootbarLegal{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* base look stays simple */
+.FootbarLegal a{
+  color: rgba(255,255,255,.86);
+  text-decoration:none;
+  font-weight:520;
+  letter-spacing:.02em;
+
+  padding:6px 8px;
+  border-radius:10px;
+
+  border:1px solid transparent;
+  transition: color .2s ease, transform .2s ease, opacity .2s ease, background .15s ease, border-color .15s ease;
+}
+
+/* keep the subtle hover background like before */
+.FootbarLegal a:hover{
+  color:#fff;
+  transform: translateY(-1px);
+}
+
+.FootbarLegal a:active{ transform: translateY(0); }
+
+.FootbarLegal__sep{
+  color: rgba(255,255,255,.45);
+  user-select:none;
+}
+
+/* ✅ NEW: underline only for Impressum + Datenschutz, starts invisible, grows from center */
+.FootbarLegal a[href*="impressum"],
+.FootbarLegal a[href*="datenschutz"]{
+  position:relative;
+}
+
+.FootbarLegal a[href*="impressum"]::after,
+.FootbarLegal a[href*="datenschutz"]::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:3px;               /* sits inside padding */
+  width:70%;
+  height:1px;
+
+  background:rgba(255,255,255,.65);
+
+  transform:translateX(-50%) scaleX(0); /* ✅ start: not visible */
+  transform-origin:center;
+
+  opacity:0;                /* ✅ extra guarantee: invisible initially */
+  transition: transform .22s ease, opacity .18s ease;
+}
+
+/* hover: expand from center */
+.FootbarLegal a[href*="impressum"]:hover::after,
+.FootbarLegal a[href*="datenschutz"]:hover::after{
+  transform:translateX(-50%) scaleX(1);
+  opacity:1;
+}
+
+/* active: tiny shrink so it feels “pressed” */
+.FootbarLegal a[href*="impressum"]:active::after,
+.FootbarLegal a[href*="datenschutz"]:active::after{
+  transform:translateX(-50%) scaleX(.92);
+  opacity:1;
+}
+
+
+.Footbar__powered{
+  display:flex;
+  justify-content:center;
+  text-align:center;
+}
+
+.Footbar__powered a{
+  text-decoration:none;
+  font-weight:520;
+  letter-spacing:.04em;
+  font-size:13px;
+
+  color: rgba(255,255,255,.80);
+
+  position:relative;
+  display:inline-block;
+  transition: color .2s ease, transform .2s ease, opacity .2s ease;
+}
+
+/* existing powered underline (kept) */
+.Footbar__powered a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:100%;
+  height:1px;
+  background:rgba(255,255,255,.30);
+  transform:scaleX(.5);
+  transform-origin:center;
+  transition:transform .25s ease, background .25s ease;
+}
+
+.Footbar__powered a:hover{
+  color:#ffffff;
+  transform:translateY(-1px);
+}
+
+.Footbar__powered a:hover::after{
+  transform:scaleX(1);
+  background:rgba(255,255,255,.65);
+}
+
+
+/* =========================================================
+   HEADBAR SOCIAL (Desktop)
+   ========================================================= */
+.Headbar__social{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-left:10px;
+}
+
+.Headbar__socialLink{
+  width:42px;
+  height:42px;
+  border-radius:var(--r);
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+  color:rgba(255,255,255,.86);
+
+  background:transparent;
+  border: 0px solid rgba(255,255,255,.18);
+
+  transition: background .15s ease, border-color .15s ease, transform .15s ease, color .15s ease;
+}
+
+.Headbar__socialLink:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.26);
+  color:#ffffff;
+  transform:translateY(-1px);
+}
+
+.Headbar__socialLink:active{
+  transform:translateY(0);
+  background:rgba(255,255,255,.06);
+}
+
+.Headbar__socialLink:focus-visible{
+  outline:2px solid rgba(255,255,255,.42);
+  outline-offset:2px;
+}
+
+.Headbar__socialIcon{
+  width:24px;
+  height:24px;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+}
+
+
+/* =========================================================
+   MOBILE SOCIAL (inside panel)
+   ========================================================= */
 .MobileMenu__social{
-  padding:6px 16px 14px;
+  padding: 6px 16px 14px;
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -573,152 +883,38 @@ html, body{
   object-position:center;
 }
 
-.MobileMenu__lang{
-  display:flex;
-  gap:10px;
-  padding:10px 16px 16px;
-}
 
-.MobileMenu__lang a{
-  flex:1;
-  height:44px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:var(--r);
-  text-decoration:none;
-  font-weight:600;
-
-  color:var(--menuTextSoft);
-  background:transparent;
-  border:1px solid rgba(255,255,255,.22);
-
-  transition:background .15s ease, color .15s ease, border-color .15s ease;
-}
-
-.MobileMenu__lang a:hover{
-  background:var(--barHover);
-  color:var(--menuText);
-  border-color:rgba(255,255,255,.28);
-}
-
-.MobileMenu__lang a.is-active{
-  background:var(--barHover);
-  color:var(--menuText);
-  border-color:rgba(255,255,255,.28);
-}
+/* =========================
+   RESPONSIVE: hide desktop socials when burger mode
+   ========================= */
+.Headbar.is-mobile .Headbar__social{ display:none; }
 
 
 /* =========================================================
-   FOOTBAR
+   FOOTER RESPONSIVE
    ========================================================= */
-.Footbar{ background:var(--bar); color:#fff; }
-
-.Footbar__inner{
-  max-width:var(--container);
-  margin:0 auto;
-  padding:34px 18px;
-
-  display:grid;
-  grid-template-columns: 1.05fr .95fr 1.25fr .75fr;
-  gap:34px;
-
-  align-items:start;
-  box-sizing:border-box;
-}
-
-.Footbar__title{
-  font-weight:600;
-  letter-spacing:.25px;
-  font-size:11.2pt;
-  margin:0 0 12px;
-  color:rgba(255,255,255,.95);
-}
-
-.Footbar__brand{
-  font-weight:650;
-  letter-spacing:.35px;
-  font-size:12.5pt;
-}
-
-.Footbar__copy{
-  margin-top:8px;
-  color:rgba(255,255,255,.82);
-  font-weight:450;
-}
-
-.Footbar__location{
-  margin-top:10px;
-  color:rgba(255,255,255,.86);
-  font-weight:450;
-  line-height:1.55;
-}
-
-.Footbar__list{
-  list-style:none;
-  padding:0;
-  margin:0;
-
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.Footbar__list a{
-  color:rgba(255,255,255,.92);
-  text-decoration:none;
-  font-weight:560;
-  letter-spacing:.1px;
-
-  display:inline-flex;
-  align-items:center;
-
-  padding:7px 10px;
-  border-radius:10px;
-
-  border:1px solid transparent;
-  background:transparent;
-
-  transition:background .15s ease, border-color .15s ease, transform .15s ease, opacity .15s ease;
-}
-
-.Footbar__list a:hover{
-  background:rgba(255,255,255,.09);
-  border-color:rgba(255,255,255,.18);
-  transform:translateY(-1px);
-}
-
-.Footbar__list a:active{ transform:translateY(0); opacity:.92; }
-
-/* Contact links */
-.Footbar__contactLink{
-  color:rgba(255,255,255,.92);
-  text-decoration:none;
-  font-weight:450;
-}
-
-.Footbar__contactLink:hover{ color:#ffffff; }
-
-.Footbar__location .Footbar__contactLink{
-  display:block;
-  margin-top:8px;
-}
-
-.Footbar__location .Footbar__contactLink + .Footbar__contactLink{
-  margin-top:6px;
-}
-
-/* Responsive footer grid */
 @media (max-width: 1100px){
-  .Footbar__inner{ grid-template-columns:1fr 1fr; }
-}
-@media (max-width: 720px){
   .Footbar__inner{
     grid-template-columns:1fr;
     gap:22px;
+  }
+
+  .Footbar__list{
+    gap:8px 10px;
+  }
+}
+
+@media (max-width: 720px){
+  .Footbar__inner{
     padding:28px 16px;
+  }
+
+  .Footbar__bottom{
+    padding:12px 16px 16px;
+  }
+
+  .Footbar__bottomInner{
+    justify-content:center;
   }
 }
 
@@ -803,12 +999,14 @@ html, body{
   background:#6a2f86;
   color:#fff;
 }
+
 .CookieBtn--primary:hover{ background:#4b004b; }
 
 .CookieBtn--ghost{
   background:transparent;
   color:#6a2f86;
 }
+
 .CookieBtn--ghost:hover{
   background:#6a2f86;
   color:#fff;

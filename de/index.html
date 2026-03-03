@@ -41,7 +41,7 @@
     font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     background:#fff;
     color:#0e1116;
-    overflow-x:hidden; /* kein rüberscrollen */
+    overflow-x:hidden;
   }
 
   :root{
@@ -164,7 +164,7 @@
     padding: 70px 18px;
   }
   .Section__inner{
-    max-width: 920px;
+    max-width: var(--container);
     margin: 0 auto;
   }
   .Section h2{
@@ -179,6 +179,113 @@
     font-size: 17px;
     line-height: 1.65;
     font-weight:400;
+  }
+
+  /* =========================
+     SONGS – YouTube previews (2 tiles)
+     ========================= */
+  .MusicGrid{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:18px;
+    align-items:start;
+  }
+
+  .YTCard{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 18px 45px rgba(10,16,26,.08);
+  }
+
+  .YTFrame{
+    position:relative;
+    width:100%;
+    aspect-ratio: 16 / 9;
+    background:#0f0f12;
+    cursor:pointer;
+    overflow:hidden;
+  }
+
+  .YTFrame__thumb{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter:saturate(1.02);
+    transform:scale(1.01);
+  }
+
+  .YTFrame__shade{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,
+      rgba(0,0,0,.55),
+      rgba(0,0,0,.08),
+      rgba(0,0,0,0));
+  }
+
+  .YTPlay{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:74px;
+    height:74px;
+    border-radius:999px;
+    border:2px solid rgba(255,255,255,.75);
+    background:rgba(0,0,0,.25);
+    display:grid;
+    place-items:center;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    box-shadow:0 18px 50px rgba(0,0,0,.35);
+  }
+  .YTFrame:hover .YTPlay{
+    transform:translate(-50%,-50%) scale(1.04);
+    background:rgba(0,0,0,.35);
+    border-color:rgba(255,255,255,.92);
+  }
+
+  .YTPlay svg{
+    width:26px;
+    height:26px;
+    margin-left:3px;
+    fill:#fff;
+  }
+
+  .YTMeta{
+    padding:14px 16px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+  .YTTitle{
+    margin:0;
+    font-size:16.5px;
+    font-weight:650;
+    letter-spacing:.01em;
+    line-height:1.25;
+  }
+
+  .YTSub{
+    margin:0;
+    font-size:14px;
+    color:rgba(14,17,22,.70);
+    line-height:1.45;
+    font-weight:450;
+  }
+
+  .YTFrame iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
   }
 
   /* =========================
@@ -222,7 +329,7 @@
   .MarqueeWrap{
     position:relative;
     width:100%;
-    overflow:visible; /* <<< CHANGED: allow hover zoom to overflow */
+    overflow:visible;
     border-top:1px solid rgba(10,16,26,.06);
     border-bottom:1px solid rgba(10,16,26,.06);
     background:#fff;
@@ -250,7 +357,6 @@
     will-change:transform;
   }
 
-  /* <<< CHANGED: pause only gallery, not press */
   .GallerySection .MarqueeWrap:hover .MarqueeTrack{
     animation-play-state: paused;
   }
@@ -264,13 +370,13 @@
     width: 340px;
     height: 230px;
     border-radius: 0px;
-    overflow:visible; /* <<< CHANGED: allow image to overflow */
+    overflow:visible;
     border:1px solid var(--border);
     background:#f4f4f8;
     flex:0 0 auto;
     cursor:pointer;
     position:relative;
-    z-index:1; /* base stacking */
+    z-index:1;
   }
 
   .MarqueeItem img{
@@ -279,18 +385,17 @@
     object-fit:cover;
     display:block;
     border-radius:0px;
-    transition:transform .22s cubic-bezier(.2,.9,.2,1); /* <<< tuned */
+    transition:transform .22s cubic-bezier(.2,.9,.2,1);
     will-change:transform;
     position:relative;
     z-index:1;
   }
 
-  /* <<< CHANGED: 1.25x zoom + overlay neighbours */
   .MarqueeItem:hover{ z-index:50; }
   .MarqueeItem:hover img{ transform:scale(1.5); z-index:60; }
 
   /* =========================
-     PRESS – STEP CAROUSEL (Mobile safe)
+     PRESS – STEP CAROUSEL
      ========================= */
   .PressSection{ padding: 0 0 76px; }
 
@@ -319,12 +424,6 @@
     isolation: isolate;
   }
 
-  #PressWrap::before,
-  #PressWrap::after{
-    z-index:0;
-    opacity:.30;
-  }
-
   #PressTrack{
     animation:none !important;
     transition: transform 450ms cubic-bezier(.2,.9,.2,1);
@@ -336,12 +435,8 @@
     width:max-content;
   }
 
-  /* >>> FIX: Breite responsive runter, damit Center-Zoom NIE über 100vw geht <<< */
   .PressCard{
     flex:0 0 auto;
-
-    /* war min(560px, 78vw) – das killt dich auf Mobile beim Zoom.
-       Neu: clamp() limitiert sauber nach unten */
     width: clamp(280px, 78vw, 520px);
 
     border:1px solid var(--border);
@@ -369,14 +464,12 @@
     text-rendering: geometricPrecision;
   }
 
-  /* Center: zusätzlich hard-cap auf Viewport (Padding 18+18=36) */
   .PressCard.is-center{
     z-index: 20;
     transform: translateZ(0) scale(1.22);
     opacity: 1;
     box-shadow: 0 34px 96px rgba(10,16,26,.26);
     border-color: rgba(104,0,104,.34);
-
     max-width: calc(100vw - 36px);
   }
 
@@ -454,6 +547,9 @@
     .Hero{ min-height: calc(92vh - var(--hbH)); }
     .Hero__inner{ padding-bottom: 42px; }
     .Btn{ width:100%; }
+
+    .MusicGrid{ grid-template-columns: 1fr; gap:14px; }
+
     .GalleryHead{ flex-direction:column; align-items:flex-start; }
     .GalleryHead__right{ justify-content:flex-start; }
     .MarqueeItem{ width: 260px; height: 180px; }
@@ -461,9 +557,6 @@
 
     .PressHead{ flex-direction:column; align-items:flex-start; }
     #PressWrap{ padding: 18px 0 26px; }
-
-    /* optional: auf sehr klein etwas weniger Zoom,
-       falls du 1.22 doch noch zu fett findest */
     .PressCard.is-center{ transform: translateZ(0) scale(1.16); }
   }
 </style>
@@ -492,12 +585,53 @@
       </div>
     </section>
 
-    <section class="Section">
+    <!-- Songs / YouTube previews -->
+    <section class="Section" aria-label="Songs">
       <div class="Section__inner">
-        <h2>Musik mit Charakter</h2>
-        <p>
-          Sandrine Neye (gesprochen: „Sandrin Naije“) (*2001) ist eine junge, aufstrebende Sängerin und Musikerin aus Karlsruhe, die in der regionalen Musikszene für ihre ausdrucksstarke Stimme und ihre soul- und poporientierte Musik bekannt geworden ist. Medien bezeichnen sie als eine der bemerkenswerten Stimmen der deutschen Nachwuchsmusikszene beziehungsweise als eine der talentiertesten jungen Sängerinnen der aufstrebenden deutschen Musiklandschaft.
+        <h2>Hör rein</h2>
+        <p style="max-width:78ch;">
+          Zwei kurze Einblicke – klick auf Play, dann startet das Video direkt hier auf der Seite.
         </p>
+
+        <div class="MusicGrid" id="MusicGrid">
+
+          <!-- VIDEO 1: https://www.youtube.com/watch?v=RQvI1DEry00 -->
+          <article class="YTCard">
+            <div class="YTFrame js-yt" role="button" tabindex="0"
+                 aria-label="YouTube Video abspielen"
+                 data-yt="RQvI1DEry00"
+                 data-title="YouTube Video">
+              <img class="YTFrame__thumb" data-auto-thumb alt="">
+              <div class="YTFrame__shade" aria-hidden="true"></div>
+              <div class="YTPlay" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="YTMeta">
+              <h3 class="YTTitle">Sandrine Neye - Memories to Save (Live Excerpt)</h3>
+              <p class="YTSub">YouTube</p>
+            </div>
+          </article>
+
+          <!-- VIDEO 2: https://www.youtube.com/watch?v=lfFkKgYLU_o -->
+          <article class="YTCard">
+            <div class="YTFrame js-yt" role="button" tabindex="0"
+                 aria-label="YouTube Video abspielen"
+                 data-yt="lfFkKgYLU_o"
+                 data-title="YouTube Video">
+              <img class="YTFrame__thumb" data-auto-thumb alt="">
+              <div class="YTFrame__shade" aria-hidden="true"></div>
+              <div class="YTPlay" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="YTMeta">
+              <h3 class="YTTitle">Sandrine Neye - Funky Sensation (Unreleased) (Live Excerpt)</h3>
+              <p class="YTSub">YouTube</p>
+            </div>
+          </article>
+
+        </div>
       </div>
     </section>
 
@@ -549,6 +683,55 @@
   (function(){
     "use strict";
 
+    /* =========================
+       YOUTUBE: lazy load on click
+       ========================= */
+    function setAutoThumb(frame){
+      const vid = frame.getAttribute("data-yt");
+      const img = frame.querySelector('img[data-auto-thumb]');
+      if(!vid || !img) return;
+
+      const candidates = [
+        `https://i.ytimg.com/vi/${vid}/maxresdefault.jpg`,
+        `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`
+      ];
+
+      img.src = candidates[0];
+      img.alt = frame.getAttribute("data-title") || "Video Vorschau";
+      img.onerror = () => { img.src = candidates[1]; };
+    }
+
+    function playYouTube(frame){
+      if(frame.dataset.loaded === "1") return;
+
+      const vid = frame.getAttribute("data-yt");
+      if(!vid) return;
+
+      frame.dataset.loaded = "1";
+      frame.innerHTML = `
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&rel=0&modestbranding=1"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      `;
+    }
+
+    const ytFrames = Array.from(document.querySelectorAll(".js-yt"));
+    ytFrames.forEach(f => {
+      setAutoThumb(f);
+      f.addEventListener("click", () => playYouTube(f));
+      f.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          playYouTube(f);
+        }
+      });
+    });
+
+    /* =========================
+       GALLERY MARQUEE
+       ========================= */
     const ENDPOINT = "https://script.google.com/macros/s/AKfycbx41vfB3zcZ2sPY8EIb6rqT6mEfxvNLtcU0Xb1UInRGPe9EoR2HqmjwjkPO7LeeeHATSQ/exec";
 
     const track = document.getElementById("MarqueeTrack");
@@ -626,7 +809,7 @@
 
     /* =========================
        PRESS – Stepper (5s hold, quick snap)
-    ========================= */
+       ========================= */
     const press = [
       { text:"Mit einem beeindruckenden Solokonzert „unplugged“ – also nur mit ihrer Stimme und ihrer Gitarre – zog sie das Publikum in ihren Bann.", source:"Haus Conrath", url:"https://haus-conrath.de/aktuelles/page/2/" },
       { text:"Und mit ihrer natürlichen Art gelang es ihr spielend, den Kontakt zum Publikum herzustellen. Man spürte, welch große Bedeutung Musik im Leben von Sandrine Neye spielt.", source:"Haus Conrath", url:"https://haus-conrath.de/aktuelles/page/2/" },

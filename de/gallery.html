@@ -28,10 +28,14 @@
 
     :root{
       --container:1120px;
-      --border:rgba(10,16,26,.12);
-      --radius:14px;
       --muted:rgba(14,17,22,.7);
       --hbH:74px;
+
+      /* 0 = wirklich keine Luft zwischen Bildern */
+      --gap:0px;
+
+      /* wenn du minimal “Premium-Luft” willst: 6px oder 8px */
+      /* --gap:8px; */
     }
 
     #MainContent{
@@ -82,41 +86,12 @@
       letter-spacing:.04em;
     }
 
-    .Grid{
-      width:100%;
-      margin-top:22px;
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap:14px;
-    }
-
-    .Tile{
-      width:100%;
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      overflow:hidden;
-      background:#f4f4f8;
-      cursor:pointer;
-      transition:transform .18s ease;
-    }
-
-    .Tile img{
-      width:100%;
-      height:240px;
-      object-fit:cover;
-      display:block;
-      transition:transform .25s ease;
-    }
-
-    .Tile:hover{ transform:translateY(-2px); }
-    .Tile:hover img{ transform:scale(1.04); }
-
     .Empty{
       width:100%;
       max-width:760px;
       margin:16px 0 0;
       border:1px dashed rgba(10,16,26,.22);
-      border-radius:var(--radius);
+      border-radius:14px;
       padding:16px 18px;
       color:var(--muted);
       box-sizing:border-box;
@@ -124,11 +99,76 @@
       font-weight:400;
     }
 
-    /* Lightbox */
+    /* =========================================================
+       REAL MASONRY (CSS COLUMNS) – practically gapless
+       ========================================================= */
+    .Grid{
+      width:100%;
+      margin-top:22px;
+
+      column-count:4;
+      column-gap:var(--gap);
+
+      /* remove any line-height gaps */
+      font-size:0;
+      line-height:0;
+    }
+
+    .Tile{
+      display:block;
+      width:100%;
+      margin:0 0 var(--gap);
+
+      /* critical: avoid split across columns */
+      break-inside:avoid;
+      -webkit-column-break-inside:avoid;
+      page-break-inside:avoid;
+
+      cursor:pointer;
+      background:transparent;
+
+      /* no borders, no padding -> no gaps */
+      border:0;
+      border-radius:0;
+      overflow:hidden;
+
+      /* tiny hover, but NO layout jump */
+      transition: filter .15s ease, transform .15s ease;
+      will-change: transform;
+    }
+
+    .Tile:hover{
+      filter:brightness(1.02);
+      transform:translateY(-1px);
+    }
+
+    .Tile img{
+      width:100%;
+      height:auto;
+      display:block;
+
+      /* no whitespace */
+      margin:0;
+      padding:0;
+    }
+
+    @media (max-width:1000px){
+      .Grid{ column-count:3; }
+    }
+    @media (max-width:700px){
+      .Grid{ column-count:2; }
+    }
+    @media (max-width:450px){
+      .Grid{ column-count:1; }
+    }
+
+    /* =========================================================
+       Lightbox
+       ========================================================= */
     .Lightbox{
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,.85);
+      background:rgba(0,0,0,.88);
       display:none;
       align-items:center;
       justify-content:center;
@@ -139,18 +179,17 @@
 
     .Lightbox__wrap{
       position:relative;
-      max-width:95vw;
+      max-width:96vw;
       max-height:90vh;
-      width:auto;
-      height:auto;
     }
 
     .Lightbox img{
       display:block;
-      max-width:95vw;
+      max-width:96vw;
       max-height:90vh;
       border-radius:12px;
       background:rgba(255,255,255,.06);
+      object-fit:contain;
     }
 
     .Lightbox__loading{
@@ -164,10 +203,10 @@
       letter-spacing:.04em;
       text-shadow:0 8px 20px rgba(0,0,0,.35);
       pointer-events:none;
+      font-size:16px;
+      line-height:normal;
     }
-    .Lightbox.is-loading .Lightbox__loading{
-      display:flex;
-    }
+    .Lightbox.is-loading .Lightbox__loading{ display:flex; }
 
     .Lightbox__error{
       position:absolute;
@@ -180,10 +219,9 @@
       letter-spacing:.02em;
       text-align:center;
       display:none;
+      line-height:normal;
     }
-    .Lightbox.has-error .Lightbox__error{
-      display:block;
-    }
+    .Lightbox.has-error .Lightbox__error{ display:block; }
 
     .Lightbox button{
       position:fixed;
@@ -197,17 +235,8 @@
       font-weight:600;
       letter-spacing:.04em;
       cursor:pointer;
-    }
-
-    @media (max-width:1000px){
-      .Grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-    @media (max-width:700px){
-      .Grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width:450px){
-      .Grid{ grid-template-columns: 1fr; }
-      .Tile img{ height:220px; }
+      font-size:14px;
+      line-height:normal;
     }
   </style>
 </head>
@@ -239,7 +268,7 @@
     <div class="Lightbox__wrap">
       <div class="Lightbox__loading">Lade Bild…</div>
       <img id="LbImg" alt="">
-      <div class="Lightbox__error" id="LbErr">Bild konnte nicht geladen werden.</div>
+      <div class="Lightbox__error" id="LbErr"></div>
     </div>
   </div>
 
@@ -264,55 +293,43 @@
       }[m]));
     }
 
-    // Escape only quotes for attributes. Keep & intact, otherwise URLs break.
     function escAttr(s){
       return String(s ?? "").replace(/"/g, "&quot;");
     }
 
-    // Convert typical Google Drive share links to direct image URLs.
     function toDirectImageUrl(url){
       const u = String(url || "").trim();
       if(!u) return "";
-
-      // If someone accidentally stored HTML-escaped ampersands:
       const fixed = u.replaceAll("&amp;", "&");
 
-      // Already a direct drive "uc" link or raw image:
       if(fixed.includes("drive.google.com/uc?") || fixed.match(/\.(jpg|jpeg|png|webp|gif)(\?|#|$)/i)){
         return fixed;
       }
 
-      // Patterns:
-      // 1) https://drive.google.com/file/d/<ID>/view?usp=sharing
       let m = fixed.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
       if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
 
-      // 2) https://drive.google.com/open?id=<ID>
       m = fixed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
       if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
 
-      // 3) https://drive.google.com/uc?id=<ID>&export=download
       m = fixed.match(/drive\.google\.com\/uc\?id=([a-zA-Z0-9_-]+)/);
       if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
 
-      // Otherwise: return as-is (might already be a direct CDN link)
       return fixed;
     }
 
     function openLb(fullUrl, thumbUrl){
       lb.classList.add("is-open", "is-loading");
       lb.classList.remove("has-error");
-      lbErr.textContent = "Bild konnte nicht geladen werden.";
+      lbErr.textContent = "";
       lb.setAttribute("aria-hidden","false");
       document.body.style.overflow = "hidden";
 
-      // Reset image first so the browser really reloads
       lbImg.removeAttribute("src");
       lbImg.removeAttribute("srcset");
 
       const direct = toDirectImageUrl(fullUrl);
 
-      // Loading handlers
       const onLoad = () => {
         lb.classList.remove("is-loading");
         lbImg.removeEventListener("load", onLoad);
@@ -320,17 +337,15 @@
       };
 
       const onErr = () => {
-        // Fallback 1: try thumb as "full" (better than nothing)
         if(thumbUrl && lbImg.src !== thumbUrl){
           lbImg.src = thumbUrl;
-          lbErr.textContent = "";
           lb.classList.add("has-error");
+          lb.classList.remove("is-loading");
           return;
         }
-
         lb.classList.remove("is-loading");
         lb.classList.add("has-error");
-        lbErr.textContent = "Bild konnte nicht geladen werden. (Link ist vermutlich kein Direktbild / Drive-Freigabe)";
+        lbErr.textContent = " (Link ist vermutlich kein Direktbild / Drive-Freigabe)";
         lbImg.removeEventListener("load", onLoad);
         lbImg.removeEventListener("error", onErr);
       };
@@ -338,7 +353,6 @@
       lbImg.addEventListener("load", onLoad);
       lbImg.addEventListener("error", onErr);
 
-      // Bust cache a tiny bit so changes propagate fast
       const cacheBust = (direct.includes("?") ? "&" : "?") + "v=" + Date.now();
       lbImg.src = direct + cacheBust;
     }
@@ -385,26 +399,23 @@
                data-full="${escAttr(item.full)}"
                data-thumb="${escAttr(item.thumb)}"
                aria-label="${escHtml(item.name)}">
-            <img src="${escAttr(item.thumb)}" alt="${escHtml(item.name)}" loading="lazy">
+            <img src="${escAttr(item.thumb)}" alt="${escHtml(item.name)}" loading="lazy" decoding="async">
           </div>
         `).join("");
 
-        grid.onclick = (e) => {
+        grid.addEventListener("click", (e) => {
           const tile = e.target.closest(".Tile");
           if(!tile) return;
 
-          // IMPORTANT: dataset gives us the raw attribute value (not HTML-decoded),
-          // but we keep a safety replace anyway.
           const full = (tile.dataset.full || "").replaceAll("&amp;", "&");
           const thumb = (tile.dataset.thumb || "").replaceAll("&amp;", "&");
-
           openLb(full, thumb);
-        };
+        });
 
       }catch(e){
         console.warn(e);
         cnt.textContent = "—";
-        showError("");
+        showError("Bilder konnten nicht geladen werden. Bitte Endpoint / Freigabe prüfen.");
       }
     }
 
