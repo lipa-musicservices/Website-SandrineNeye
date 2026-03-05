@@ -208,7 +208,7 @@
       text-transform:uppercase;
       font-size:12px;
 
-      border:2px solid var(--purple);
+      border: 0px solid var(--purple);
       color:var(--purple);
       background:transparent;
 
@@ -384,7 +384,7 @@
         if(ticketUrl){
           actionHtml = `<a class="GigLink" href="${ticketUrl}" target="_blank" rel="noopener">Tickets</a>`;
         }else if(infoUrl){
-          actionHtml = `<a class="GigLink" href="${infoUrl}" target="_blank" rel="noopener">Info</a>`;
+          actionHtml = `<a class="GigLink" href="${infoUrl}" target="_blank" rel="noopener">Tickets</a>`;
         }else{
           actionHtml = `<span class="GigTag">${isPast ? "Vergangen" : "Kommend"}</span>`;
         }
@@ -403,7 +403,7 @@
               <h3 class="GigTitle">${title}</h3>
               <div class="GigMeta">
                 ${esc(meta)}
-                ${infoUrl ? ` <small>·</small> <a href="${infoUrl}" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-decoration-color:rgba(14,17,22,.25); text-underline-offset:3px;">Details</a>` : ""}
+                ${infoUrl ? ` <small>·</small> <a href="${infoUrl}" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-decoration-color:rgba(14,17,22,.25); text-underline-offset:3px;"></a>` : ""}
               </div>
             </div>
 

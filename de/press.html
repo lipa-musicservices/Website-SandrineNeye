@@ -23,10 +23,10 @@
   <title>Pressestimmen – Sandrine Neye</title>
   <meta name="description" content="Pressestimmen und Zitate über Sandrine Neye – Singer & Songwriter." />
 
-  <!-- Google Fonts: Outfit + Niconne -->
+  <!-- Google Fonts: Outfit + Lora (lesbar, elegant) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Root assets (2 Ebenen hoch) -->
   <link rel="icon" href="../Resources/Content/Favicon.ico" />
@@ -53,8 +53,12 @@
     --radius:14px;
     --hbH:74px;
 
-    --quoteInk:rgba(14,17,22,.86);
+    --quoteInk:rgba(14,17,22,.88);
     --quoteMark:rgba(104,0,104,.42);
+
+    /* “keine Umrandung”-Look: nur sanfter Hintergrund + linke Akzentlinie */
+    --quoteBg: rgba(104,0,104,.0);
+    --quoteLine: rgba(104,0,104,.28);
   }
 
   /* Footer nicht im Raum */
@@ -80,7 +84,6 @@
     margin-bottom:22px;
   }
 
-  /* Schlanker, eleganter */
   .Page__title{
     margin:0;
     font-size: clamp(32px, 4.2vw, 52px);
@@ -107,78 +110,82 @@
     font-weight:400;
   }
 
+  /* =========================================================
+     LIST: weniger “Boxen”, mehr “Editorial”
+     ========================================================= */
   .Grid{
     margin-top:26px;
-    display:grid;
-    grid-template-columns:1fr;
+    display:flex;
+    flex-direction:column;
     gap:12px;
     width:100%;
   }
 
   .Quote{
     width:100%;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:16px 18px;
-    background:#fff;
     box-sizing:border-box;
+
+    /* statt Umrandung: sanfter Block + Akzent links */
+    background: var(--quoteBg);
+    border-left: 3px solid var(--quoteLine);
+    border-radius: 12px;
+
+    padding: 14px 16px 12px;
   }
 
-  /* ✅ Niconne nur für den Zitattext */
+  /* Bonus: subtiler Hover, ohne “Karteikarten”-Vibe */
+  .Quote:hover{
+
+  }
+
+  /* ✅ Lora für Zitattext: klar, lesbar, trotzdem elegant */
   .Quote__text{
     margin:0;
-    font-family:"Niconne", cursive;
-    font-size:28px;         /* wirkt “premium”, bleibt aber lesbar */
-    line-height:1.35;
+    font-family:"Lora", ui-serif, Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    line-height: 1.65;
     color: var(--quoteInk);
-    font-weight:400;
-    letter-spacing:.01em;
+    font-weight: 400;
   }
 
-  /* Anführungszeichen bewusst NICHT in Niconne (sonst wird’s schnell kitschig) */
+  /* Quotes als typografisches Detail, aber nicht “laut” */
   .Quote__text::before,
   .Quote__text::after{
     font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color: var(--quoteMark);
-    font-weight:600;
-    font-size:18px;
+    font-weight:700;
+    font-size:14px;
     vertical-align:top;
   }
-  .Quote__text::before{
-    content:"“";
-    margin-right:6px;
-  }
-  .Quote__text::after{
-    content:"”";
-    margin-left:6px;
-  }
+  .Quote__text::before{ content:"“"; margin-right:6px; }
+  .Quote__text::after{ content:"”"; margin-left:6px; }
 
   .Quote__meta{
     margin-top:10px;
     display:flex;
     flex-wrap:wrap;
-    gap:10px 14px;
+    gap:8px 14px;
     align-items:baseline;
     color: var(--muted);
     font-weight:500;
-    font-size:14px;
+    font-size:13.5px;
   }
 
   .Quote__source{
-    color: rgba(14,17,22,.78);
-    font-weight:600;
+    color: rgba(14,17,22,.80);
+    font-weight:650;
   }
 
   .Quote__date{
     opacity:.9;
-    font-weight:400;
+    font-weight:450;
   }
 
   .Quote__link{
     color: var(--purple);
     text-decoration: underline;
     text-underline-offset: 3px;
-    font-weight:600;
+    font-weight:650;
   }
 
   .Empty{
@@ -195,8 +202,8 @@
 
   @media (max-width:700px){
     .Quote__text{
-      font-size:24px;
-      line-height:1.35;
+      font-size:18.5px;
+      line-height:1.65;
     }
   }
 </style>

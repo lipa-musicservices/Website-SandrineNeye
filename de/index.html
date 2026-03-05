@@ -135,7 +135,7 @@
     justify-content:center;
     height:46px;
     padding:0 18px;
-    border-radius:10px;
+    border-radius:2px; /* weniger rund wie gewünscht */
     text-decoration:none;
     font-weight:700;
     border:2px solid transparent;
@@ -354,6 +354,7 @@
     padding:14px 18px;
     width:max-content;
     animation: marquee 115s linear infinite;
+    animation-play-state: running; /* läuft immer */
     will-change:transform;
   }
 
@@ -395,7 +396,7 @@
   .MarqueeItem:hover img{ transform:scale(1.5); z-index:60; }
 
   /* =========================
-     PRESS – STEP CAROUSEL
+     PRESS – Fade Carousel (one-by-one)
      ========================= */
   .PressSection{ padding: 0 0 76px; }
 
@@ -416,61 +417,37 @@
     letter-spacing:-0.004em;
   }
 
-  #PressWrap{
-    margin-top: 18px;
-    padding: 26px 0 34px;
-    overflow: visible;
-    perspective: 1100px;
-    isolation: isolate;
+  .PressFadeWrap{
+    max-width: var(--container);
+    margin: 18px auto 0;
+    padding: 0 18px;
+    box-sizing:border-box;
   }
 
-  #PressTrack{
-    animation:none !important;
-    transition: transform 450ms cubic-bezier(.2,.9,.2,1);
-    will-change: transform;
+  .PressFadeStage{
     position:relative;
-    z-index:1;
-    transform-style: preserve-3d;
-    display:flex;
-    width:max-content;
-  }
-
-  .PressCard{
-    flex:0 0 auto;
-    width: clamp(280px, 78vw, 520px);
-
+    min-height: 180px;
     border:1px solid var(--border);
     border-radius: var(--radius);
     background:#fff;
-    padding: 16px 18px;
-    box-sizing:border-box;
-
-    position:relative;
-    z-index:1;
-
-    transform: translateZ(0) scale(.86);
-    opacity:.78;
-
-    transition:
-      transform 1100ms cubic-bezier(.22, .8, .18, 1),
-      opacity  1100ms cubic-bezier(.22, .8, .18, 1),
-      box-shadow 1100ms cubic-bezier(.22, .8, .18, 1),
-      border-color 1100ms cubic-bezier(.22, .8, .18, 1);
-
-    will-change: transform;
-    backface-visibility:hidden;
-    transform-style:preserve-3d;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: geometricPrecision;
+    box-shadow:0 18px 45px rgba(10,16,26,.08);
+    overflow:hidden;
   }
 
-  .PressCard.is-center{
-    z-index: 20;
-    transform: translateZ(0) scale(1.22);
-    opacity: 1;
-    box-shadow: 0 34px 96px rgba(10,16,26,.26);
-    border-color: rgba(104,0,104,.34);
-    max-width: calc(100vw - 36px);
+  .PressFadeCard{
+    position:absolute;
+    inset:0;
+    padding: 18px 18px 16px;
+    box-sizing:border-box;
+    opacity:0;
+    transform: translate3d(0,6px,0);
+    transition: opacity 600ms ease, transform 600ms ease;
+    pointer-events:none;
+  }
+  .PressFadeCard.is-active{
+    opacity:1;
+    transform: translate3d(0,0,0);
+    pointer-events:auto;
   }
 
   .PressText{
@@ -489,7 +466,7 @@
   .PressText::after{ content:"”"; margin-left:2px; }
 
   .PressMeta{
-    margin-top: 10px;
+    margin-top: 12px;
     display:flex;
     flex-wrap:wrap;
     gap: 10px 14px;
@@ -509,11 +486,13 @@
     font-weight: 650;
   }
 
-  /* Lightbox */
+  /* =========================================================
+     Lightbox (robust wie auf Galerie-Seite)
+     ========================================================= */
   .Lightbox{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.85);
+    background:rgba(0,0,0,.88);
     display:none;
     align-items:center;
     justify-content:center;
@@ -521,11 +500,53 @@
     padding:20px;
   }
   .Lightbox.is-open{ display:flex; }
+
+  .Lightbox__wrap{
+    position:relative;
+    max-width:96vw;
+    max-height:90vh;
+  }
+
   .Lightbox img{
-    max-width:95vw;
+    display:block;
+    max-width:96vw;
     max-height:90vh;
     border-radius:12px;
+    background:rgba(255,255,255,.06);
+    object-fit:contain;
   }
+
+  .Lightbox__loading{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-shadow:0 8px 20px rgba(0,0,0,.35);
+    pointer-events:none;
+    font-size:16px;
+    line-height:normal;
+  }
+  .Lightbox.is-loading .Lightbox__loading{ display:flex; }
+
+  .Lightbox__error{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:-38px;
+    color:rgba(255,255,255,.82);
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:.02em;
+    text-align:center;
+    display:none;
+    line-height:normal;
+  }
+  .Lightbox.has-error .Lightbox__error{ display:block; }
+
   .Lightbox button{
     position:fixed;
     top:20px;
@@ -535,8 +556,11 @@
     border:2px solid #fff;
     background:transparent;
     color:#fff;
-    font-weight:650;
+    font-weight:600;
+    letter-spacing:.04em;
     cursor:pointer;
+    font-size:14px;
+    line-height:normal;
   }
 
   @media (max-width: 900px){
@@ -556,8 +580,12 @@
     .MarqueeWrap::before, .MarqueeWrap::after{ width:46px; }
 
     .PressHead{ flex-direction:column; align-items:flex-start; }
-    #PressWrap{ padding: 18px 0 26px; }
-    .PressCard.is-center{ transform: translateZ(0) scale(1.16); }
+    .PressFadeStage{ min-height: 220px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .MarqueeTrack{ animation: none; }
+    .PressFadeCard{ transition: none; transform:none; }
   }
 </style>
 </head>
@@ -657,8 +685,8 @@
         <h2>Pressestimmen</h2>
       </div>
 
-      <div class="MarqueeWrap" id="PressWrap">
-        <div class="MarqueeTrack" id="PressTrack" aria-label="Pressestimmen Carousel"></div>
+      <div class="PressFadeWrap">
+        <div class="PressFadeStage" id="PressStage" aria-label="Pressestimmen Fade Carousel"></div>
       </div>
     </section>
 
@@ -670,7 +698,12 @@
   <!-- Lightbox -->
   <div class="Lightbox" id="Lightbox" aria-hidden="true">
     <button id="LbClose" type="button">Schließen</button>
-    <img id="LbImg" alt="">
+
+    <div class="Lightbox__wrap">
+      <div class="Lightbox__loading">Lade Bild…</div>
+      <img id="LbImg" alt="">
+      <div class="Lightbox__error" id="LbErr"></div>
+    </div>
   </div>
 
   <noscript>
@@ -730,7 +763,7 @@
     });
 
     /* =========================
-       GALLERY MARQUEE
+       GALLERY MARQUEE + ROBUST LIGHTBOX
        ========================= */
     const ENDPOINT = "https://script.google.com/macros/s/AKfycbx41vfB3zcZ2sPY8EIb6rqT6mEfxvNLtcU0Xb1UInRGPe9EoR2HqmjwjkPO7LeeeHATSQ/exec";
 
@@ -740,6 +773,7 @@
     const lb = document.getElementById("Lightbox");
     const lbImg = document.getElementById("LbImg");
     const lbClose = document.getElementById("LbClose");
+    const lbErr = document.getElementById("LbErr");
 
     function esc(s){
       return String(s ?? "").replace(/[&<>"']/g, m => ({
@@ -747,23 +781,99 @@
       }[m]));
     }
 
-    function openLb(src){
-      lbImg.src = src;
-      lb.classList.add("is-open");
+    function toDirectImageUrl(url){
+      const u = String(url || "").trim();
+      if(!u) return "";
+      const fixed = u.replaceAll("&amp;", "&");
+
+      if(fixed.includes("drive.google.com/uc?") || fixed.match(/\.(jpg|jpeg|png|webp|gif)(\?|#|$)/i)){
+        return fixed;
+      }
+
+      let m = fixed.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
+
+      m = fixed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
+
+      m = fixed.match(/drive\.google\.com\/uc\?id=([a-zA-Z0-9_-]+)/);
+      if(m && m[1]) return "https://drive.google.com/uc?export=view&id=" + m[1];
+
+      return fixed;
+    }
+
+    function openLb(fullUrl, thumbUrl){
+      lb.classList.add("is-open","is-loading");
+      lb.classList.remove("has-error");
+      lbErr.textContent = "";
       lb.setAttribute("aria-hidden","false");
       document.body.style.overflow = "hidden";
+
+      lbImg.removeAttribute("src");
+      lbImg.removeAttribute("srcset");
+
+      const direct = toDirectImageUrl(fullUrl);
+
+      const onLoad = () => {
+        lb.classList.remove("is-loading");
+        lbImg.removeEventListener("load", onLoad);
+        lbImg.removeEventListener("error", onErr);
+      };
+
+      const onErr = () => {
+        if(thumbUrl && lbImg.src !== thumbUrl){
+          lbImg.src = thumbUrl;
+          lb.classList.add("has-error");
+          lb.classList.remove("is-loading");
+          lbErr.textContent = "";
+          return;
+        }
+        lb.classList.remove("is-loading");
+        lb.classList.add("has-error");
+        lbErr.textContent = "Bild konnte nicht geladen werden (Link / Freigabe prüfen).";
+        lbImg.removeEventListener("load", onLoad);
+        lbImg.removeEventListener("error", onErr);
+      };
+
+      lbImg.addEventListener("load", onLoad);
+      lbImg.addEventListener("error", onErr);
+
+      const cacheBust = (direct.includes("?") ? "&" : "?") + "v=" + Date.now();
+      lbImg.src = direct + cacheBust;
     }
 
     function closeLb(){
-      lb.classList.remove("is-open");
+      lb.classList.remove("is-open","is-loading","has-error");
       lb.setAttribute("aria-hidden","true");
-      lbImg.src = "";
+      lbImg.removeAttribute("src");
       document.body.style.overflow = "";
     }
 
     lbClose.addEventListener("click", closeLb);
     lb.addEventListener("click", e => { if(e.target === lb) closeLb(); });
     document.addEventListener("keydown", e => { if(e.key === "Escape") closeLb(); });
+
+    /* CHANGED: Event-Delegation, damit Klick IMMER greift */
+    document.addEventListener("click", (e) => {
+      const tile = e.target && e.target.closest ? e.target.closest(".MarqueeItem") : null;
+      if(!tile) return;
+
+      const full = (tile.dataset.full || "").replaceAll("&amp;","&");
+      const thumb = (tile.dataset.thumb || "").replaceAll("&amp;","&");
+
+      if(full){
+        e.preventDefault();
+        e.stopPropagation();
+        openLb(full, thumb);
+      }
+    }, true);
+
+    function forceMarqueeRun(){
+      if(!track) return;
+      track.style.animationPlayState = "running";
+      void track.offsetWidth;
+      track.style.animationPlayState = "running";
+    }
 
     async function loadMarquee(){
       if(!track) return;
@@ -784,19 +894,18 @@
         cnt.textContent = "";
 
         const htmlOnce = items.map(item => `
-          <div class="MarqueeItem" data-full="${esc(item.full)}" aria-label="${esc(item.name)}">
+          <div class="MarqueeItem"
+               data-full="${esc(item.full)}"
+               data-thumb="${esc(item.thumb)}"
+               aria-label="${esc(item.name)}">
             <img src="${esc(item.thumb)}" alt="${esc(item.name)}" loading="lazy">
           </div>
         `).join("");
 
         track.innerHTML = htmlOnce + htmlOnce;
 
-        track.addEventListener("click", (e) => {
-          const tile = e.target.closest(".MarqueeItem");
-          if(!tile) return;
-          const src = tile.dataset.full;
-          if(src) openLb(src);
-        });
+        forceMarqueeRun();
+        requestAnimationFrame(forceMarqueeRun);
 
       }catch(err){
         console.warn(err);
@@ -808,7 +917,7 @@
     loadMarquee();
 
     /* =========================
-       PRESS – Stepper (5s hold, quick snap)
+       PRESS – Fade Carousel (Quelle immer dabei)
        ========================= */
     const press = [
       { text:"Mit einem beeindruckenden Solokonzert „unplugged“ – also nur mit ihrer Stimme und ihrer Gitarre – zog sie das Publikum in ihren Bann.", source:"Haus Conrath", url:"https://haus-conrath.de/aktuelles/page/2/" },
@@ -823,87 +932,73 @@
       { text:"Ein Höhepunkt war sicher der Auftritt der Sängerin Sandrine, die bei „Whats Going On“ ihre beeindruckende Soulstimme klingen ließ.", source:"BNN (Printartikel)", url:"" }
     ];
 
-    const pressTrack = document.getElementById("PressTrack");
-    const pressWrap  = document.getElementById("PressWrap");
+    const pressStage = document.getElementById("PressStage");
 
-    if(pressTrack && pressWrap && press.length){
-      const once = press.map(q => `
-        <article class="PressCard">
+    function renderPress(){
+      if(!pressStage || !press.length) return;
+
+      const cards = press.map((q, i) => `
+        <article class="PressFadeCard${i===0 ? " is-active" : ""}" data-i="${i}">
           <p class="PressText">${esc(q.text)}</p>
           <div class="PressMeta">
             <span class="PressSource">${esc(q.source)}</span>
-            ${q.url ? `<a class="PressLink" href="${esc(q.url)}" target="_blank" rel="noopener">Quelle</a>` : ``}
+            ${q.url
+              ? `<a class="PressLink" href="${esc(q.url)}" target="_blank" rel="noopener">Quelle</a>`
+              : `<span class="PressLink" aria-label="Quelle">Quelle</span>`}
           </div>
         </article>
       `).join("");
 
-      pressTrack.innerHTML = once + once + once;
-
-      const N = press.length;
-      let idx = N;
-
-      let holdMs = 5000;
-      let moveMs = 450;
-      let timer = null;
-
-      function cards(){
-        return Array.from(pressTrack.querySelectorAll(".PressCard"));
-      }
-
-      function setTransition(ms){
-        pressTrack.style.transitionDuration = ms + "ms";
-      }
-
-      function centerTo(index){
-        const cs = cards();
-        const card = cs[index];
-        if(!card) return;
-
-        cs.forEach((c,i) => c.classList.toggle("is-center", i === index));
-
-        const wrapW = pressWrap.clientWidth;
-        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
-        const targetX = (wrapW / 2) - cardCenter;
-
-        pressTrack.style.transform = `translate3d(${targetX}px,0,0)`;
-      }
-
-      function step(){
-        setTransition(0);
-        centerTo(idx);
-
-        timer = window.setTimeout(() => {
-          idx += 1;
-
-          setTransition(moveMs);
-          centerTo(idx);
-
-          window.setTimeout(() => {
-            if(idx >= N*2){
-              setTransition(0);
-              idx = N;
-              centerTo(idx);
-            }
-            step();
-          }, moveMs + 20);
-
-        }, holdMs);
-      }
-
-      requestAnimationFrame(() => {
-        setTransition(0);
-        centerTo(idx);
-        step();
-      });
-
-      window.addEventListener("resize", () => {
-        setTransition(0);
-        centerTo(idx);
-      });
-
-      pressWrap.addEventListener("mouseenter", () => { if(timer) clearTimeout(timer); });
-      pressWrap.addEventListener("mouseleave", () => { step(); });
+      pressStage.innerHTML = cards;
     }
+
+    function startPressFade(){
+      if(!pressStage || !press.length) return;
+
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if(reduce) return;
+
+      let i = 0;
+      const holdMs = 5200;
+
+      const all = () => Array.from(pressStage.querySelectorAll(".PressFadeCard"));
+
+      function show(next){
+        const cs = all();
+        cs.forEach((c, idx) => c.classList.toggle("is-active", idx === next));
+      }
+
+      let t = window.setInterval(() => {
+        i = (i + 1) % press.length;
+        show(i);
+      }, holdMs);
+
+      pressStage.addEventListener("mouseenter", () => { if(t) { clearInterval(t); t = null; } });
+      pressStage.addEventListener("mouseleave", () => {
+        if(!t){
+          t = window.setInterval(() => {
+            i = (i + 1) % press.length;
+            show(i);
+          }, holdMs);
+        }
+      });
+
+      window.addEventListener("visibilitychange", () => {
+        if(document.hidden){
+          if(t){ clearInterval(t); t = null; }
+        }else{
+          if(!t){
+            t = window.setInterval(() => {
+              i = (i + 1) % press.length;
+              show(i);
+            }, holdMs);
+          }
+        }
+      });
+    }
+
+    renderPress();
+    startPressFade();
 
   })();
   </script>

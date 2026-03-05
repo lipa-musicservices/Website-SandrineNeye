@@ -12,11 +12,12 @@
 
 /* =========================================================
    Sandrine Neye – MENU + FOOTER (CLEAN)
-   - Headbar + MobileMenu + Footbar: SOLID purple (no transparency mix)
-   - No pill buttons (slight rounding only)
-   - Desktop nav hover: Shirin-style text fly-out/in
-   - Footer pages: HORIZONTAL + WRAP
-   - Legal links: ONLY Impressum + Datenschutz get center-out underline hover
+   CHANGES:
+   - Footer pages list: same center-out underline like Impressum
+   - Headbar social icons: smaller
+   - Headbar brand click (name): NO border/box, only text color change
+   - Brand: only “Sandrine Neye” (no subline styling; subline hidden)
+   - Legal links keep center-out underline (Impressum/Datenschutz)
    - Cookie banner included
    ========================================================= */
 
@@ -44,8 +45,13 @@
 
   --navTight:10px;
 
+  /* socials (footer) */
   --socBtn:44px;
   --socIcon:24px;
+
+  /* socials (headbar) */
+  --headSocBtn:36px;
+  --headSocIcon:18px;
 }
 
 
@@ -100,6 +106,8 @@ html, body{
 
 /* =========================
    BRAND (TEXT VERSION)
+   - NEW: no box/border, only text color shift
+   - NEW: hide subline everywhere
    ========================= */
 .Headbar__brand{
   display:flex;
@@ -110,37 +118,36 @@ html, body{
   text-decoration:none;
   color:var(--menuText);
 
-  padding:6px 10px;
-  border-radius:var(--r);
+  padding:0;                /* no pill/box */
+  border-radius:0;
+  border:0;
+  background:transparent;
 
-  border:1px solid transparent;
-  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  transition: color .18s ease, transform .15s ease, opacity .15s ease;
 
-  min-width:140px;
+  min-width:auto;
 }
 
 .Headbar__brand:hover{
-  background:rgba(255,255,255,.08);
-  border-color:rgba(255,255,255,.18);
+  color:rgba(255,255,255,.78);
+  opacity:.98;
   transform:translateY(-1px);
 }
-.Headbar__brand:active{ transform:translateY(0); }
+.Headbar__brand:active{
+  transform:translateY(0);
+  color:#ffffff;
+}
 
 .Headbar__brandText{
   font-weight:650;
   letter-spacing:.35px;
-  font-size:12.2pt;
+  font-size:12.6pt;
   line-height:1.05;
-  color:#fff;
+  color:inherit; /* inherits hover color */
 }
 
-.Headbar__brandSub{
-  font-weight:450;
-  letter-spacing:.12px;
-  font-size:10.1pt;
-  line-height:1.05;
-  color:rgba(255,255,255,.78);
-}
+/* Hide “Singer & Songwriter” always */
+.Headbar__brandSub{ display:none !important; }
 
 .Headbar__logo{
   height:40px;
@@ -524,6 +531,7 @@ html, body{
   padding:0;
 }
 
+/* NEW: pages list also gets center-out underline (like legal) */
 .Footbar__list a{
   color:rgba(255,255,255,.92);
   text-decoration:none;
@@ -534,24 +542,57 @@ html, body{
   align-items:center;
   justify-content:center;
 
-  padding:8px 12px;
+  padding:8px 10px;
   border-radius:10px;
 
   border:1px solid transparent;
   background:rgba(255,255,255,.00);
 
-  transition:background .15s ease, border-color .15s ease, transform .15s ease, opacity .15s ease;
+  position:relative;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    transform .15s ease,
+    opacity .15s ease,
+    color .15s ease;
 }
 
+/* subtle hover background stays */
 .Footbar__list a:hover{
-  background:rgba(255,255,255,.09);
-  border-color:rgba(255,255,255,.18);
   transform:translateY(-1px);
+}
+
+/* underline: start invisible, grow from center */
+.Footbar__list a::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:5px;
+  width:70%;
+  height:1px;
+  background:rgba(255,255,255,.65);
+
+  transform:translateX(-50%) scaleX(0);
+  transform-origin:center;
+  opacity:0;
+
+  transition:transform .22s ease, opacity .18s ease;
+}
+
+.Footbar__list a:hover::after{
+  transform:translateX(-50%) scaleX(1);
+  opacity:1;
 }
 
 .Footbar__list a:active{
   transform:translateY(0);
   opacity:.92;
+}
+
+.Footbar__list a:active::after{
+  transform:translateX(-50%) scaleX(.92);
+  opacity:1;
 }
 
 
@@ -613,12 +654,11 @@ html, body{
 
   opacity: 0.5;
 
-  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease, opacity .12s ease;
 }
 
 .FootbarSocialRow__btn:hover{
   transform: translateY(-1px);
-
   opacity: 1;
 }
 
@@ -678,7 +718,6 @@ html, body{
   transition: color .2s ease, transform .2s ease, opacity .2s ease, background .15s ease, border-color .15s ease;
 }
 
-/* keep the subtle hover background like before */
 .FootbarLegal a:hover{
   color:#fff;
   transform: translateY(-1px);
@@ -691,7 +730,7 @@ html, body{
   user-select:none;
 }
 
-/* ✅ NEW: underline only for Impressum + Datenschutz, starts invisible, grows from center */
+/* underline only for Impressum + Datenschutz */
 .FootbarLegal a[href*="impressum"],
 .FootbarLegal a[href*="datenschutz"]{
   position:relative;
@@ -702,27 +741,25 @@ html, body{
   content:"";
   position:absolute;
   left:50%;
-  bottom:3px;               /* sits inside padding */
+  bottom:3px;
   width:70%;
   height:1px;
 
   background:rgba(255,255,255,.65);
 
-  transform:translateX(-50%) scaleX(0); /* ✅ start: not visible */
+  transform:translateX(-50%) scaleX(0);
   transform-origin:center;
 
-  opacity:0;                /* ✅ extra guarantee: invisible initially */
+  opacity:0;
   transition: transform .22s ease, opacity .18s ease;
 }
 
-/* hover: expand from center */
 .FootbarLegal a[href*="impressum"]:hover::after,
 .FootbarLegal a[href*="datenschutz"]:hover::after{
   transform:translateX(-50%) scaleX(1);
   opacity:1;
 }
 
-/* active: tiny shrink so it feels “pressed” */
 .FootbarLegal a[href*="impressum"]:active::after,
 .FootbarLegal a[href*="datenschutz"]:active::after{
   transform:translateX(-50%) scaleX(.92);
@@ -749,7 +786,6 @@ html, body{
   transition: color .2s ease, transform .2s ease, opacity .2s ease;
 }
 
-/* existing powered underline (kept) */
 .Footbar__powered a::after{
   content:"";
   position:absolute;
@@ -775,18 +811,18 @@ html, body{
 
 
 /* =========================================================
-   HEADBAR SOCIAL (Desktop)
+   HEADBAR SOCIAL (Desktop) – SMALLER ICONS
    ========================================================= */
 .Headbar__social{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  margin-left:10px;
+  gap:6px;
+  margin-left:8px;
 }
 
 .Headbar__socialLink{
-  width:42px;
-  height:42px;
+  width:var(--headSocBtn);
+  height:var(--headSocBtn);
   border-radius:var(--r);
 
   display:inline-flex;
@@ -797,14 +833,13 @@ html, body{
   color:rgba(255,255,255,.86);
 
   background:transparent;
-  border: 0px solid rgba(255,255,255,.18);
+  border:0;
 
-  transition: background .15s ease, border-color .15s ease, transform .15s ease, color .15s ease;
+  transition: background .15s ease, transform .15s ease, color .15s ease, opacity .15s ease;
 }
 
 .Headbar__socialLink:hover{
   background:rgba(255,255,255,.08);
-  border-color:rgba(255,255,255,.26);
   color:#ffffff;
   transform:translateY(-1px);
 }
@@ -820,8 +855,8 @@ html, body{
 }
 
 .Headbar__socialIcon{
-  width:24px;
-  height:24px;
+  width:var(--headSocIcon);
+  height:var(--headSocIcon);
   display:block;
   object-fit:contain;
   object-position:center;
@@ -876,8 +911,8 @@ html, body{
 }
 
 .MobileMenu__socialIcon{
-  width:24px;
-  height:24px;
+  width:20px;
+  height:20px;
   display:block;
   object-fit:contain;
   object-position:center;
