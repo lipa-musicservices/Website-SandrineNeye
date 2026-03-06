@@ -51,7 +51,7 @@
     --border:rgba(10,16,26,.10);
 
     --radius:16px;
-    --shadow: 0 22px 60px rgba(10,16,26,.10);
+    --coverRadius:18px;
   }
 
   #MainContent{
@@ -98,24 +98,21 @@
   }
 
   /* =========================================================
-     RELEASE LIST (no card look)
-     - square cover
-     - title + date
-     - icons on the right
+     RELEASE LIST
+     - große Cover
+     - Listenoptik mit Strichen bleibt
      ========================================================= */
   .List{
-    margin-top:28px;
+    margin-top:32px;
     display:flex;
     flex-direction:column;
-    gap:12px;
   }
 
   .Row{
     display:flex;
-    gap:14px;
+    gap:28px;
     align-items:center;
-
-    padding:10px 0;
+    padding:26px 0;
     border-bottom:1px solid rgba(10,16,26,.08);
   }
 
@@ -124,12 +121,12 @@
   }
 
   .CoverSq{
-    width:74px;
-    height:74px;
+    width:190px;
+    height:190px;
     flex:0 0 auto;
     background: rgba(10,16,26,.03);
     overflow:hidden;
-    border-radius:10px;
+    border-radius:var(--coverRadius);
     border:1px solid rgba(10,16,26,.08);
   }
 
@@ -145,23 +142,20 @@
     flex:1;
     display:flex;
     flex-direction:column;
-    gap:4px;
+    gap:10px;
   }
 
   .Name{
     margin:0;
-    font-size:18px;
+    font-size:28px;
     font-weight:600;
-    letter-spacing:-0.004em;
-    line-height:1.2;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    letter-spacing:-0.01em;
+    line-height:1.14;
   }
 
   .Meta{
     display:flex;
-    gap:10px;
+    gap:12px;
     align-items:center;
     flex-wrap:wrap;
     color: rgba(14,17,22,.55);
@@ -174,33 +168,34 @@
     font-weight:650;
     color: rgba(14,17,22,.62);
   }
+
   .Date{
     font-weight:600;
     color: rgba(14,17,22,.45);
   }
 
-  /* Icons: use PNGs from ../Resources/Pictograms/ */
+  /* Icons */
   .Links{
     flex:0 0 auto;
     display:flex;
     gap:10px;
     align-items:center;
+    flex-wrap:wrap;
   }
 
   .IconLink{
-    width:40px;
-    height:40px;
-    border-radius:10px;
+    width:46px;
+    height:46px;
+    border-radius:12px;
     display:inline-flex;
     align-items:center;
     justify-content:center;
-
     border:1px solid rgba(10,16,26,.12);
     background: rgba(10,16,26,.05);
     text-decoration:none;
-
     transition: transform .15s ease, background .15s ease, border-color .15s ease;
   }
+
   .IconLink:hover{
     transform: translateY(-2px);
     background: rgba(104,0,104,.06);
@@ -208,8 +203,8 @@
   }
 
   .IconLink img{
-    width:20px;
-    height:20px;
+    width:22px;
+    height:22px;
     display:block;
     object-fit:contain;
     image-rendering:auto;
@@ -226,22 +221,73 @@
     font-weight:400;
   }
 
-  @media (max-width:720px){
-    .CoverSq{ width:66px; height:66px; border-radius:10px; }
-    .IconLink{ width:38px; height:38px; }
-    .IconLink img{ width:19px; height:19px; }
+  @media (max-width:980px){
+    .CoverSq{
+      width:160px;
+      height:160px;
+    }
+
+    .Name{
+      font-size:24px;
+    }
+
+    .Row{
+      gap:22px;
+    }
+  }
+
+  @media (max-width:760px){
+    .CoverSq{
+      width:128px;
+      height:128px;
+      border-radius:16px;
+    }
+
+    .Name{
+      font-size:21px;
+    }
+
+    .Row{
+      gap:18px;
+      padding:20px 0;
+    }
+
+    .IconLink{
+      width:42px;
+      height:42px;
+    }
+
+    .IconLink img{
+      width:20px;
+      height:20px;
+    }
   }
 
   @media (max-width:520px){
     .Row{
-      align-items:flex-start;
-      gap:12px;
+      display:grid;
+      grid-template-columns: 128px minmax(0,1fr);
+      gap:14px;
+      align-items:start;
     }
+
+    .CoverSq{
+      width:128px;
+      height:128px;
+      grid-row:1 / span 2;
+    }
+
+    .Info{
+      gap:6px;
+    }
+
     .Links{
       margin-top:2px;
     }
-    .Name{ font-size:17px; }
-    .CoverSq{ width:62px; height:62px; }
+
+    .Name{
+      font-size:19px;
+    }
   }
 
   .sr-only{
@@ -283,25 +329,21 @@
           </div>
 
           <div class="Links" aria-label="Streaming Links">
-            <!-- Spotify -->
             <a class="IconLink" href="https://open.spotify.com/intl-de/album/2lZqHQetjrCnFik88MUk9e?si=wcFd5WdqRdaBl-YhGLUTKw" target="_blank" rel="noopener" aria-label="Spotify öffnen">
               <span class="sr-only">Spotify</span>
               <img src="../Resources/Pictograms/SP_6a2f86.png" alt="" aria-hidden="true">
             </a>
 
-            <!-- Apple Music -->
             <a class="IconLink" href="https://music.apple.com/de/album/memories-to-save-single/1692427122" target="_blank" rel="noopener" aria-label="Apple Music öffnen">
               <span class="sr-only">Apple Music</span>
               <img src="../Resources/Pictograms/AP_6a2f86.png" alt="" aria-hidden="true">
             </a>
 
-            <!-- Amazon Music -->
             <a class="IconLink" href="https://amazon.com/music/player/albums/B0C7YF4XDC?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_2vsVI1Bkc9jgPZZgbydShywjn" target="_blank" rel="noopener" aria-label="Amazon Music öffnen">
               <span class="sr-only">Amazon Music</span>
               <img src="../Resources/Pictograms/AZ_6a2f86.png" alt="" aria-hidden="true">
             </a>
 
-            <!-- YouTube Music -->
             <a class="IconLink" href="https://music.youtube.com/watch?v=Pype5ksHVb4&si=mhCSOERAvc4URRu3" target="_blank" rel="noopener" aria-label="YouTube Music öffnen">
               <span class="sr-only">YouTube Music</span>
               <img src="../Resources/Pictograms/YT_6a2f86.png" alt="" aria-hidden="true">
@@ -324,25 +366,21 @@
           </div>
 
           <div class="Links" aria-label="Streaming Links">
-            <!-- Spotify -->
             <a class="IconLink" href="https://open.spotify.com/intl-de/album/3mW7D3neDSlCZ5gxC0VlX9" target="_blank" rel="noopener" aria-label="Spotify öffnen">
               <span class="sr-only">Spotify</span>
               <img src="../Resources/Pictograms/SP_6a2f86.png" alt="" aria-hidden="true">
             </a>
 
-            <!-- Apple Music -->
             <a class="IconLink" href="https://music.apple.com/de/album/dreaming-like-flying-ep/1629703552" target="_blank" rel="noopener" aria-label="Apple Music öffnen">
               <span class="sr-only">Apple Music</span>
               <img src="../Resources/Pictograms/AP_6a2f86.png" alt="" aria-hidden="true">
             </a>
 
-            <!-- Amazon Music -->
             <a class="IconLink" href="https://www.amazon.com/Far-Away/dp/B0B43878W4" target="_blank" rel="noopener" aria-label="Amazon Music öffnen">
               <span class="sr-only">Amazon Music</span>
               <img src="../Resources/Pictograms/AZ_6a2f86.png" alt="" aria-hidden="true">
             </a>
 
-            <!-- YouTube Music -->
             <a class="IconLink" href="https://music.youtube.com/playlist?list=OLAK5uy_m-SsyOI0589-99zwvwE0vw9e9MLJRpd60&si=wEJCamWbey7PgxkQ" target="_blank" rel="noopener" aria-label="YouTube Music öffnen">
               <span class="sr-only">YouTube Music</span>
               <img src="../Resources/Pictograms/YT_6a2f86.png" alt="" aria-hidden="true">
@@ -370,10 +408,6 @@
 
   <script>
     // Statisch, newest-first.
-    // Icons sind jetzt PNGs aus ../Resources/Pictograms/ (keine selbstgebauten SVGs mehr).
-    // Hinweis: Dateinamen müssen exakt so existieren:
-    //   Spotify_6a2f86.png, AppleMusic_6a2f86.png, AmazonMusic_6a2f86.png, YT_6a2f86.png
-    // Falls deine Pictograms anders heißen, einfach die src-Pfade anpassen.
   </script>
 </body>
 </html>
