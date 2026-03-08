@@ -234,7 +234,7 @@ html, body{
 }
 
 .Headbar__menu a .NavLabel::after{
-  transform:translateY(calc(-1 * var(--navTight)));
+  transform:translateY(calc(-1.3 * var(--navTight)));
 }
 
 .Headbar__menu a:hover{
@@ -243,7 +243,7 @@ html, body{
 }
 
 .Headbar__menu a:hover .NavLabel{
-  transform:translate3d(0,-37%,0);
+  transform:translate3d(0,-34%,0);
 }
 
 .Headbar__menu a:active{

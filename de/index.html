@@ -337,10 +337,11 @@
   .MarqueeWrap{
     position:relative;
     width:100%;
-    overflow:visible;
+    overflow:hidden;
     border-top:1px solid rgba(10,16,26,.06);
     border-bottom:1px solid rgba(10,16,26,.06);
     background:#fff;
+    -webkit-overflow-scrolling:touch;
   }
 
   .MarqueeWrap::before,
@@ -362,23 +363,34 @@
     padding:14px 18px;
     width:max-content;
     animation: marquee 115s linear infinite;
+    -webkit-animation: marquee 115s linear infinite;
     animation-play-state: running;
+    -webkit-animation-play-state: running;
     will-change:transform;
+    transform:translate3d(0,0,0);
+    -webkit-transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
   }
 
   .GallerySection .MarqueeWrap:hover .MarqueeTrack{
     animation-play-state: paused;
+    -webkit-animation-play-state: paused;
   }
 
   @keyframes marquee{
     from{ transform:translate3d(0,0,0); }
     to{ transform:translate3d(-50%,0,0); }
   }
+  @-webkit-keyframes marquee{
+    from{ -webkit-transform:translate3d(0,0,0); }
+    to{ -webkit-transform:translate3d(-50%,0,0); }
+  }
 
   .MarqueeItem{
     width: 340px;
     height: 230px;
-    border-radius: 0px;
+    border-radius:0;
     overflow:visible;
     border:1px solid var(--border);
     background:#f4f4f8;
@@ -386,6 +398,8 @@
     cursor:pointer;
     position:relative;
     z-index:1;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
   }
 
   .MarqueeItem img{
@@ -393,15 +407,60 @@
     height:100%;
     object-fit:cover;
     display:block;
-    border-radius:0px;
+    border-radius:0;
     transition:transform .22s cubic-bezier(.2,.9,.2,1);
     will-change:transform;
     position:relative;
     z-index:1;
+    pointer-events:none;
+    -webkit-user-drag:none;
+    user-select:none;
   }
 
   .MarqueeItem:hover{ z-index:50; }
   .MarqueeItem:hover img{ transform:scale(1.5); z-index:60; }
+
+  /* Apple / touch fix:
+     - no hover-zoom overflow on touch devices
+     - marquee never pauses on touch
+  */
+  @media (hover:none), (pointer:coarse){
+    .GallerySection .MarqueeWrap:hover .MarqueeTrack{
+      animation-play-state: running;
+      -webkit-animation-play-state: running;
+    }
+
+    .MarqueeItem{
+      overflow:hidden;
+    }
+
+    .MarqueeItem:hover{
+      z-index:1;
+    }
+
+    .MarqueeItem:hover img,
+    .MarqueeItem img{
+      transform:none;
+    }
+  }
+
+  html.is-apple-touch .GallerySection .MarqueeWrap:hover .MarqueeTrack{
+    animation-play-state: running;
+    -webkit-animation-play-state: running;
+  }
+
+  html.is-apple-touch .MarqueeItem{
+    overflow:hidden;
+  }
+
+  html.is-apple-touch .MarqueeItem:hover{
+    z-index:1;
+  }
+
+  html.is-apple-touch .MarqueeItem:hover img,
+  html.is-apple-touch .MarqueeItem img{
+    transform:none;
+  }
 
   /* =========================
      PRESS – Home like press page
@@ -511,7 +570,7 @@
   }
 
   /* =========================================================
-     Lightbox (robust wie auf Galerie-Seite)
+     Lightbox
      ========================================================= */
   .Lightbox{
     position:fixed;
@@ -613,7 +672,7 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    .MarqueeTrack{ animation: none; }
+    .MarqueeTrack{ animation: none; -webkit-animation:none; }
     .PressFadeCard{ transition: none; transform:none; }
   }
 </style>
@@ -645,14 +704,9 @@
     <!-- Songs / YouTube previews -->
     <section class="Section" aria-label="Songs">
       <div class="Section__inner">
-<!--         <h2>Hör rein</h2>
-        <p style="max-width:78ch;">
-          Zwei kurze Einblicke – klick auf Play, dann startet das Video direkt hier auf der Seite.
-        </p> -->
 
         <div class="MusicGrid" id="MusicGrid">
 
-          <!-- VIDEO 1: https://www.youtube.com/watch?v=RQvI1DEry00 -->
           <article class="YTCard">
             <div class="YTFrame js-yt" role="button" tabindex="0"
                  aria-label="YouTube Video abspielen"
@@ -670,7 +724,6 @@
             </div>
           </article>
 
-          <!-- VIDEO 2: https://www.youtube.com/watch?v=lfFkKgYLU_o -->
           <article class="YTCard">
             <div class="YTFrame js-yt" role="button" tabindex="0"
                  aria-label="YouTube Video abspielen"
@@ -744,6 +797,16 @@
   <script>
   (function(){
     "use strict";
+
+    const ua = navigator.userAgent || "";
+    const platform = navigator.platform || "";
+    const isAppleTouch =
+      (/iPad|iPhone|iPod/.test(ua)) ||
+      (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    if(isAppleTouch){
+      document.documentElement.classList.add("is-apple-touch");
+    }
 
     /* =========================
        YOUTUBE: lazy load on click
@@ -882,25 +945,55 @@
     lb.addEventListener("click", e => { if(e.target === lb) closeLb(); });
     document.addEventListener("keydown", e => { if(e.key === "Escape") closeLb(); });
 
-    document.addEventListener("click", (e) => {
-      const tile = e.target && e.target.closest ? e.target.closest(".MarqueeItem") : null;
-      if(!tile) return;
-
-      const full = (tile.dataset.full || "").replaceAll("&amp;","&");
-      const thumb = (tile.dataset.thumb || "").replaceAll("&amp;","&");
-
-      if(full){
-        e.preventDefault();
-        e.stopPropagation();
-        openLb(full, thumb);
-      }
-    }, true);
-
     function forceMarqueeRun(){
       if(!track) return;
-      track.style.animationPlayState = "running";
+      track.style.animation = "none";
+      track.style.webkitAnimation = "none";
       void track.offsetWidth;
+      track.style.animation = "marquee 115s linear infinite";
+      track.style.webkitAnimation = "marquee 115s linear infinite";
       track.style.animationPlayState = "running";
+      track.style.webkitAnimationPlayState = "running";
+    }
+
+    let marqueeClickLocked = false;
+
+    function bindMarqueeClicks(){
+      if(!track) return;
+
+      const openFromTile = (tile) => {
+        if(!tile || marqueeClickLocked) return;
+        marqueeClickLocked = true;
+        window.setTimeout(() => { marqueeClickLocked = false; }, 350);
+
+        const full = (tile.dataset.full || "").replaceAll("&amp;","&");
+        const thumb = (tile.dataset.thumb || "").replaceAll("&amp;","&");
+
+        if(full){
+          openLb(full, thumb);
+        }
+      };
+
+      track.addEventListener("click", (e) => {
+        const tile = e.target.closest(".MarqueeItem");
+        if(!tile) return;
+        e.preventDefault();
+        e.stopPropagation();
+        openFromTile(tile);
+      });
+
+      track.addEventListener("touchend", (e) => {
+        const touch = e.changedTouches && e.changedTouches[0];
+        if(!touch) return;
+
+        const el = document.elementFromPoint(touch.clientX, touch.clientY);
+        const tile = el && el.closest ? el.closest(".MarqueeItem") : null;
+        if(!tile) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        openFromTile(tile);
+      }, { passive:false });
     }
 
     async function loadMarquee(){
@@ -926,7 +1019,10 @@
                data-full="${esc(item.full)}"
                data-thumb="${esc(item.thumb)}"
                aria-label="${esc(item.name)}">
-            <img src="${esc(item.thumb)}" alt="${esc(item.name)}" loading="lazy">
+            <img src="${esc(item.thumb)}"
+                 alt="${esc(item.name)}"
+                 loading="lazy"
+                 draggable="false">
           </div>
         `).join("");
 
@@ -934,7 +1030,7 @@
 
         forceMarqueeRun();
         requestAnimationFrame(forceMarqueeRun);
-
+        window.setTimeout(forceMarqueeRun, 120);
       }catch(err){
         console.warn(err);
         cnt.textContent = "—";
@@ -942,6 +1038,7 @@
       }
     }
 
+    bindMarqueeClicks();
     loadMarquee();
 
     /* =========================
@@ -992,7 +1089,7 @@
       if(reduce) return;
 
       let i = 0;
-      const holdMs = 7600; /* länger stehen lassen */
+      const holdMs = 7600;
 
       const all = () => Array.from(pressStage.querySelectorAll(".PressFadeCard"));
 
