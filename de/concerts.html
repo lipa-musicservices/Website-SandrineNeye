@@ -337,12 +337,22 @@
       const pastEl = document.getElementById("PastList");
       const errEl = document.getElementById("LoadError");
 
-      const ENDPOINT = "https://script.google.com/macros/s/AKfycbybqzLZWJ-B2k6T1qkaMpikRUKdNPuxUgOyu6YMC2zP-bJyF-oPd4_fR_WOEsZmO2PtUQ/exec";
+      const ENDPOINT = "https://script.google.com/macros/s/AKfycbyo1BAksEoDm9S7-C2zK1qQ7iDi3OE5dml9-bRAC0RVpgVBrW6M8nTYtSHTQxLjGIatbw/exec";
+
+      function decodeHtmlEntities(s){
+        const txt = document.createElement("textarea");
+        txt.innerHTML = String(s ?? "");
+        return txt.value;
+      }
 
       function esc(s){
         return String(s ?? "").replace(/[&<>"']/g, m => ({
           "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
         }[m]));
+      }
+
+      function safeText(s){
+        return esc(decodeHtmlEntities(s));
       }
 
       const MONTHS_DE = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
@@ -365,13 +375,13 @@
       function gigRow(g, isPast){
         const dp = dateParts(g.date);
 
-        const title = esc(g.title || g.venue || "Konzert");
-        const city = esc(g.city || "");
-        const venue = esc(g.venue || "");
-        const time = esc(g.time || "");
+        const title = safeText(g.title || g.venue || "Konzert");
+        const city = safeText(g.city || "");
+        const venue = safeText(g.venue || "");
+        const time = safeText(g.time || "");
 
-        const ticketUrl = g.tickets ? esc(g.tickets) : "";
-        const infoUrl = g.url ? esc(g.url) : "";
+        const ticketUrl = g.tickets ? esc(decodeHtmlEntities(g.tickets)) : "";
+        const infoUrl = g.url ? esc(decodeHtmlEntities(g.url)) : "";
 
         const metaParts = [];
         if(venue) metaParts.push(venue);
@@ -392,17 +402,17 @@
         return `
           <article class="GigRow ${isPast ? "is-past" : ""}">
             <div class="GigDate" aria-label="Datum">
-              <div class="GigDate__day">${esc(dp.day)}</div>
+              <div class="GigDate__day">${safeText(dp.day)}</div>
               <div class="GigDate__stack">
-                <div class="GigDate__month">${esc(dp.mon)}</div>
-                <div class="GigDate__year">${esc(dp.year)}</div>
+                <div class="GigDate__month">${safeText(dp.mon)}</div>
+                <div class="GigDate__year">${safeText(dp.year)}</div>
               </div>
             </div>
 
             <div class="GigMain">
               <h3 class="GigTitle">${title}</h3>
               <div class="GigMeta">
-                ${esc(meta)}
+                ${meta}
                 ${infoUrl ? ` <small>·</small> <a href="${infoUrl}" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-decoration-color:rgba(14,17,22,.25); text-underline-offset:3px;"></a>` : ""}
               </div>
             </div>
@@ -415,7 +425,7 @@
       }
 
       function showEmpty(el, txt){
-        el.innerHTML = `<div class="Empty">${esc(txt)}</div>`;
+        el.innerHTML = `<div class="Empty">${safeText(txt)}</div>`;
       }
 
       async function load(){
@@ -440,7 +450,7 @@
         }catch(e){
           console.warn(e);
           errEl.style.display = "block";
-          errEl.innerHTML = `<strong>Konzerte konnten nicht geladen werden.</strong><br>${esc(String(e))}`;
+          errEl.innerHTML = `<strong>Konzerte konnten nicht geladen werden.</strong><br>${safeText(String(e))}`;
           showEmpty(upcomingEl, "—");
           showEmpty(pastEl, "—");
         }
