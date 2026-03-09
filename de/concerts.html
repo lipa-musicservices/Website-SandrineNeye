@@ -103,9 +103,6 @@
       color:rgba(14,17,22,.62);
     }
 
-    /* =========================
-       LIST LAYOUT (Ira Diehr style)
-       ========================= */
     .GigList{
       border-top:1px solid var(--line);
     }
@@ -115,12 +112,10 @@
       grid-template-columns: 160px 1fr 140px;
       gap:18px;
       align-items:center;
-
       padding:22px 0;
       border-bottom:1px solid var(--line);
     }
 
-    /* Date block: big day + small month */
     .GigDate{
       display:flex;
       align-items:flex-start;
@@ -183,11 +178,6 @@
       letter-spacing:.02em;
     }
 
-    .GigMeta small{
-      color:var(--muted2);
-      font-weight:500;
-    }
-
     .GigActions{
       display:flex;
       justify-content:flex-end;
@@ -202,16 +192,13 @@
       padding:0 14px;
       border-radius:10px;
       text-decoration:none;
-
       font-weight:750;
       letter-spacing:.10em;
       text-transform:uppercase;
       font-size:12px;
-
-      border: 0px solid var(--purple);
+      border:0;
       color:var(--purple);
       background:transparent;
-
       transition: background .15s ease, color .15s ease, transform .15s ease;
       white-space:nowrap;
     }
@@ -231,13 +218,12 @@
       white-space:nowrap;
     }
 
-    /* Past styling */
     .GigRow.is-past{
       opacity:.55;
       filter:saturate(.9);
     }
+
     .GigRow.is-past .GigLink{
-      border-color:rgba(104,0,104,.55);
       color:rgba(104,0,104,.9);
     }
 
@@ -265,7 +251,6 @@
       opacity:.95;
     }
 
-    /* Responsive */
     @media (max-width: 980px){
       .GigRow{
         grid-template-columns: 150px 1fr 130px;
@@ -288,6 +273,7 @@
       .GigDate__day{
         font-size:52px;
       }
+
       .GigDate__stack{
         padding-top:10px;
       }
@@ -337,7 +323,7 @@
       const pastEl = document.getElementById("PastList");
       const errEl = document.getElementById("LoadError");
 
-      const ENDPOINT = "https://script.google.com/macros/s/AKfycbyo1BAksEoDm9S7-C2zK1qQ7iDi3OE5dml9-bRAC0RVpgVBrW6M8nTYtSHTQxLjGIatbw/exec";
+      const ENDPOINT = "https://script.google.com/macros/s/AKfycbzAg5q7gmwzp0-fXU6pdLqf8_VndwknTmPCNRQUTziAglwB9QPQrIHSrY7ZKdzN6K5eaA/exec";
 
       function decodeHtmlEntities(s){
         const txt = document.createElement("textarea");
@@ -347,7 +333,11 @@
 
       function esc(s){
         return String(s ?? "").replace(/[&<>"']/g, m => ({
-          "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
         }[m]));
       }
 
@@ -355,10 +345,16 @@
         return esc(decodeHtmlEntities(s));
       }
 
+      function safeUrl(s){
+        const v = decodeHtmlEntities(String(s ?? "")).trim();
+        if(!/^https?:\/\//i.test(v)) return "";
+        return esc(v);
+      }
+
       const MONTHS_DE = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
       function parseISO(iso){
-        const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso||""));
+        const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
         if(!m) return null;
         return { y:+m[1], mo:+m[2], d:+m[3] };
       }
@@ -366,10 +362,11 @@
       function dateParts(iso){
         const p = parseISO(iso);
         if(!p) return { day:"", mon:"", year:"" };
-        const day = String(p.d).padStart(2,"0");
-        const mon = MONTHS_DE[Math.max(0, Math.min(11, p.mo-1))];
-        const year = String(p.y);
-        return { day, mon, year };
+        return {
+          day: String(p.d).padStart(2,"0"),
+          mon: MONTHS_DE[Math.max(0, Math.min(11, p.mo - 1))],
+          year: String(p.y)
+        };
       }
 
       function gigRow(g, isPast){
@@ -380,8 +377,7 @@
         const venue = safeText(g.venue || "");
         const time = safeText(g.time || "");
 
-        const ticketUrl = g.tickets ? esc(decodeHtmlEntities(g.tickets)) : "";
-        const infoUrl = g.url ? esc(decodeHtmlEntities(g.url)) : "";
+        const ticketUrl = safeUrl(g.description || "");
 
         const metaParts = [];
         if(venue) metaParts.push(venue);
@@ -393,10 +389,8 @@
         let actionHtml = "";
         if(ticketUrl){
           actionHtml = `<a class="GigLink" href="${ticketUrl}" target="_blank" rel="noopener">Tickets</a>`;
-        }else if(infoUrl){
-          actionHtml = `<a class="GigLink" href="${infoUrl}" target="_blank" rel="noopener">Tickets</a>`;
         }else{
-          actionHtml = `<span class="GigTag">${isPast ? "Vergangen" : "Kommend"}</span>`;
+          actionHtml = `<span class="GigTag">${isPast ? "" : ""}</span>`;
         }
 
         return `
@@ -411,10 +405,7 @@
 
             <div class="GigMain">
               <h3 class="GigTitle">${title}</h3>
-              <div class="GigMeta">
-                ${meta}
-                ${infoUrl ? ` <small>·</small> <a href="${infoUrl}" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-decoration-color:rgba(14,17,22,.25); text-underline-offset:3px;"></a>` : ""}
-              </div>
+              <div class="GigMeta">${meta}</div>
             </div>
 
             <div class="GigActions">
@@ -434,16 +425,23 @@
         try{
           const res = await fetch(url, { cache:"no-cache" });
           if(!res.ok) throw new Error("HTTP " + res.status);
+
           const data = await res.json();
 
           const upcoming = Array.isArray(data.upcoming) ? data.upcoming : [];
           const past = Array.isArray(data.past) ? data.past : [];
 
-          if(upcoming.length === 0) showEmpty(upcomingEl, "Aktuell sind keine kommenden Konzerte eingetragen.");
-          else upcomingEl.innerHTML = upcoming.map(g => gigRow(g, false)).join("");
+          if(upcoming.length === 0){
+            showEmpty(upcomingEl, "Aktuell sind keine kommenden Konzerte eingetragen.");
+          }else{
+            upcomingEl.innerHTML = upcoming.map(g => gigRow(g, false)).join("");
+          }
 
-          if(past.length === 0) showEmpty(pastEl, "Noch keine vergangenen Konzerte eingetragen.");
-          else pastEl.innerHTML = past.map(g => gigRow(g, true)).join("");
+          if(past.length === 0){
+            showEmpty(pastEl, "Noch keine vergangenen Konzerte eingetragen.");
+          }else{
+            pastEl.innerHTML = past.map(g => gigRow(g, true)).join("");
+          }
 
           errEl.style.display = "none";
           errEl.textContent = "";
